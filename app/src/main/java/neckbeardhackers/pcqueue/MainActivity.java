@@ -9,6 +9,11 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.parse.Parse;
+import com.parse.ParseObject;
+
+import java.text.ParseException;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -26,6 +31,15 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        // Enable Local Datastore.
+        Parse.enableLocalDatastore(this);
+
+        Parse.initialize(this, "***REMOVED***", "***REMOVED***");
+        ParseObject testObject = new ParseObject("TestObject");
+        testObject.put("boo", "bar");
+        testObject.saveInBackground();
+        //testObject.deleteInBackground();
     }
 
     @Override
