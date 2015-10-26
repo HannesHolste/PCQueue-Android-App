@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">PCQueue</string>
     <string name="action_settings">Settings</string>
+    <string-array name="restaurants_array">
+        <item>Santorini</item>
+        <item>Burger King</item>
+        <item>DLush</item>
+        <item>Tapioca Express</item>
+        <item>Subway</item>
+        <item>Bombay Kitchen</item>
+        <item>Panda Express</item>
+        <item>Rest here</item>
+    </string-array>
+    <string name="title_activity_report">Report</string>
+    <string name="title_activity_restaurant_list">Restaurant List</string>
 </resources>
