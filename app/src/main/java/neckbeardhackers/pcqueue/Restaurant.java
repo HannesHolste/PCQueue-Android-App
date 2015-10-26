@@ -1,5 +1,7 @@
 package neckbeardhackers.pcqueue;
 
+import android.media.Image;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +12,7 @@ import java.util.List;
 public class Restaurant {
     private String restaurantName;
     private WaitTime wait;
-    //private Image logo;
+    private Image logo;
 
     public Restaurant(String name) {
         this.restaurantName = name;
@@ -25,6 +27,14 @@ public class Restaurant {
         return this.wait;
     }
 
+    public void setLogo(Image logo) {
+        this.logo = logo;
+    }
+
+    public Image getLogo() {
+        return this.logo;
+    }
+
     public static List<Restaurant> getSampleData() {
         List<Restaurant> restaurantList = new ArrayList<Restaurant>();
 
@@ -35,6 +45,10 @@ public class Restaurant {
         }
 
         return restaurantList;
+    }
+
+    public static List<Restaurant> getRestaurantsFromParse() {
+        return null;
     }
 
 }
