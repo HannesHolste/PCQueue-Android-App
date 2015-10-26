@@ -12,4 +12,5 @@
         <item>Rest here</item>
     </string-array>
     <string name="title_activity_report">Report</string>
+    <string name="title_activity_restaurant_list">Restaurant List</string>
 </resources>
