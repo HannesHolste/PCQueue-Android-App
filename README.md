@@ -1,5 +1,4 @@
-CSE110 Project - RestaurantList UI Branch
-=========================================
-This branch contains the first designs for the RestaurantList UI
+CSE110 Project - Develop Branch
+===============================
 
 ![Preview](screen.png)
