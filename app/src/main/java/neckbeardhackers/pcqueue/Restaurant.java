@@ -21,6 +21,7 @@ public class Restaurant {
     private String restaurantName;
     private String location;
     private String phoneNumber;
+    private OperatingHours hours;
     private WaitTime wait;
     private Image logo;
 
@@ -28,6 +29,7 @@ public class Restaurant {
     private static final String PARSE_NAME_KEY = "Name";
     private static final String PARSE_LOCATION_KEY = "Location";
     private static final String PARSE_PHONE_KEY = "Phone";
+    private static final String PARSE_HOURS_KEY = "Hours";
 
     public Restaurant(String name) {
         this.restaurantName = name;
