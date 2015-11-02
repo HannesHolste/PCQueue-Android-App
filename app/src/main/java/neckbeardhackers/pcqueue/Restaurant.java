@@ -91,7 +91,6 @@ class RestaurantList {
 
     public List<Restaurant> getRestaurants() {
         List<Restaurant> restaurantList = new ArrayList<Restaurant>();
-        System.err.println("sz : " + this.restaurants.size());
         Enumeration<Restaurant> restaurantEnumerator = this.getRestaurantsEnumerator();
         while (restaurantEnumerator.hasMoreElements()) {
             restaurantList.add(restaurantEnumerator.nextElement());
@@ -118,8 +117,6 @@ class RestaurantList {
 
     private void updateRestaurant(Restaurant restaurantToUpdate) {
         this.restaurants.put(restaurantToUpdate.getRestaurantName(), restaurantToUpdate);
-        System.err.println(restaurantToUpdate.getRestaurantName() + "updated");
-        System.err.println("Check: " + this.restaurants.get(restaurantToUpdate.getRestaurantName()));
 
     }
 
@@ -141,12 +138,10 @@ class RestaurantList {
     private void handleRestaurantQuerySuccess(List<ParseObject> retrievedRestaurants) {
         for (ParseObject retrievedRestaurant : retrievedRestaurants) {
             try {
-                System.err.println(retrievedRestaurant.getString("Name"));
                 Restaurant processedRestaurant = Restaurant.fromParseObject(retrievedRestaurant);
                 this.updateRestaurant(processedRestaurant);
             }
             catch (Exception e) {
-                System.err.println("---err");
                 continue;
             }
         }
