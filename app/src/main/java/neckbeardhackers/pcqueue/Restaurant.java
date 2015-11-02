@@ -1,6 +1,7 @@
 package neckbeardhackers.pcqueue;
 
 import android.media.Image;
+import android.os.AsyncTask;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -101,30 +102,18 @@ public class Restaurant {
 }
 
 class RestaurantList {
-    private Dictionary<String, Restaurant> restaurants;
+    private List<Restaurant> restaurants;
 
     public RestaurantList() {
-        this.restaurants = new Hashtable<String, Restaurant>();
+        this.restaurants = new ArrayList<Restaurant>();
     }
 
     public RestaurantList(List<Restaurant> restaurantList) {
-        this.restaurants = new Hashtable<String, Restaurant>();
-        for (Restaurant r : restaurantList)
-            this.restaurants.put(r.getRestaurantName(), r);
+        this.restaurants = restaurantList;
     }
 
     public List<Restaurant> getRestaurants() {
-        List<Restaurant> restaurantList = new ArrayList<Restaurant>();
-        Enumeration<Restaurant> restaurantEnumerator = this.getRestaurantsEnumerator();
-        while (restaurantEnumerator.hasMoreElements()) {
-            restaurantList.add(restaurantEnumerator.nextElement());
-        }
-
-        return restaurantList;
-    }
-
-    public Enumeration<Restaurant> getRestaurantsEnumerator() {
-        return this.restaurants.elements();
+        return this.restaurants;
     }
 
     public void updateRestaurantList(final RestaurantQuerySuccessHandler callback) throws Exception {
@@ -139,9 +128,8 @@ class RestaurantList {
         this.executeGetRestaurantsQuery(failHandler, successHandler);
     }
 
-    private void updateRestaurant(Restaurant restaurantToUpdate) {
-        this.restaurants.put(restaurantToUpdate.getRestaurantName(), restaurantToUpdate);
-
+    private void addRestaurant(Restaurant restaurantToAdd) {
+        this.restaurants.add(restaurantToAdd);
     }
 
     private void executeGetRestaurantsQuery(final RestaurantQueryFailHandler failHandler,
@@ -166,7 +154,7 @@ class RestaurantList {
                 if (retrievedRestaurant.containsKey("Hours")) {
                 }
                 Restaurant processedRestaurant = Restaurant.fromParseObject(retrievedRestaurant);
-                this.updateRestaurant(processedRestaurant);
+                this.addRestaurant(processedRestaurant);
             }
             catch (Exception e) {
                 continue;

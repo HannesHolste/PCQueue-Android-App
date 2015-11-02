@@ -36,6 +36,7 @@ public class RestaurantInfoAdapter extends BaseAdapter {
                     public void handleRestaurantQuerySuccess() {
                         super.handleRestaurantQuerySuccess();
                         restaurantList = l.getRestaurants();
+                        notifyDataSetChanged();
                     }
                 });
             }
