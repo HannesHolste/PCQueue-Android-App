@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,23 +24,32 @@ public class RestaurantInfoAdapter extends BaseAdapter {
 
     public RestaurantInfoAdapter(Context c) {
         this.context = c;
+        this.restaurantList = new ArrayList<Restaurant>();
+        this.instantiateList();
     }
 
     public void instantiateList() {
-        if (restaurantList == null) {
-            restaurantList = Restaurant.getSampleData();
-        }
+            final RestaurantList l = new RestaurantList();
+            try {
+                l.updateRestaurantList(new RestaurantQuerySuccessHandler() {
+                    @Override
+                    public void handleRestaurantQuerySuccess() {
+                        super.handleRestaurantQuerySuccess();
+                        restaurantList = l.getRestaurants();
+                    }
+                });
+            }
+            catch (Exception e) {
+            }
     }
 
     @Override
     public int getCount() {
-        this.instantiateList();
         return this.restaurantList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        this.instantiateList();
         return this.restaurantList.get(position);
     }
 

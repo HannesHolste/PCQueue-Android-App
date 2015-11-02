@@ -8,7 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
 
-public class RestaurantList extends AppCompatActivity {
+public class RestaurantListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,6 @@ public class RestaurantList extends AppCompatActivity {
         RestaurantInfoAdapter infoGetter = new RestaurantInfoAdapter(this);
         ListView restaurantListComponent = (ListView) this.findViewById(R.id.restaurantListView);
         restaurantListComponent.setAdapter(infoGetter);
-
     }
 
 }
