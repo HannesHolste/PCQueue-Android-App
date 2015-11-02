@@ -41,6 +41,19 @@ public class Restaurant {
         this.phoneNumber = o.getString(PARSE_PHONE_KEY);
         this.wait = new WaitTime();
         this.wait.setCurrentWait(5);
+        this.setHours(o.getParseObject(PARSE_HOURS_KEY));
+    }
+
+    private void setHours(ParseObject hoursParseObject) {
+        if (hoursParseObject == null)
+            this.hours = null;
+        else {
+            try {
+                this.hours = OperatingHours.fromParseObject(hoursParseObject);
+            }
+            catch (Exception e) {
+            }
+        }
     }
 
     public String getRestaurantName() {
@@ -55,8 +68,16 @@ public class Restaurant {
         this.logo = logo;
     }
 
+
     public Image getLogo() {
         return this.logo;
+    }
+
+    public String getHoursString() {
+        if (this.hours == null)
+            return "Information not available";
+        DailyOperatingHours todaysHours = this.hours.getHoursForToday();
+        return String.format("%s-%s", todaysHours.getOpeningTime(), todaysHours.getCloseTime());
     }
 
     public static List<Restaurant> getSampleData() {
@@ -74,6 +95,7 @@ public class Restaurant {
     public static Restaurant fromParseObject(ParseObject o) throws Exception {
         if (!o.getClassName().equals(Restaurant.PARSE_CLASS))
             throw new Exception("Provided ParseObject is not of Restaurant Class");
+
         return new Restaurant(o);
     }
 }
@@ -125,6 +147,7 @@ class RestaurantList {
     private void executeGetRestaurantsQuery(final RestaurantQueryFailHandler failHandler,
                                             final RestaurantQuerySuccessHandler successHandler) {
         ParseQuery<ParseObject> restaurantQuery = ParseQuery.getQuery(Restaurant.PARSE_CLASS);
+        restaurantQuery.include("Hours");
         restaurantQuery.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
@@ -140,6 +163,8 @@ class RestaurantList {
     private void handleRestaurantQuerySuccess(List<ParseObject> retrievedRestaurants) {
         for (ParseObject retrievedRestaurant : retrievedRestaurants) {
             try {
+                if (retrievedRestaurant.containsKey("Hours")) {
+                }
                 Restaurant processedRestaurant = Restaurant.fromParseObject(retrievedRestaurant);
                 this.updateRestaurant(processedRestaurant);
             }
