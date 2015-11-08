@@ -9,70 +9,56 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_report" tools:context="neckbeardhackers.pcqueue.Report">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Report a waiting time"
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight=    "1"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Which restaurant?"
-        android:id="@+id/textView2"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight=    "1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_gravity="center_horizontal"
+            android:text="Restaurant Name"
+            android:textSize="35dp"
+            android:id="@+id/reporter_restaurantName"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="33dp" />
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/restaurant_spinner"
-        android:layout_gravity="center_horizontal"
-        android:spinnerMode="dialog"
-        android:layout_weight=    "1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="How many people are in line?"
+            android:id="@+id/peopleQuestion"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="44dp"
+            android:layout_below="@+id/reporter_restaurantName"
+            android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="How many people are in line?"
-        android:id="@+id/textView3"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight=    "1"/>
-
-        <EditText
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/editText2"
+            android:id="@+id/people_spinner"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="1" />
+            android:spinnerMode="dialog"
+            android:layout_below="@+id/peopleQuestion"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="37dp" />
 
         <Button
-        android:layout_width="203dp"
-        android:layout_height="wrap_content"
-        android:text="SUBMIT"
-        android:id="@+id/button"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight=    "0.20"/>
-
-        <EditText
-            android:layout_width="match_parent"
+            android:id="@+id/reporter_updateButton"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/editText"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="1" />
+            android:background="#5AC1F5"
+            android:text="Update Wait Time"
+            android:drawableLeft="@android:drawable/ic_menu_recent_history"
+            android:textColor="#FFFFFF"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="81dp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>
