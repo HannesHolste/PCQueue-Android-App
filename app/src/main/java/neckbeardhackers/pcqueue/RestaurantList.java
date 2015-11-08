@@ -50,6 +50,8 @@ public class RestaurantList extends AppCompatActivity {
 
         //Testing to see if it will close the default action bar
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        /*Making the title pretty :-)*/
         TextView txt = (TextView) findViewById(R.id.mainToolbar_title);
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Pacifico.ttf");
         txt.setTypeface(font);
