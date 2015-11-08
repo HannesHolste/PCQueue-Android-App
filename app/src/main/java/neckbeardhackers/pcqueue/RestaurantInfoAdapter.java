@@ -54,7 +54,6 @@ public class RestaurantInfoAdapter extends RecyclerView.Adapter<RestaurantInfoAd
                     public void handleRestaurantQuerySuccess() {
                         super.handleRestaurantQuerySuccess();
                         restaurantList = l.getRestaurants();
-                        System.err.println(restaurantList.get(0).getRestaurantName());
                         notifyDataSetChanged();
                     }
                 });

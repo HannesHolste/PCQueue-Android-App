@@ -28,9 +28,7 @@ public class RestaurantListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Parent class calling onCreate
-        System.err.println("BABALOO1");
         super.onCreate(savedInstanceState);
-        System.err.println("BABALOO");
 
         // This sets the focus on this class on a particular XML file
         setContentView(R.layout.activity_restaurant_list);
@@ -53,7 +51,6 @@ public class RestaurantListActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
 
     /*Making the title pretty :-)*/
-        System.err.println("YAY1");
         TextView txt = (TextView) findViewById(R.id.mainToolbar_title);
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Pacifico.ttf");
         txt.setTypeface(font);
@@ -62,7 +59,6 @@ public class RestaurantListActivity extends AppCompatActivity {
 
 
     /* Load the restaurant list data */
-        System.err.println("YAY!");
         RestaurantInfoAdapter infoGetter = new RestaurantInfoAdapter(this);
         RecyclerView restaurantListRecycler = (RecyclerView) this.findViewById(R.id.RestaurantListRecycler);
         restaurantListRecycler.setHasFixedSize(true);
