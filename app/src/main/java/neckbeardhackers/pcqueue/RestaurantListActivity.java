@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+public class RestaurantListActivity extends AppCompatActivity {
 
 /*
  * Notes:

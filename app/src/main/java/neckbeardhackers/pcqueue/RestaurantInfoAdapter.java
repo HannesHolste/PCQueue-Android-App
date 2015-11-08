@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,17 +42,24 @@ public class RestaurantInfoAdapter extends RecyclerView.Adapter<RestaurantInfoAd
 
     public RestaurantInfoAdapter(Context c) {
         this.context = c;
-        this.restaurantList = new List<Restaurant>();
-    }
-
-    public RestaurantInfoAdapter(List<Restaurant> restaurants) {
-        this.restaurantList = restaurants;
+        this.restaurantList = new ArrayList<Restaurant>();
+        this.instantiateList();
     }
 
     public void instantiateList() {
-        if (restaurantList == null) {
-            restaurantList = Restaurant.getSampleData();
-        }
+            final RestaurantList l = new RestaurantList();
+            try {
+                l.updateRestaurantList(new RestaurantQuerySuccessHandler() {
+                    @Override
+                    public void handleRestaurantQuerySuccess() {
+                        super.handleRestaurantQuerySuccess();
+                        restaurantList = l.getRestaurants();
+                        notifyDataSetChanged();
+                    }
+                });
+            }
+            catch (Exception e) {
+            }
     }
 
     @Override
@@ -59,7 +67,6 @@ public class RestaurantInfoAdapter extends RecyclerView.Adapter<RestaurantInfoAd
         return this.restaurantList.size();
     }
 
-    @Override
     public RestaurantViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.restaurant_list_item,
                                                                     viewGroup, false);

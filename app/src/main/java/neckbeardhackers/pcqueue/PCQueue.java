@@ -12,10 +12,12 @@ public class PCQueue extends Application {
     public void onCreate() {
         super.onCreate();
 
+        initializeParse();
+    }
+
+    public void initializeParse() {
         // Enable Local Datastore and initialize Parse
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, PARSE_APP_ID, PARSE_CLIENT_KEY);
     }
-
-
 }
