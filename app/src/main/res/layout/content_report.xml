@@ -17,8 +17,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="25sp"
+        android:textStyle="bold"
         android:text="Report a waiting time"
-        android:id="@+id/textView"
+        android:id="@+id/reportWait"
         android:layout_gravity="center_horizontal"
         android:layout_weight=    "1"/>
 
@@ -27,7 +29,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Which restaurant?"
-        android:id="@+id/textView2"
+        android:id="@+id/ReportSelectRestaurant"
         android:layout_gravity="center_horizontal"
         android:layout_weight=    "1"/>
 

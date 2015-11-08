@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.graphics.Typeface;
+import android.widget.TextView;
 
 public class Report extends AppCompatActivity {
 
@@ -15,8 +17,13 @@ public class Report extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.reportToolbar);
         setSupportActionBar(toolbar);
+
+        TextView txt = (TextView) findViewById(R.id.reportWait);
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Pacifico.ttf");
+        txt.setTypeface(font);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
