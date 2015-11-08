@@ -6,6 +6,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
@@ -49,7 +51,8 @@ public class RestaurantList extends AppCompatActivity {
         });*/
 
         //Testing to see if it will close the default action bar
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if (this.getSupportActionBar() != null)
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         /*Making the title pretty :-)*/
         TextView txt = (TextView) findViewById(R.id.mainToolbar_title);
@@ -61,9 +64,10 @@ public class RestaurantList extends AppCompatActivity {
 
         /* Load the restaurant list data */
         RestaurantInfoAdapter infoGetter = new RestaurantInfoAdapter(this);
-        CardView restaurantListComponent = (CardView) this.findViewById(R.id.restaurantListView);
-        restaurantListComponent.setAdapter(infoGetter);
-
+        RecyclerView restaurantListRecycler = (RecyclerView) this.findViewById(R.id.RestaurantListRecycler);
+        restaurantListRecycler.setHasFixedSize(true);
+        restaurantListRecycler.setLayoutManager(new LinearLayoutManager(this));
+        restaurantListRecycler.setAdapter(infoGetter);
     }
 
 }
