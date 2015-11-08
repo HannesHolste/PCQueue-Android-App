@@ -2,10 +2,13 @@ package neckbeardhackers.pcqueue;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
@@ -17,12 +20,32 @@ import java.util.List;
  * the information retrieved by this adapter will be used as an individual chunk of information
  * for building a single item on the RestaurantListUI
  */
-public class RestaurantInfoAdapter extends BaseAdapter {
+public class RestaurantInfoAdapter extends RecyclerView.Adapter<RestaurantInfoAdapter.RestaurantViewHolder> {
+
+    public static class RestaurantViewHolder extends RecyclerView.ViewHolder {
+        CardView cardView;
+        TextView restaurantName;
+        TextView currentWait;
+        Button updateButton;
+
+        RestaurantViewHolder(View itemView) {
+            super(itemView);
+            cardView = (CardView)itemView.findViewById(R.id.restaurant_card);
+            restaurantName = (TextView) itemView.findViewById(R.id.restaurantName);
+            currentWait = (TextView) itemView.findViewById(R.id.restaurantWaitTime);
+            updateButton = (Button)itemView.findViewById(R.id.updateButton);
+        }
+    }
     private List<Restaurant> restaurantList;
     private Context context;
 
     public RestaurantInfoAdapter(Context c) {
         this.context = c;
+        this.restaurantList = new List<Restaurant>();
+    }
+
+    public RestaurantInfoAdapter(List<Restaurant> restaurants) {
+        this.restaurantList = restaurants;
     }
 
     public void instantiateList() {
@@ -32,34 +55,36 @@ public class RestaurantInfoAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-        this.instantiateList();
+    public int getItemCount() {
         return this.restaurantList.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        this.instantiateList();
-        return this.restaurantList.get(position);
+    public RestaurantViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.restaurant_list_item,
+                                                                    viewGroup, false);
+        return new RestaurantViewHolder(v);
     }
 
     @Override
-    public long getItemId(int position) {
-        return position;
+    public void onBindViewHolder(RestaurantViewHolder restaurantViewHolder, int i) {
+        restaurantViewHolder.restaurantName.setText(restaurantList.get(i).getRestaurantName());
+        restaurantViewHolder.currentWait.setText(restaurantList.get(i).getWaitTime());
+        restaurantViewHolder.updateButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO: GO TO UPDATE ACTIVITY
+            }
+
+        });
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.restaurant_list_item, parent, false);
-        }
-
-        TextView resName = (TextView) convertView.findViewById(R.id.restaurantName);
-        TextView waitTime = (TextView) convertView.findViewById(R.id.restaurantWaitTime);
-        resName.setText(this.restaurantList.get(position).getRestaurantName());
-        waitTime.setText(String.format("~%d Min.", this.restaurantList.get(position).getWaitTime().getCurrentWait()));
-
-        return convertView;
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
     }
+
+    }
+
 }
