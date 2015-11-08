@@ -50,7 +50,7 @@
                 android:background="@android:color/transparent"
                 android:text="Update Wait Time"
                 style="?android:attr/borderlessButtonStyle"
-                android:drawableLeft="@android:drawable/ic_menu_refresh"
+                android:drawableLeft="@android:drawable/ic_menu_recent_history"
                 android:textColor="#78A2D8"
                 >
 
