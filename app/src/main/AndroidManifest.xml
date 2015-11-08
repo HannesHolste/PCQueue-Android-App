@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme"
         android:name="neckbeardhackers.pcqueue.PCQueue">
         <activity
-            android:name=".RestaurantListActivity"
+            android:name="neckbeardhackers.pcqueue.RestaurantListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>

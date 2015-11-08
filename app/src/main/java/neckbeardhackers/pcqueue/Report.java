@@ -15,6 +15,7 @@ public class Report extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.err.println("SHOWING HERE");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
         Toolbar toolbar = (Toolbar) findViewById(R.id.reportToolbar);
