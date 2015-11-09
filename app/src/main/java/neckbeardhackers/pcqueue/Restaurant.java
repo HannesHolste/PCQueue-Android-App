@@ -2,13 +2,17 @@ package neckbeardhackers.pcqueue;
 
 import android.media.Image;
 import android.os.AsyncTask;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.io.Serializable;
+
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Enumeration;
@@ -19,7 +23,7 @@ import java.util.List;
  * Created by brandon on 10/25/15.
  * Meant to manage the data of a given restaurant
  */
-public class Restaurant implements Serializable {
+public class Restaurant {
     private String restaurantName;
     private String location;
     private String phoneNumber;
@@ -51,8 +55,7 @@ public class Restaurant implements Serializable {
         else {
             try {
                 this.hours = OperatingHours.fromParseObject(hoursParseObject);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
             }
         }
     }
@@ -134,8 +137,7 @@ class RestaurantList {
                 if (e == null) {
                     handleRestaurantQuerySuccess(objects);
                     successHandler.handleRestaurantQuerySuccess();
-                }
-                else
+                } else
                     failHandler.handleRestaurantQueryFail();
             }
         });
@@ -148,8 +150,7 @@ class RestaurantList {
                 }
                 Restaurant processedRestaurant = Restaurant.fromParseObject(retrievedRestaurant);
                 this.addRestaurant(processedRestaurant);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 continue;
             }
         }

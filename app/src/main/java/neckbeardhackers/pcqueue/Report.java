@@ -11,10 +11,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class Report extends AppCompatActivity {
 
-    private Restaurant restaurant;
+    private Restaurant restaurant = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,27 @@ public class Report extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.reportToolbar);
         setSupportActionBar(toolbar);
 
+        // back button
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
+        Intent intent = getIntent();
+
+        if (intent != null) {
+            // TODO use Parceable and serialize Restaurant object
+            this.restaurant = new Restaurant(intent.getStringExtra("restaurant"));
+        }
+
+        if (restaurant != null) {
+            TextView restaurantName = (TextView) findViewById(R.id.reporter_restaurantName);
+            restaurantName.setText(restaurant.getRestaurantName());
+        }
 
         // Setup wait time selector
         final Spinner spinner = (Spinner) findViewById(R.id.people_spinner);

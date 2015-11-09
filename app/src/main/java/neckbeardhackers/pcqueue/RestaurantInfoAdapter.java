@@ -2,6 +2,7 @@ package neckbeardhackers.pcqueue;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -67,6 +68,10 @@ public class RestaurantInfoAdapter extends RecyclerView.Adapter<RestaurantInfoAd
         return this.restaurantList.size();
     }
 
+    public List<Restaurant> getRestaurantList() {
+        return restaurantList;
+    }
+
     public RestaurantViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.restaurant_list_item,
                                                                     viewGroup, false);
@@ -74,14 +79,16 @@ public class RestaurantInfoAdapter extends RecyclerView.Adapter<RestaurantInfoAd
     }
 
     @Override
-    public void onBindViewHolder(RestaurantViewHolder restaurantViewHolder, int i) {
+    public void onBindViewHolder(RestaurantViewHolder restaurantViewHolder, final int i) {
         restaurantViewHolder.restaurantName.setText(restaurantList.get(i).getRestaurantName());
         //restaurantViewHolder.currentWait.setText(restaurantList.get(i).getWaitTime().getCurrentWait());
         restaurantViewHolder.updateButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                // TODO: GO TO UPDATE ACTIVITY
+                Intent intent = new Intent(v.getContext(), Report.class);
+                intent.putExtra("restaurant", restaurantList.get(i).getRestaurantName());
+                v.getContext().startActivity(intent);
             }
 
         });
