@@ -32,7 +32,6 @@ public class RestaurantListActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
-
     /* Load the restaurant list data */
         RestaurantInfoAdapter infoGetter = new RestaurantInfoAdapter(this);
         RecyclerView restaurantListRecycler = (RecyclerView) this.findViewById(R.id.RestaurantListRecycler);
