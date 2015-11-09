@@ -40,4 +40,5 @@
         android:id="@+id/RestaurantListRecycler" />
     </LinearLayout>
 
+
 </android.support.design.widget.CoordinatorLayout>

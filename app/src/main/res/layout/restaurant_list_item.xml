@@ -11,7 +11,7 @@
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        card_view:cardCornerRadius="4dp"
+        card_view:cardCornerRadius="7dp"
         card_view:cardUseCompatPadding="true"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
