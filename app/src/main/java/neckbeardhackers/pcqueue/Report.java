@@ -27,7 +27,7 @@ public class Report extends AppCompatActivity {
             }
         });
 
-        Spinner spinner = (Spinner) findViewById(R.id.restaurant_spinner);
+        Spinner spinner = (Spinner) findViewById(R.id.people_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.restaurants_array, android.R.layout.simple_spinner_item);
