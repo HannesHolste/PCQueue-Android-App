@@ -18,6 +18,7 @@ public class RestaurantListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         // This sets the focus on this class on a particular XML file
         setContentView(R.layout.activity_restaurant_list);
 

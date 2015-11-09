@@ -6,6 +6,12 @@
     android:layout_height="match_parent" android:fitsSystemWindows="true"
     tools:context="neckbeardhackers.pcqueue.RestaurantListActivity">
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+
     <android.support.design.widget.AppBarLayout android:layout_height="wrap_content"
         android:layout_width="match_parent" android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -28,10 +34,9 @@
 
     <!-- Container for cards -->
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <include layout="@layout/content_restaurant_list"/>
+        android:layout_height="match_parent"
+        android:id="@+id/RestaurantListRecycler" />
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
