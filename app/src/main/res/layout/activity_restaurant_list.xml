@@ -6,6 +6,13 @@
     android:layout_height="match_parent" android:fitsSystemWindows="true"
     tools:context="neckbeardhackers.pcqueue.RestaurantListActivity">
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#F0F0F0">
+
+    <!-- Application bar -->
     <android.support.design.widget.AppBarLayout android:layout_height="wrap_content"
         android:layout_width="match_parent" android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -13,31 +20,25 @@
             android:id="@+id/mainToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="#303740"
             app:popupTheme="@style/AppTheme.PopupOverlay">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Price Center Queue"
-                android:textSize="30dp"
-                android:textColor="#D6D5D7"
+                android:textSize="20dp"
+                android:textColor="#ffffff"
                 android:id="@+id/mainToolbar_title"/>
 
-
-
         </android.support.v7.widget.Toolbar>
-
     </android.support.design.widget.AppBarLayout>
 
-
+    <!-- Container for cards -->
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:id="@+id/RestaurantListRecycler" />
+    </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
 
 </android.support.design.widget.CoordinatorLayout>
