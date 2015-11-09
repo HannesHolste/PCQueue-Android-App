@@ -1,39 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:fitsSystemWindows="true"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context="neckbeardhackers.pcqueue.Report">
 
-    <android.support.design.widget.AppBarLayout android:layout_height="wrap_content"
-        android:layout_width="match_parent" android:theme="@style/AppTheme.AppBarOverlay">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/reportToolbar"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" >
-            <Button
-                android:layout_width="?attr/actionBarSize"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:background="@android:color/transparent"
-                android:drawableLeft="@android:drawable/ic_menu_revert"
-                style="?android:attr/borderlessButtonStyle"
-                />
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/reportToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay"></android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
             <TextView
+                android:id="@+id/reporter_restaurantName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Price Center Queue"
-                android:textColor="#D6D5D7"
-                android:textSize="30dp"
-                />
-        </android.support.v7.widget.Toolbar>
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="33dp"
+                android:text="Restaurant Name"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="35dp" />
 
-    </android.support.design.widget.AppBarLayout>
+            <TextView
+                android:id="@+id/peopleQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/reporter_restaurantName"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="44dp"
+                android:text="How many people are in line?"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <include layout="@layout/content_report" />
+            <Spinner
+                android:id="@+id/people_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/peopleQuestion"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="37dp"
+                android:spinnerMode="dialog" />
+
+            <Button
+                android:id="@+id/reporter_updateButton"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="81dp"
+                android:background="#5AC1F5"
+                android:drawableLeft="@android:drawable/ic_menu_recent_history"
+                android:text="Update Wait Time"
+                android:textColor="#FFFFFF" />
+
+        </RelativeLayout>
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
