@@ -7,8 +7,8 @@ package neckbeardhackers.pcqueue;
 public class WaitTime {
 
     public enum WaitTimeByGroup {
-        LOW("0 - 5 people", 0, 10), MEDIUM("5 - 10 people", 10, 20), HIGH("10 - 20 people", 20, 40),
-        VERY_HIGH("20+ people", 40, 100);
+        LOW("0 - 5 people", 0, 10), MEDIUM("5 - 10 people", 11, 20), HIGH("10 - 20 people", 21, 40),
+        VERY_HIGH("20+ people", 41, 100);
 
         String label;
         int clockTimeLow;
