@@ -74,7 +74,7 @@ public class WaitTime {
 
         // find the WaitTimeByGroup that corresponds to the given waitTimeInMinutes
         for (WaitTimeByGroup g : enums ) {
-            if (waitTimeInMinutes < g.getClockTimeHigh() && waitTimeInMinutes > g.getClockTimeLow()) {
+            if (waitTimeInMinutes <= g.getClockTimeHigh() && waitTimeInMinutes >= g.getClockTimeLow()) {
                 group = g;
                 break;
             }
