@@ -3,6 +3,7 @@ package neckbeardhackers.pcqueue;
 import android.media.Image;
 import android.os.AsyncTask;
 
+import java.io.Serializable;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -18,7 +19,7 @@ import java.util.List;
  * Created by brandon on 10/25/15.
  * Meant to manage the data of a given restaurant
  */
-public class Restaurant {
+public class Restaurant implements Serializable {
     private String restaurantName;
     private String location;
     private String phoneNumber;
@@ -41,7 +42,6 @@ public class Restaurant {
         this.location = o.getString(PARSE_LOCATION_KEY);
         this.phoneNumber = o.getString(PARSE_PHONE_KEY);
         this.wait = new WaitTime();
-        this.wait.setCurrentWait(5);
         this.setHours(o.getParseObject(PARSE_HOURS_KEY));
     }
 
@@ -74,19 +74,12 @@ public class Restaurant {
         return this.logo;
     }
 
-    public String getHoursString() {
-        if (this.hours == null)
-            return "Information not available";
-        DailyOperatingHours todaysHours = this.hours.getHoursForToday();
-        return String.format("%s-%s", todaysHours.getOpeningTime(), todaysHours.getCloseTime());
-    }
-
     public static List<Restaurant> getSampleData() {
         List<Restaurant> restaurantList = new ArrayList<Restaurant>();
 
         for (int i = 0; i < 20; ++i) {
             Restaurant r = new Restaurant(String.format("Restaurant %s", i));
-            r.getWaitTime().setCurrentWait(i);
+            r.getWaitTime().setCurrentWait(WaitTime.WaitTimeByGroup.LOW);
             restaurantList.add(r);
         }
 

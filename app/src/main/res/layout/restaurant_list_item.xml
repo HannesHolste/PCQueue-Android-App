@@ -67,7 +67,7 @@
                 android:background="@android:color/transparent"
                 android:text="Update Wait Time"
                 style="?android:attr/borderlessButtonStyle"
-                android:drawableLeft="@drawable/ic_sync"
+                android:drawableLeft="@drawable/ic_sync_blue"
                 android:textColor="#78A2D8"
                 android:layout_marginBottom="10dp"
                 >
