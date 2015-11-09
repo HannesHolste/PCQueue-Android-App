@@ -15,19 +15,8 @@ import android.widget.TextView;
 
 public class RestaurantListActivity extends AppCompatActivity {
 
-/*
- * Notes:
- *  R = a class containing the definitions for all resources of a particular
- *  application package. It is in the namespace of the application package. As in
- *  it is able to search through our app folder and reference things in any subdirectory
- *  and file
- *  */
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Parent class calling onCreate
         super.onCreate(savedInstanceState);
 
         // This sets the focus on this class on a particular XML file
@@ -37,25 +26,10 @@ public class RestaurantListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.mainToolbar);
         setSupportActionBar(toolbar);
 
-    /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-    fab.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-        }
-    });*/
 
         //Testing to see if it will close the default action bar
         if (this.getSupportActionBar() != null)
             getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-    /*Making the title pretty :-)*/
-        TextView txt = (TextView) findViewById(R.id.mainToolbar_title);
-        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Pacifico.ttf");
-        txt.setTypeface(font);
-
-
 
 
     /* Load the restaurant list data */

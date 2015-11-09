@@ -18,4 +18,6 @@ public class WaitTime {
     public void setCurrentWait(int wait) {
         this.currentWait = wait;
     }
+
+
 }
