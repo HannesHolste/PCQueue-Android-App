@@ -2,6 +2,7 @@ package neckbeardhackers.pcqueue;
 
 import android.media.Image;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  * Created by brandon on 10/25/15.
  * Meant to manage the data of a given restaurant
  */
-public class Restaurant {
+public class Restaurant implements Serializable {
     private String restaurantName;
     private WaitTime wait;
     private Image logo;
@@ -35,12 +36,14 @@ public class Restaurant {
         return this.logo;
     }
 
+
+
     public static List<Restaurant> getSampleData() {
         List<Restaurant> restaurantList = new ArrayList<Restaurant>();
 
         for (int i = 0; i < 20; ++i) {
             Restaurant r = new Restaurant(String.format("Restaurant %s", i));
-            r.getWaitTime().setCurrentWait(i);
+            r.getWaitTime().setCurrentWait(WaitTime.WaitTimeByGroup.LOW);
             restaurantList.add(r);
         }
 
