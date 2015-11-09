@@ -21,20 +21,6 @@ public class Report extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.reportToolbar);
         setSupportActionBar(toolbar);
 
-        TextView txt = (TextView) findViewById(R.id.reportWait);
-        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Pacifico.ttf");
-        txt.setTypeface(font);
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         Spinner spinner = (Spinner) findViewById(R.id.restaurant_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
