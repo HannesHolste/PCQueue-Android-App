@@ -1,35 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="100dp">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="200dp">
 
-    <ImageView
-        android:id="@+id/restaurantIconImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="10sp"
-        android:layout_centerVertical="true"
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/restaurant_card"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        card_view:cardCornerRadius="7dp"
+        card_view:cardUseCompatPadding="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        android:src="@mipmap/ic_launcher"/>
+            <TextView
+                android:id="@+id/restaurantName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="34sp"
+                android:text="Restaurant Name"
+                android:fontFamily="sans-serif-light"
+                android:layout_above="@+id/restaurantWaitTimeContainer"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="35dp"
+                android:layout_marginBottom="7dp"/>
 
-    <TextView
-        android:id="@+id/restaurantName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/restaurantIconImageView"
-        android:layout_centerVertical="true"
-        android:textSize="20sp"
-        android:text="Restaurant Name" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/restaurantWaitTimeContainer"
+                android:layout_centerVertical="true"
+                android:layout_alignStart="@+id/restaurantName"
+                >
+            <TextView
+                android:id="@+id/restaurantWaitTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                android:text="0 minute wait"
+                android:textSize="17sp"
+                android:textColor="#87D820"
+                 />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-    <TextView
-        android:id="@+id/restaurantWaitTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20sp"
-        android:text="Wait Time"
-        android:textSize="26sp"/>
+                android:text="– as of last report"
+                android:textSize="17sp"
+                android:textColor="#A0A0A0" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/updateButton"
+                android:layout_width="180dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/restaurantName"
+                android:background="@android:color/transparent"
+                android:text="Update Wait Time"
+                style="?android:attr/borderlessButtonStyle"
+                android:drawableLeft="@drawable/ic_sync"
+                android:textColor="#78A2D8"
+                android:layout_marginBottom="10dp"
+                >
+
+            </Button>
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
 
 
-</RelativeLayout>
+</LinearLayout>

@@ -11,8 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class Report extends AppCompatActivity {
 
@@ -25,28 +23,6 @@ public class Report extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.reportToolbar);
         setSupportActionBar(toolbar);
 
-        // Receive intent information containing current restaurant information
-        Intent intent = getIntent();
-
-        // Set restaurant to the deserialized restaurant gotten from the Intent data
-        if (intent != null) {
-            this.restaurant =  (Restaurant) intent.getSerializableExtra("restaurant");
-        }
-
-        // Set restaurant text label name
-        if (restaurant != null) {
-            TextView restaurantNameView = (TextView) findViewById(R.id.reporter_restaurantName);
-            restaurantNameView.setText(restaurant.getRestaurantName());
-        }
-
-        // Show back button. On click, finish() activity
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         // Setup wait time selector
         final Spinner spinner = (Spinner) findViewById(R.id.people_spinner);

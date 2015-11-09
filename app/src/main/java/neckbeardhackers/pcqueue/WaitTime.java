@@ -95,4 +95,6 @@ public class WaitTime {
     public String toString() {
         return currentWait.getLabel();
     }
+
+
 }
