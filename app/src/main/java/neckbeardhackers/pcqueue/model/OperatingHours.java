@@ -35,7 +35,10 @@ public final class OperatingHours {
         throw new Exception("Needs implementation");
         // TODO:
         // Find current day. Lookup day in weeklyHours to find corresponding DailyOperatingHours
-        // Call its isOpenNow() method and return the result
+        // if weeklyHours.get(day) returns null, that means the restaurant is closed on that day.
+        // simply return false. Else:
+        // Call its isOpenNow() method and return that result
+
     }
 }
 
@@ -74,7 +77,7 @@ final class OperatingHoursFactory {
         // TODO
 
         // store
-        weeklyHours.put(dayName, new DailyOperatingHours(openTime, closeTime));
+        weeklyHours.put(dayName, new DailyOperatingHours(dayName, openTime, closeTime));
         return this;
     }
 
@@ -85,10 +88,18 @@ final class OperatingHoursFactory {
 }
 
 final class DailyOperatingHours {
+    private final String day;
     private final String openTime;
     private final String closeTime;
 
-    public DailyOperatingHours(String openTime, String closeTime) {
+    /**
+     *
+     * @param day Day of week as a string, e.g. "Monday"
+     * @param openTime open time as a string
+     * @param closeTime open time as a string
+     */
+    public DailyOperatingHours(String day, String openTime, String closeTime) {
+        this.day = day;
         this.openTime = openTime;
         this.closeTime = closeTime;
     }
@@ -101,17 +112,24 @@ final class DailyOperatingHours {
         return this.closeTime;
     }
 
+    public String getDayString() {
+        return day;
+    }
+
     public boolean isOpenNow() throws Exception {
         // TODO
-        // Interpret String open time and close time
+        // Interpret String openTime and closeTime
+        // if openTime == closeTime, then the restaurant is open 24 hours this day.
+        // Simply return true.
         // Get current system time
-        // check if system time is in the interval (open, close)
+        // check if system time is in the interval (openTime, closeTime)
+
         throw new Exception("Needs implementation");
     }
 
     @Override
     public String toString() {
         // TODO pre-process openTime and closeTime to standardize the date format
-        return openTime + " - " + closeTime;
+        return day + ":" + openTime + " - " + closeTime;
     }
 }

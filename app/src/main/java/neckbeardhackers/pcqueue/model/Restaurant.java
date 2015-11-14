@@ -62,12 +62,16 @@ public class Restaurant extends ParseObject {
         OperatingHoursFactory factory = OperatingHoursFactory.create();
         for (int i = 0; i < days.length(); i++) {
             try {
-                JSONObject day = days.getJSONObject(i);
-                JSONObject timespanContainer = day.getJSONObject(OperatingHours.DAY_NAMES[i]);
-                String startTime = timespanContainer.getString("open");
-                String endTime = timespanContainer.getString("close");
-                factory.day(OperatingHours.DAY_NAMES[i], startTime, endTime);
+                // ensure  the Restaurant has opening hours defined
+                // if not, it means the Restaurant is closed on this day
+                if (!days.isNull(i)) {
+                    JSONObject day = days.getJSONObject(i);
 
+                    JSONObject timespanContainer = day.getJSONObject(OperatingHours.DAY_NAMES[i]);
+                    String startTime = timespanContainer.getString("open");
+                    String endTime = timespanContainer.getString("close");
+                    factory.day(OperatingHours.DAY_NAMES[i], startTime, endTime);
+                }
             } catch (JSONException e) {
                 System.err.println("Possibly malformed parse cloud database entry for operating hours" +
                         " for restaurant " + this);
