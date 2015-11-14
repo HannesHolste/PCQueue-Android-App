@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import neckbeardhackers.pcqueue.R;
 import neckbeardhackers.pcqueue.model.Restaurant;
-import neckbeardhackers.pcqueue.model.WaitTime;
+import neckbeardhackers.pcqueue.model.WaitTimeGroup;
 
 public class ReporterActivity extends AppCompatActivity {
 
@@ -51,7 +51,7 @@ public class ReporterActivity extends AppCompatActivity {
 
         final WaitTimeSpinnerAdapter adapter = new WaitTimeSpinnerAdapter(this,
                 R.layout.spinner_item,
-                WaitTime.WaitTimeByGroup.getWaitTimes());
+                WaitTimeGroup.WAIT_TIME_GROUPS.getWaitTimes());
         spinner.setAdapter(adapter);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
@@ -63,7 +63,7 @@ public class ReporterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // finish activity and submit report. Show toast in main UI.
                 // TODO Submit Report to Parse (asynchronously!!)
-                WaitTime selectedWaitTime = (WaitTime) spinner.getSelectedItem();
+                WaitTimeGroup selectedWaitTimeGroup = (WaitTimeGroup) spinner.getSelectedItem();
                 finish();
             }
         });

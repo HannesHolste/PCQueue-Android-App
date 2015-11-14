@@ -1,19 +1,12 @@
 package neckbeardhackers.pcqueue.model;
 
-import android.media.Image;
-
-import com.parse.FindCallback;
 import com.parse.ParseClassName;
-import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents an Restaurant objects with its attributes.
@@ -44,9 +37,8 @@ public class Restaurant extends ParseObject {
         return getString("Phone");
     }
 
-    public WaitTime getWait() {
-        // TODO
-        return null;
+    public WaitTimeGroup getWaitTimeGroup() {
+        return new WaitTimeGroup(getWaitInMinutes());
     }
 
     public int getWaitInMinutes() {
@@ -87,7 +79,7 @@ public class Restaurant extends ParseObject {
 
     @Override
     public String toString() {
-        return "Restaurant{id: " + getObjectId() + ", name: " + getName() + "}";
+        return "Restaurant {id: " + getObjectId() + ", name: " + getName() + "}";
     }
 
     /**
