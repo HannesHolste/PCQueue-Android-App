@@ -8,6 +8,10 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +21,6 @@ import java.util.List;
  */
 @ParseClassName("Restaurant")
 public class Restaurant extends ParseObject {
-
     public String getName() {
         // These property names correspond with the Restaurant collection in Parse cloud
         return getString("Name");
@@ -50,11 +53,41 @@ public class Restaurant extends ParseObject {
         return getInt("CurrentWait");
     }
 
-    // TODO: Hours and WaitTime
-
+    /**
+     * Create and serialize an OperatingHours wrapper object from the raw JSON array in
+     * Parse cloud, which follows the JSON object format:
+     * <p>
+     * [{"Monday": {"open": "9am", "close": "12am"}}, {"Tuesday": {"open": "11am", "close": "1pm"}},
+     * ...until Sunday...]
+     * </p>
+     * For now, we do not want to cache this in a private class field because the Parse cloud
+     * database value for operatingHours may change on the server side.
+     *
+     * @return OperatingHours object wrapper.
+     */
     public OperatingHours getHours() {
-        // TODO
-        return null;
+        JSONArray days = getJSONArray("operatingHours");
+        OperatingHoursFactory factory = OperatingHoursFactory.create();
+        for (int i = 0; i < days.length(); i++) {
+            try {
+                JSONObject day = days.getJSONObject(i);
+                JSONObject timespanContainer = day.getJSONObject(OperatingHours.DAY_NAMES[i]);
+                String startTime = timespanContainer.getString("open");
+                String endTime = timespanContainer.getString("close");
+                factory.day(OperatingHours.DAY_NAMES[i], startTime, endTime);
+
+            } catch (JSONException e) {
+                System.err.println("Possibly malformed parse cloud database entry for operating hours" +
+                        " for restaurant " + this);
+                e.printStackTrace();
+            }
+        }
+        return factory.build();
+    }
+
+    @Override
+    public String toString() {
+        return "Restaurant{id: " + getObjectId() + ", name: " + getName() + "}";
     }
 
     /**

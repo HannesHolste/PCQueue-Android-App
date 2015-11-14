@@ -67,14 +67,14 @@ public class RestaurantInfoAdapter extends RecyclerView.Adapter<RestaurantInfoAd
 
     @Override
     public void onBindViewHolder(RestaurantViewHolder restaurantViewHolder, final int i) {
-        restaurantViewHolder.restaurantName.setText(restaurantList.get(i).getRestaurantName());
+        restaurantViewHolder.restaurantName.setText(restaurantList.get(i).getName());
         //restaurantViewHolder.currentWait.setText(restaurantList.get(i).getWaitTime().getCurrentWait());
         restaurantViewHolder.updateButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ReporterActivity.class);
-                intent.putExtra("restaurant", restaurantList.get(i).getRestaurantName());
+                intent.putExtra("restaurant", restaurantList.get(i).getName());
                 v.getContext().startActivity(intent);
             }
 

@@ -38,12 +38,12 @@ public class ReporterActivity extends AppCompatActivity {
 
         if (intent != null) {
             // TODO use Parceable and serialize Restaurant object
-            this.restaurant = new Restaurant(intent.getStringExtra("restaurant"));
+            //this.restaurant = new Restaurant(intent.getStringExtra("restaurant"));
         }
 
         if (restaurant != null) {
             TextView restaurantName = (TextView) findViewById(R.id.reporter_restaurantName);
-            restaurantName.setText(restaurant.getRestaurantName());
+            restaurantName.setText(restaurant.getName());
         }
 
         // Setup wait time selector

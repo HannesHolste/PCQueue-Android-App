@@ -8,94 +8,110 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 /**
- * Created by brandon on 11/1/15.
+ * Immutable class OperatingHours
  */
-public class OperatingHours {
-    private Dictionary<String, DailyOperatingHours> weeklyHours;
+public final class OperatingHours {
+    private final Dictionary<String, DailyOperatingHours> weeklyHours;
 
-    private static final String PARSE_KEY = "OperatingHours";
-    private static final String[] DAY_KEYS = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
-            "Friday", "Saturday"};
+    /**
+     * Global constant, days of the week starting at Monday = index 0.
+     */
+    public static final String[] DAY_NAMES = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
 
-    public OperatingHours() {
-        this.weeklyHours = new Hashtable<String, DailyOperatingHours>();
+    public OperatingHours(Dictionary<String, DailyOperatingHours> weeklyHours) {
+        this.weeklyHours = weeklyHours;
     }
 
-    private OperatingHours(ParseObject o) {
-        this.weeklyHours = new Hashtable<String, DailyOperatingHours>();
-        for (String dayKey : DAY_KEYS) {
-            this.weeklyHours.put(dayKey, new DailyOperatingHours(o.getString(dayKey)));
-        }
+    public Dictionary<String, DailyOperatingHours> getOperatingHours() {
+        return weeklyHours;
     }
 
-    public static OperatingHours fromParseObject(ParseObject o) throws Exception {
-        if (!o.getClassName().equals(PARSE_KEY))
-            throw new Exception("Cannot create OperatingHours from non-OperatingHours Parse Object");
-
-        return new OperatingHours(o);
+    public DailyOperatingHours getOperatingHours(String day) {
+        return weeklyHours.get(day);
     }
 
-    private DailyOperatingHours getHoursForDay(String day) {
-        return this.weeklyHours.get(day);
-    }
-
-    public DailyOperatingHours getHoursForToday() {
-        Calendar c = Calendar.getInstance();
-        c.setTime(new Date());
-        return getHoursForDay(DAY_KEYS[c.get(Calendar.DAY_OF_WEEK) - 1]);
+    public boolean isOpenNow() throws Exception {
+        // TODO
+        throw new Exception("Needs implementation");
+        // TODO:
+        // Find current day. Lookup day in weeklyHours to find corresponding DailyOperatingHours
+        // Call its isOpenNow() method and return the result
     }
 }
 
-class DailyOperatingHours {
-    private boolean open;
-    private String openTime;
-    private String closeTime;
+/**
+ * Factory pattern.
+ * Creates immutable class OperatingHours
+ */
+final class OperatingHoursFactory {
+    Dictionary<String, DailyOperatingHours> weeklyHours = new Hashtable<>();
 
-    private static final String CLOSED_KEY = "CLOSED";
+    /**
+     * Private constructor to prevent outside instantiation.
+     */
+    private OperatingHoursFactory() {
+    }
+
+    public static OperatingHoursFactory create() {
+        return new OperatingHoursFactory();
+    }
+
+    public OperatingHoursFactory day(String dayName, String openTime, String closeTime) {
+        boolean hasValidDayName = false;
+        // check validity of day name
+        for (String validDayName : OperatingHours.DAY_NAMES) {
+            if (dayName.equalsIgnoreCase(validDayName)) {
+                hasValidDayName = true;
+                break;
+            }
+        }
+
+        if (!hasValidDayName) {
+            throw new IllegalArgumentException("Trying to construct OperatingHours with invalid day name: " + dayName);
+        }
+
+        // check validity of start and end time
+        // TODO
+
+        // store
+        weeklyHours.put(dayName, new DailyOperatingHours(openTime, closeTime));
+        return this;
+    }
+
+    public OperatingHours build() {
+        return new OperatingHours(weeklyHours);
+    }
+
+}
+
+final class DailyOperatingHours {
+    private final String openTime;
+    private final String closeTime;
 
     public DailyOperatingHours(String openTime, String closeTime) {
-        this.open = true;
         this.openTime = openTime;
         this.closeTime = closeTime;
     }
 
-    public DailyOperatingHours(String jointTimes) {
-        if (jointTimes.equals(CLOSED_KEY)) {
-            this.open = false;
-        }
-        else {
-            this.open = true;
-            String[] splitTimes = jointTimes.split("-");
-            this.openTime = getStandardizedTimeString(splitTimes[0]);
-            this.closeTime = getStandardizedTimeString(splitTimes[1]);
-        }
-    }
-
-    public String getOpeningTime() {
+    public String getOpeningTimeString() {
         return this.openTime;
     }
 
-    public String getCloseTime() {
+    public String getCloseTimeString() {
         return this.closeTime;
     }
 
-    private String getStandardizedTimeString(String timeString) {
-        if (!timeString.contains(":")) {
-            timeString += ":00";
-        }
+    public boolean isOpenNow() throws Exception {
+        // TODO
+        // Interpret String open time and close time
+        // Get current system time
+        // check if system time is in the interval (open, close)
+        throw new Exception("Needs implementation");
+    }
 
-        String[] sectionedTimeString = timeString.split(":");
-        int hourChunk = Integer.parseInt(sectionedTimeString[0]);
-        if (hourChunk > 12) {
-            hourChunk -= 12;
-            sectionedTimeString[1] += " PM";
-        }
-        else {
-            if (hourChunk == 0)
-                hourChunk = 12;
-            sectionedTimeString[1] += " AM";
-        }
-
-        return String.format("%s:%s", Integer.toString(hourChunk), sectionedTimeString[1]);
+    @Override
+    public String toString() {
+        // TODO pre-process openTime and closeTime to standardize the date format
+        return openTime + " - " + closeTime;
     }
 }
