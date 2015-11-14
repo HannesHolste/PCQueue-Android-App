@@ -1,9 +1,5 @@
 package neckbeardhackers.pcqueue.model;
 
-import com.parse.ParseObject;
-
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -11,14 +7,14 @@ import java.util.Hashtable;
  * Immutable class OperatingHours
  */
 public final class OperatingHours {
-    private final Dictionary<String, DailyOperatingHours> weeklyHours;
+    private final Hashtable<String, DailyOperatingHours> weeklyHours;
 
     /**
      * Global constant, days of the week starting at Monday = index 0.
      */
     public static final String[] DAY_NAMES = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
 
-    public OperatingHours(Dictionary<String, DailyOperatingHours> weeklyHours) {
+    public OperatingHours(Hashtable<String, DailyOperatingHours> weeklyHours) {
         this.weeklyHours = weeklyHours;
     }
 
@@ -34,11 +30,21 @@ public final class OperatingHours {
         // TODO
         throw new Exception("Needs implementation");
         // TODO:
-        // Find current day. Lookup day in weeklyHours to find corresponding DailyOperatingHours
-        // if weeklyHours.get(day) returns null, that means the restaurant is closed on that day.
+        // Find current dayName. Lookup dayName in weeklyHours to find corresponding DailyOperatingHours
+        // if weeklyHours.get(dayName) returns null, that means the restaurant is closed on that dayName.
         // simply return false. Else:
         // Call its isOpenNow() method and return that result
+    }
 
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append("Hours: ");
+        for (DailyOperatingHours d : weeklyHours.values()) {
+            s.append(d);
+            s.append("\n");
+        }
+
+        return s.toString();
     }
 }
 
@@ -47,7 +53,7 @@ public final class OperatingHours {
  * Creates immutable class OperatingHours
  */
 final class OperatingHoursFactory {
-    Dictionary<String, DailyOperatingHours> weeklyHours = new Hashtable<>();
+    Hashtable<String, DailyOperatingHours> weeklyHours = new Hashtable<>();
 
     /**
      * Private constructor to prevent outside instantiation.
@@ -61,7 +67,7 @@ final class OperatingHoursFactory {
 
     public OperatingHoursFactory day(String dayName, String openTime, String closeTime) {
         boolean hasValidDayName = false;
-        // check validity of day name
+        // check validity of dayName name
         for (String validDayName : OperatingHours.DAY_NAMES) {
             if (dayName.equalsIgnoreCase(validDayName)) {
                 hasValidDayName = true;
@@ -70,7 +76,7 @@ final class OperatingHoursFactory {
         }
 
         if (!hasValidDayName) {
-            throw new IllegalArgumentException("Trying to construct OperatingHours with invalid day name: " + dayName);
+            throw new IllegalArgumentException("Trying to construct OperatingHours with invalid dayName name: " + dayName);
         }
 
         // check validity of start and end time
@@ -88,7 +94,7 @@ final class OperatingHoursFactory {
 }
 
 final class DailyOperatingHours {
-    private final String day;
+    private final String dayName;
     private final String openTime;
     private final String closeTime;
 
@@ -99,7 +105,7 @@ final class DailyOperatingHours {
      * @param closeTime open time as a string
      */
     public DailyOperatingHours(String day, String openTime, String closeTime) {
-        this.day = day;
+        this.dayName = day;
         this.openTime = openTime;
         this.closeTime = closeTime;
     }
@@ -113,13 +119,13 @@ final class DailyOperatingHours {
     }
 
     public String getDayString() {
-        return day;
+        return dayName;
     }
 
     public boolean isOpenNow() throws Exception {
         // TODO
         // Interpret String openTime and closeTime
-        // if openTime == closeTime, then the restaurant is open 24 hours this day.
+        // if openTime == closeTime, then the restaurant is open 24 hours this dayName.
         // Simply return true.
         // Get current system time
         // check if system time is in the interval (openTime, closeTime)
@@ -130,6 +136,6 @@ final class DailyOperatingHours {
     @Override
     public String toString() {
         // TODO pre-process openTime and closeTime to standardize the date format
-        return day + ":" + openTime + " - " + closeTime;
+        return dayName + ":" + openTime + " - " + closeTime;
     }
 }
