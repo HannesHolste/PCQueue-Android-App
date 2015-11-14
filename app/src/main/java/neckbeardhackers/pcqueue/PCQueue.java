@@ -6,6 +6,8 @@ import com.parse.ParseACL;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import neckbeardhackers.pcqueue.model.Restaurant;
+
 /**
  * Main entry point for the application
  */
@@ -26,6 +28,10 @@ public class PCQueue extends Application {
 
         // Enable storing data locally first. We'll take care of syncing it.
         Parse.enableLocalDatastore(getApplicationContext());
+
+        // Register Parse Object subclasses that we use to represent our data model
+        // and that are kept in sync with Parse
+        ParseObject.registerSubclass(Restaurant.class);
 
         // Initialize Parse client with authentication information
         Parse.initialize(this, PARSE_APP_ID, PARSE_CLIENT_KEY);

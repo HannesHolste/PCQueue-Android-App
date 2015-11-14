@@ -3,6 +3,7 @@ package neckbeardhackers.pcqueue.model;
 import android.media.Image;
 
 import com.parse.FindCallback;
+import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -11,79 +12,58 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by brandon on 10/25/15.
- * Meant to manage the data of a given restaurant
+ * Represents an Restaurant objects with its attributes.
+ * Extends ParseObject to give it querying capabilities.
  */
-public class Restaurant {
-    private String restaurantName;
-    private String location;
-    private String phoneNumber;
-    private OperatingHours hours;
-    private WaitTime wait;
-    private Image logo;
+@ParseClassName("Restaurant")
+public class Restaurant extends ParseObject {
 
-    public static final String PARSE_CLASS = "Restaurant";
-    private static final String PARSE_NAME_KEY = "Name";
-    private static final String PARSE_LOCATION_KEY = "Location";
-    private static final String PARSE_PHONE_KEY = "Phone";
-    private static final String PARSE_HOURS_KEY = "Hours";
-
-    public Restaurant(String name) {
-        this.restaurantName = name;
+    public String getName() {
+        // These property names correspond with the Restaurant collection in Parse cloud
+        return getString("Name");
     }
 
-    private Restaurant(ParseObject o) {
-        this.restaurantName = o.getString(PARSE_NAME_KEY);
-        this.location = o.getString(PARSE_LOCATION_KEY);
-        this.phoneNumber = o.getString(PARSE_PHONE_KEY);
-        this.wait = new WaitTime();
-        this.setHours(o.getParseObject(PARSE_HOURS_KEY));
+    /**
+     * Returns Parse ID for this object
+     *
+     * @return String containing Parse ID for this object
+     */
+    public String getId() {
+        return getObjectId();
     }
 
-    private void setHours(ParseObject hoursParseObject) {
-        if (hoursParseObject == null)
-            this.hours = null;
-        else {
-            try {
-                this.hours = OperatingHours.fromParseObject(hoursParseObject);
-            } catch (Exception e) {
-            }
-        }
+    public String getLocation() {
+        // return location from Parse document for this Restaurant object
+        return getString("Location");
     }
 
-    public String getRestaurantName() {
-        return this.restaurantName;
+    public String getPhoneNumber() {
+        return getString("Phone");
     }
 
-    public WaitTime getWaitTime() {
-        return this.wait;
+    public WaitTime getWait() {
+        // TODO
+        return null;
     }
 
-    public void setLogo(Image logo) {
-        this.logo = logo;
+    public int getWaitInMinutes() {
+        return getInt("CurrentWait");
     }
 
+    // TODO: Hours and WaitTime
 
-    public Image getLogo() {
-        return this.logo;
+    public OperatingHours getHours() {
+        // TODO
+        return null;
     }
 
-    public static List<Restaurant> getSampleData() {
-        List<Restaurant> restaurantList = new ArrayList<Restaurant>();
-
-        for (int i = 0; i < 20; ++i) {
-            Restaurant r = new Restaurant(String.format("Restaurant %s", i));
-            r.getWaitTime().setCurrentWait(WaitTime.WaitTimeByGroup.LOW);
-            restaurantList.add(r);
-        }
-
-        return restaurantList;
+    /**
+     * Creates a new Parse query for the given Restaurant subclass type.
+     *
+     * @return A new ParseQuery
+     */
+    public static ParseQuery<Restaurant> getQuery() {
+        return ParseQuery.getQuery(Restaurant.class);
     }
 
-    public static Restaurant fromParseObject(ParseObject o) throws Exception {
-        if (!o.getClassName().equals(Restaurant.PARSE_CLASS))
-            throw new Exception("Provided ParseObject is not of Restaurant Class");
-
-        return new Restaurant(o);
-    }
 }
