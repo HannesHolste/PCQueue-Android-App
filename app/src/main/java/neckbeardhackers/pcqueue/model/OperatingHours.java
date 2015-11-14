@@ -1,4 +1,4 @@
-package neckbeardhackers.pcqueue;
+package neckbeardhackers.pcqueue.model;
 
 import com.parse.ParseObject;
 

@@ -1,4 +1,4 @@
-package neckbeardhackers.pcqueue;
+package neckbeardhackers.pcqueue.model;
 
 /**
  * Created by brandon on 10/25/15.

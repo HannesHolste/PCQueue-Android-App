@@ -1,6 +1,5 @@
-package neckbeardhackers.pcqueue;
+package neckbeardhackers.pcqueue.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
@@ -8,12 +7,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import neckbeardhackers.pcqueue.R;
+import neckbeardhackers.pcqueue.model.Restaurant;
+import neckbeardhackers.pcqueue.model.RestaurantList;
 
 /**
  * Created by brandon on 10/25/15.
@@ -44,24 +46,9 @@ public class RestaurantInfoAdapter extends RecyclerView.Adapter<RestaurantInfoAd
     public RestaurantInfoAdapter(Context c) {
         this.context = c;
         this.restaurantList = new ArrayList<Restaurant>();
-        this.instantiateList();
     }
 
-    public void instantiateList() {
-            final RestaurantList l = new RestaurantList();
-            try {
-                l.updateRestaurantList(new RestaurantQuerySuccessHandler() {
-                    @Override
-                    public void handleRestaurantQuerySuccess() {
-                        super.handleRestaurantQuerySuccess();
-                        restaurantList = l.getRestaurants();
-                        notifyDataSetChanged();
-                    }
-                });
-            }
-            catch (Exception e) {
-            }
-    }
+
 
     @Override
     public int getItemCount() {
@@ -86,7 +73,7 @@ public class RestaurantInfoAdapter extends RecyclerView.Adapter<RestaurantInfoAd
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Report.class);
+                Intent intent = new Intent(v.getContext(), ReporterActivity.class);
                 intent.putExtra("restaurant", restaurantList.get(i).getRestaurantName());
                 v.getContext().startActivity(intent);
             }
