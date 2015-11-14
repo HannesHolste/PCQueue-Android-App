@@ -15,7 +15,6 @@ import java.util.List;
 
 import neckbeardhackers.pcqueue.R;
 import neckbeardhackers.pcqueue.model.Restaurant;
-import neckbeardhackers.pcqueue.model.RestaurantList;
 
 /**
  * Created by brandon on 10/25/15.
@@ -24,7 +23,7 @@ import neckbeardhackers.pcqueue.model.RestaurantList;
  * the information retrieved by this adapter will be used as an individual chunk of information
  * for building a single item on the RestaurantListUI
  */
-public class RestaurantInfoAdapter extends RecyclerView.Adapter<RestaurantInfoAdapter.RestaurantViewHolder> {
+public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.RestaurantViewHolder> {
 
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
@@ -43,7 +42,7 @@ public class RestaurantInfoAdapter extends RecyclerView.Adapter<RestaurantInfoAd
     private List<Restaurant> restaurantList;
     private Context context;
 
-    public RestaurantInfoAdapter(Context c) {
+    public RestaurantListAdapter(Context c) {
         this.context = c;
         this.restaurantList = new ArrayList<Restaurant>();
     }

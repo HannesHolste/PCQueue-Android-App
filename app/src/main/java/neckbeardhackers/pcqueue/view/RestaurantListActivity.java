@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import neckbeardhackers.pcqueue.R;
-import neckbeardhackers.pcqueue.view.RestaurantInfoAdapter;
 
 public class RestaurantListActivity extends AppCompatActivity {
 
@@ -29,7 +28,7 @@ public class RestaurantListActivity extends AppCompatActivity {
 
 
     /* Load the restaurant list data */
-        RestaurantInfoAdapter infoGetter = new RestaurantInfoAdapter(this);
+        RestaurantListAdapter infoGetter = new RestaurantListAdapter(this);
         RecyclerView restaurantListRecycler = (RecyclerView) this.findViewById(R.id.RestaurantListRecycler);
         restaurantListRecycler.setHasFixedSize(true);
         restaurantListRecycler.setLayoutManager(new LinearLayoutManager(this));
