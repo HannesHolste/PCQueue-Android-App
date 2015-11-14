@@ -26,6 +26,6 @@ public class RestaurantList {
         return this.restaurants;
     }
 
-  
+
 
 }
