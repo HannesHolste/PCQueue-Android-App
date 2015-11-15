@@ -4,6 +4,7 @@ import android.app.Application;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -39,6 +40,8 @@ public class PCQueue extends Application {
 
         // Initialize Parse client with authentication information
         Parse.initialize(this, PARSE_APP_ID, PARSE_CLIENT_KEY);
+        // Register client with Parse (for push notificatons)
+        ParseInstallation.getCurrentInstallation().saveInBackground();
 
         // Enable anonymous users, so we can save data to the local data store without logging in
         // We shall never log them out and anonymoous users can sync with Parse cloud
