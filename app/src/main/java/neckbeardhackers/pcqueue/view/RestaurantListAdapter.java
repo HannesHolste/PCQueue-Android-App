@@ -10,21 +10,32 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import ameron32.ParseRecyclerQueryAdapter;
 import neckbeardhackers.pcqueue.R;
 import neckbeardhackers.pcqueue.model.Restaurant;
 
 /**
- * Created by brandon on 10/25/15.
  *
  * This adapter is meant to turn information about a Restaurant into a listview item. That is,
  * the information retrieved by this adapter will be used as an individual chunk of information
  * for building a single item on the RestaurantListUI
  */
-public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.RestaurantViewHolder> {
+public class RestaurantListAdapter extends ParseRecyclerQueryAdapter<Restaurant, RestaurantListAdapter.RestaurantViewHolder> {
 
+    private RestaurantViewHolder restaurantViewHolder;
+
+    /**
+     * ViewHolder representing a restaurant card in our UI,
+     * based on the restaurant card layout XML,
+     * as required by RecyclerView in android.
+     */
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         TextView restaurantName;
@@ -39,50 +50,72 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
             updateButton = (Button)itemView.findViewById(R.id.updateButton);
         }
     }
-    private List<Restaurant> restaurantList;
     private Context context;
 
-    public RestaurantListAdapter(Context c) {
-        this.context = c;
-        this.restaurantList = new ArrayList<Restaurant>();
+    public RestaurantListAdapter(ParseQueryAdapter.QueryFactory<Restaurant> factory, boolean hasStableIds) {
+        super(factory, hasStableIds);
     }
 
+    public RestaurantListAdapter(Context c) {
+        // Create query Factory and setup superclass
+        super(new ParseQueryAdapter.QueryFactory<Restaurant>() {
+            public ParseQuery<Restaurant> create() {
+                // Configure a custom Parse query to retrieve restaurants sorted alphabetically
+                ParseQuery<Restaurant> query = Restaurant.getQuery();
+                query.fromLocalDatastore();
 
+                // sort alphabetically by restaurant name
+                query.orderByAscending("Name");
+                return query;
+            }
+        }, false);
+
+        this.context = c;
+    }
+
+    // TODO: Re-sort/sort restaurant methods
 
     @Override
     public int getItemCount() {
-        return this.restaurantList.size();
+        return super.getItemCount();
     }
 
-    public List<Restaurant> getRestaurantList() {
-        return restaurantList;
-    }
-
+    /**
+     * Required method for RecyclerView. Upon creation, inflate the appropriate
+     * Layout XML view and instantiate a RestaurantViewHolder.
+     * @param viewGroup
+     * @param i
+     * @return
+     */
     public RestaurantViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.restaurant_list_item,
                                                                     viewGroup, false);
-        return new RestaurantViewHolder(v);
+        this.restaurantViewHolder = new RestaurantViewHolder(v);
+        return restaurantViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(RestaurantViewHolder restaurantViewHolder, final int i) {
-        restaurantViewHolder.restaurantName.setText(restaurantList.get(i).getName());
+
+    /**
+     * Called by RecyclerView to display the data at the specified position.
+     */
+    public void onBindViewHolder(RestaurantViewHolder holder, int position) {
+        final Restaurant restaurant = getItem(position);
+
+        restaurantViewHolder.restaurantName.setText(restaurant.getName());
         //restaurantViewHolder.currentWait.setText(restaurantList.get(i).getWaitTime().getCurrentWait());
         restaurantViewHolder.updateButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ReporterActivity.class);
-                intent.putExtra("restaurant", restaurantList.get(i).getName());
+                intent.putExtra("restaurantId", restaurant.getId());
                 v.getContext().startActivity(intent);
             }
 
         });
-    }
 
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
+
     }
 
 }

@@ -9,6 +9,13 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.List;
+
 import neckbeardhackers.pcqueue.R;
 import neckbeardhackers.pcqueue.model.Restaurant;
 import neckbeardhackers.pcqueue.model.WaitTimeGroup;
@@ -36,9 +43,28 @@ public class ReporterActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        // If we instantaited this ReporterActivity with an intent, unpack the restaurant
         if (intent != null) {
-            // TODO use Parceable and serialize Restaurant object
-            //this.restaurant = new Restaurant(intent.getStringExtra("restaurant"));
+            String restaurantId = intent.getStringExtra("restaurantId");
+
+            ParseQuery<Restaurant> query = Restaurant.getQuery();
+            query.fromLocalDatastore();
+            query.whereEqualTo("objectId", restaurantId);
+            try {
+                // synchronous, blocking call.
+                // TODO: see if this is okay or results in lag
+                List<Restaurant> results = query.find();
+
+                // ensure we only got one result
+                if (results.size() > 1) {
+                    throw new ParseException(ParseException.OBJECT_NOT_FOUND,
+                            "More than one objectId for restaurant " + restaurantId);
+                }
+
+                restaurant = results.get(0);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
         if (restaurant != null) {

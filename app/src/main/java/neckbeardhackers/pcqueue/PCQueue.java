@@ -3,8 +3,12 @@ package neckbeardhackers.pcqueue;
 import android.app.Application;
 import com.parse.Parse;
 import com.parse.ParseACL;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.util.List;
 
 import neckbeardhackers.pcqueue.model.Restaurant;
 
@@ -44,5 +48,13 @@ public class PCQueue extends Application {
         ParseACL defaultACL = new ParseACL();
         ParseACL.setDefaultACL(defaultACL, true /* give access to current user */);
 
+        // Pin all Restaurant objects so they're accessible from the local data store
+        ParseQuery<Restaurant> query = Restaurant.getQuery();
+        try {
+            // TODO: Show a loading app indicator in the UI while this is happening
+            ParseObject.pinAll(query.find());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }
