@@ -12,7 +12,8 @@ public final class OperatingHours {
     /**
      * Global constant, days of the week starting at Monday = index 0.
      */
-    public static final String[] DAY_NAMES = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+    public static final String[] DAY_NAMES = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
+    "Saturday", "Sunday"};
 
     public OperatingHours(Hashtable<String, DailyOperatingHours> weeklyHours) {
         this.weeklyHours = weeklyHours;
@@ -110,6 +111,11 @@ final class DailyOperatingHours {
         this.closeTime = closeTime;
     }
 
+    // Call this if you want to denote "open 24 hours per day"
+    public DailyOperatingHours(String day) {
+        this(day, null, null);
+    }
+
     public String getOpeningTimeString() {
         return this.openTime;
     }
@@ -136,6 +142,17 @@ final class DailyOperatingHours {
     @Override
     public String toString() {
         // TODO pre-process openTime and closeTime to standardize the date format
-        return dayName + ":" + openTime + " - " + closeTime;
+        StringBuilder s = new StringBuilder();
+        s.append(dayName);
+        s.append(": ");
+
+        if (openTime == null && closeTime == null) {
+            s.append("24 hours");
+        } else {
+            s.append(openTime);
+            s.append(" - ");
+            s.append(closeTime);
+        }
+        return s.toString();
     }
 }

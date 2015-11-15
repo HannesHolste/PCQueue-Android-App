@@ -51,13 +51,12 @@ public class CustomParsePushBroadcastReceiver extends ParsePushBroadcastReceiver
                     if (e == null || objects.size() != 1) {
                         final Restaurant updatedRestaurant = objects.get(0);
 
-                        RestaurantManager.getInstance().notifyObservers(updatedRestaurant);
-
                         // Remove previously cached local data storage restaurant object
                         ParseObject.unpinAllInBackground(objects, new DeleteCallback() {
                             public void done(ParseException e) {
                                 // Cache the updated restaurant object in the local data storage
                                 ParseObject.pinAllInBackground(objects);
+                                RestaurantManager.getInstance().notifyObservers(updatedRestaurant);
 
                             }
                         });

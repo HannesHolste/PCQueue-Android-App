@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- used for wait time labels -->
+    <color name="green">#85DD00</color>
+    <color name="orange">#ECA000</color>
+    <color name="red">#AD1F02</color>
 </resources>

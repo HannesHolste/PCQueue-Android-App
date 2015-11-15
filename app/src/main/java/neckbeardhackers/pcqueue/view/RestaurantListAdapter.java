@@ -2,6 +2,7 @@ package neckbeardhackers.pcqueue.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,8 +16,10 @@ import com.parse.ParseQueryAdapter;
 
 import neckbeardhackers.pcqueue.R;
 import neckbeardhackers.pcqueue.event.RestaurantChangeObserver;
+import neckbeardhackers.pcqueue.model.OperatingHours;
 import neckbeardhackers.pcqueue.model.Restaurant;
 import neckbeardhackers.pcqueue.model.RestaurantManager;
+import neckbeardhackers.pcqueue.model.WaitTimeGroup;
 
 /**
  *
@@ -104,9 +107,31 @@ public class RestaurantListAdapter
     public void onBindViewHolder(RestaurantViewHolder holder, int position) {
         final Restaurant restaurant = getItem(position);
 
+        // Restaurant name
         holder.restaurantName.setText(restaurant.getName());
-        //restaurantViewHolder.currentWait.setText(restaurant.getWaitTimeInMinutes());
-        // TODO format color and set minute text
+
+        // Wait time label
+        holder.currentWait.setText(restaurant.getWaitInMinutes() + " minute wait");
+        WaitTimeGroup waitTimeGroup = restaurant.getWaitTimeGroup();
+
+        // set color of currentWait label to green/orange/red
+        int color = -1;
+        switch (waitTimeGroup.getCurrentWait()) {
+            case LOW:
+                color = R.color.green;
+                break;
+            case MEDIUM:
+                color = R.color.orange;
+                break;
+            case HIGH:
+            case VERY_HIGH:
+                color = R.color.red;
+                break;
+        }
+        if (color != -1) {
+            holder.currentWait.setTextColor(context.getResources().getColor(color));
+        }
+
         holder.updateButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
