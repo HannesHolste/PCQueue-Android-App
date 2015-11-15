@@ -17,26 +17,6 @@
     <uses-permission android:name="neckbeardhackers.pcqueue.permission.C2D_MESSAGE" />
 
 
-    <service android:name="com.parse.PushService" />
-    <receiver android:name="com.parse.ParsePushBroadcastReceiver"
-        android:exported="false">
-        <intent-filter>
-            <action android:name="com.parse.push.intent.RECEIVE" />
-            <action android:name="com.parse.push.intent.DELETE" />
-            <action android:name="com.parse.push.intent.OPEN" />
-        </intent-filter>
-    </receiver>
-    <receiver android:name="com.parse.GcmBroadcastReceiver"
-        android:permission="com.google.android.c2dm.permission.SEND">
-        <intent-filter>
-            <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-            <!-- package name for receiver -->
-            <category android:name="neckbeardhackers.pcqueue" />
-        </intent-filter>
-    </receiver>
-
     <uses-sdk android:minSdkVersion="20" />
 
     <application
@@ -62,6 +42,27 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+
+        <service android:name="com.parse.PushService" />
+        <receiver android:name="neckbeardhackers.pcqueue.net.CustomParsePushBroadcastReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.parse.push.intent.RECEIVE" />
+                <action android:name="com.parse.push.intent.DELETE" />
+                <action android:name="com.parse.push.intent.OPEN" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.parse.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <!-- package name for receiver -->
+                <category android:name="neckbeardhackers.pcqueue" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

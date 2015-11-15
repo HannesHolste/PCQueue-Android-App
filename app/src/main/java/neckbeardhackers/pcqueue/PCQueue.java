@@ -6,6 +6,7 @@ import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -43,6 +44,10 @@ public class PCQueue extends Application {
         // Register client with Parse (for push notificatons)
         ParseInstallation.getCurrentInstallation().saveInBackground();
 
+        // Subscribe to channel to listen for updates to the restaurant objects, e.g. waittime
+        // modifications per object from cloud code
+        ParsePush.subscribeInBackground("restaurantUpdates");
+
         // Enable anonymous users, so we can save data to the local data store without logging in
         // We shall never log them out and anonymoous users can sync with Parse cloud
         ParseUser.enableAutomaticUser();
@@ -52,6 +57,7 @@ public class PCQueue extends Application {
         ParseACL.setDefaultACL(defaultACL, true /* give access to current user */);
 
         // Pin all Restaurant objects so they're accessible from the local data store
+        // Pinning means caching the network-retrieved restaurant objects into local data store
         ParseQuery<Restaurant> query = Restaurant.getQuery();
         try {
             // TODO: Show a loading app indicator in the UI while this is happening

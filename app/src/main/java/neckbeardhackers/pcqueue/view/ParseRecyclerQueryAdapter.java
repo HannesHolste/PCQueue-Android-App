@@ -1,4 +1,4 @@
-package ameron32;
+package neckbeardhackers.pcqueue.view;
 
 import com.parse.ParseException;
 /*
@@ -28,31 +28,31 @@ import com.parse.ParseException;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 
-        import com.parse.FindCallback;
-        import com.parse.ParseException;
-        import com.parse.ParseObject;
-        import com.parse.ParseQuery;
-        import com.parse.ParseQueryAdapter.QueryFactory;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter.QueryFactory;
 
-        import java.util.ArrayList;
-        import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
- *  NEARLY IDENTICAL REPLACEMENT FOR ParseQueryAdapter ON ListView.
- *  REQUIRES THAT YOU SUBCLASS TO CREATE ViewHolder, onBindViewHolder(), and onCreateViewHolder
- *  AS ENFORCED BY THE RECYCLERVIEW PATTERN.
+ * NEARLY IDENTICAL REPLACEMENT FOR ParseQueryAdapter ON ListView.
+ * REQUIRES THAT YOU SUBCLASS TO CREATE ViewHolder, onBindViewHolder(), and onCreateViewHolder
+ * AS ENFORCED BY THE RECYCLERVIEW PATTERN.
+ * <p/>
+ * TESTED SUCCESSFULLY with RecyclerView v7:21.0.3
+ * AND with SuperRecyclerView by Malinskiy
  *
- *  TESTED SUCCESSFULLY with RecyclerView v7:21.0.3
- *  AND with SuperRecyclerView by Malinskiy
- *  @ https://github.com/Malinskiy/SuperRecyclerView
- *  SHOULD WORK WITH UltimateRecyclerView
- *
- *  from: https://gist.github.com/ameron32/34329dbd5856bf5ea7c3
+ * @ https://github.com/Malinskiy/SuperRecyclerView
+ * SHOULD WORK WITH UltimateRecyclerView
+ * <p/>
+ * from: https://gist.github.com/ameron32/34329dbd5856bf5ea7c3
  */
 public abstract class ParseRecyclerQueryAdapter<T extends ParseObject, U extends RecyclerView.ViewHolder>
-        extends RecyclerView.Adapter<U>
-{
+        extends RecyclerView.Adapter<U> {
 
     private final QueryFactory<T> mFactory;
     private final boolean hasStableIds;
@@ -74,7 +74,8 @@ public abstract class ParseRecyclerQueryAdapter<T extends ParseObject, U extends
     public ParseRecyclerQueryAdapter(final String className, final boolean hasStableIds) {
         this(new QueryFactory<T>() {
 
-            @Override public ParseQuery<T> create() {
+            @Override
+            public ParseQuery<T> create() {
                 return ParseQuery.getQuery(className);
             }
         }, hasStableIds);
@@ -84,7 +85,8 @@ public abstract class ParseRecyclerQueryAdapter<T extends ParseObject, U extends
     public ParseRecyclerQueryAdapter(final Class<T> clazz, final boolean hasStableIds) {
         this(new QueryFactory<T>() {
 
-            @Override public ParseQuery<T> create() {
+            @Override
+            public ParseQuery<T> create() {
                 return ParseQuery.getQuery(clazz);
             }
         }, hasStableIds);
@@ -103,16 +105,18 @@ public abstract class ParseRecyclerQueryAdapter<T extends ParseObject, U extends
         return super.getItemId(position);
     }
 
-    @Override public int getItemCount() {
+    @Override
+    public int getItemCount() {
         return mItems.size();
     }
 
-    public T getItem(int position) { return mItems.get(position); }
+    public T getItem(int position) {
+        return mItems.get(position);
+    }
 
-    public List<T> getItems() { return mItems; }
-
-
-
+    public List<T> getItems() {
+        return mItems;
+    }
 
 
     /**
@@ -126,9 +130,11 @@ public abstract class ParseRecyclerQueryAdapter<T extends ParseObject, U extends
         dispatchOnLoading();
         final ParseQuery<T> query = mFactory.create();
         onFilterQuery(query);
-        query.findInBackground(new FindCallback<T>() {;
+        query.findInBackground(new FindCallback<T>() {
+            ;
 
-            @Override public void done(
+            @Override
+            public void done(
                     List<T> queriedItems,
                     @Nullable ParseException e) {
                 if (e == null) {
@@ -142,10 +148,16 @@ public abstract class ParseRecyclerQueryAdapter<T extends ParseObject, U extends
         });
     }
 
+//    public void updateItem(T item, int position) {
+//        mItems.remove(position);
+//        recycler.removeViewAt(position);
+//        mAdapter.notifyItemRemoved(position);
+//        mAdapter.notifyItemRangeChanged(position, list.size());
+//    }
 
 
     public interface OnDataSetChangedListener {
-        public void onDataSetChanged();
+        void onDataSetChanged();
     }
 
     private final List<OnDataSetChangedListener> mDataSetListeners;

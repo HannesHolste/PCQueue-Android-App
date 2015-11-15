@@ -13,13 +13,10 @@ import android.widget.TextView;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import ameron32.ParseRecyclerQueryAdapter;
 import neckbeardhackers.pcqueue.R;
+import neckbeardhackers.pcqueue.event.RestaurantChangeObserver;
 import neckbeardhackers.pcqueue.model.Restaurant;
+import neckbeardhackers.pcqueue.model.RestaurantManager;
 
 /**
  *
@@ -27,7 +24,24 @@ import neckbeardhackers.pcqueue.model.Restaurant;
  * the information retrieved by this adapter will be used as an individual chunk of information
  * for building a single item on the RestaurantListUI
  */
-public class RestaurantListAdapter extends ParseRecyclerQueryAdapter<Restaurant, RestaurantListAdapter.RestaurantViewHolder> {
+public class RestaurantListAdapter
+        extends ParseRecyclerQueryAdapter<Restaurant, RestaurantListAdapter.RestaurantViewHolder>
+        implements RestaurantChangeObserver {
+
+    @Override
+    /**
+     * Called when we need to update the corresponding Restaurant view
+     */
+    public void update(Restaurant updatedRestaurant) {
+        for (int i = 0; i < getItemCount(); i++) {
+            Restaurant r = getItem(i);
+            if (r.getId().equals(updatedRestaurant.getId())) {
+                // Update the view for this restaurant
+                super.loadObjects(); // temporary: simply reload all restaurant objects from parsequery
+                break;
+            }
+        }
+    }
 
     /**
      * ViewHolder representing a restaurant card in our UI,
@@ -54,17 +68,12 @@ public class RestaurantListAdapter extends ParseRecyclerQueryAdapter<Restaurant,
         // Create query Factory and setup superclass
         super(new ParseQueryAdapter.QueryFactory<Restaurant>() {
             public ParseQuery<Restaurant> create() {
-                // Configure a custom Parse query to retrieve restaurants sorted alphabetically
-                ParseQuery<Restaurant> query = Restaurant.getQuery();
-                query.fromLocalDatastore();
-
-                // sort alphabetically by restaurant name
-                query.orderByAscending("Name");
-                return query;
+              return RestaurantManager.getInstance().queryForAllRestaurants();
             }
         }, false);
 
         this.context = c;
+        RestaurantManager.getInstance().registerRestaurantChangeListener(this);
     }
 
     // TODO: Re-sort/sort restaurant methods
