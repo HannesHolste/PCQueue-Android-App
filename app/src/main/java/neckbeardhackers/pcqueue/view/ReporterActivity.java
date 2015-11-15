@@ -46,13 +46,11 @@ public class ReporterActivity extends AppCompatActivity {
         // If we instantaited this ReporterActivity with an intent, unpack the restaurant
         if (intent != null) {
             String restaurantId = intent.getStringExtra("restaurantId");
-
             ParseQuery<Restaurant> query = Restaurant.getQuery();
             query.fromLocalDatastore();
             query.whereEqualTo("objectId", restaurantId);
             try {
                 // synchronous, blocking call.
-                // TODO: see if this is okay or results in lag
                 List<Restaurant> results = query.find();
 
                 // ensure we only got one result

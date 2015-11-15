@@ -29,8 +29,6 @@ import neckbeardhackers.pcqueue.model.Restaurant;
  */
 public class RestaurantListAdapter extends ParseRecyclerQueryAdapter<Restaurant, RestaurantListAdapter.RestaurantViewHolder> {
 
-    private RestaurantViewHolder restaurantViewHolder;
-
     /**
      * ViewHolder representing a restaurant card in our UI,
      * based on the restaurant card layout XML,
@@ -51,10 +49,6 @@ public class RestaurantListAdapter extends ParseRecyclerQueryAdapter<Restaurant,
         }
     }
     private Context context;
-
-    public RestaurantListAdapter(ParseQueryAdapter.QueryFactory<Restaurant> factory, boolean hasStableIds) {
-        super(factory, hasStableIds);
-    }
 
     public RestaurantListAdapter(Context c) {
         // Create query Factory and setup superclass
@@ -90,8 +84,7 @@ public class RestaurantListAdapter extends ParseRecyclerQueryAdapter<Restaurant,
     public RestaurantViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.restaurant_list_item,
                                                                     viewGroup, false);
-        this.restaurantViewHolder = new RestaurantViewHolder(v);
-        return restaurantViewHolder;
+        return new RestaurantViewHolder(v);
     }
 
     @Override
@@ -102,9 +95,10 @@ public class RestaurantListAdapter extends ParseRecyclerQueryAdapter<Restaurant,
     public void onBindViewHolder(RestaurantViewHolder holder, int position) {
         final Restaurant restaurant = getItem(position);
 
-        restaurantViewHolder.restaurantName.setText(restaurant.getName());
-        //restaurantViewHolder.currentWait.setText(restaurantList.get(i).getWaitTime().getCurrentWait());
-        restaurantViewHolder.updateButton.setOnClickListener(new View.OnClickListener() {
+        holder.restaurantName.setText(restaurant.getName());
+        //restaurantViewHolder.currentWait.setText(restaurant.getWaitTimeInMinutes());
+        // TODO format color and set minute text
+        holder.updateButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
