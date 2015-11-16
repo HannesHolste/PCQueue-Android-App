@@ -1,5 +1,9 @@
 package neckbeardhackers.pcqueue.model;
 
+import com.parse.DeleteCallback;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
@@ -50,8 +54,13 @@ public class RestaurantManager implements RestaurantChangeSubject {
      */
     public ParseQuery<Restaurant> queryForAllRestaurants(RestaurantSortType t) {
         // Configure a custom Parse query to retrieve restaurants sorted alphabetically
+        return this.queryForAllRestaurants(t, true);
+    }
+
+    private ParseQuery<Restaurant> queryForAllRestaurants(RestaurantSortType t, boolean local) {
         ParseQuery<Restaurant> query = Restaurant.getQuery();
-        query.fromLocalDatastore();
+        if (local)
+            query.fromLocalDatastore();
 
         if (t.equals(RestaurantSortType.NAME)) {
             // sort alphabetically by restaurant name
@@ -62,8 +71,35 @@ public class RestaurantManager implements RestaurantChangeSubject {
         return query;
     }
 
+    public void refreshAllRestaurantsHard() {
+        ParseQuery<Restaurant> query = queryForAllRestaurants(false);
+        query.findInBackground(new FindCallback<Restaurant>() {
+
+            @Override
+            public void done(final List<Restaurant> objects, ParseException e) {
+                if (e == null) {
+                    ParseObject.unpinAllInBackground(objects, new DeleteCallback() {
+
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                ParseObject.pinAllInBackground(objects);
+                                for (Restaurant restaurant : objects)
+                                    notifyObservers(restaurant);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
     public ParseQuery<Restaurant> queryForAllRestaurants() {
         return queryForAllRestaurants(RestaurantSortType.NAME);
+    }
+
+    public ParseQuery<Restaurant> queryForAllRestaurants(boolean local) {
+        return queryForAllRestaurants(RestaurantSortType.NAME, local);
     }
 
     @Override
