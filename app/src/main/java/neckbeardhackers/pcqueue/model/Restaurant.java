@@ -67,10 +67,10 @@ public class Restaurant extends ParseObject {
                 if (!days.isNull(i)) {
                     JSONObject day = days.getJSONObject(i);
 
-                    JSONObject timespanContainer = day.getJSONObject(OperatingHours.DAY_NAMES[i]);
+                    JSONObject timespanContainer = day.getJSONObject(OperatingHours.getDayOfWeek(i));
                     String startTime = timespanContainer.getString("open");
                     String endTime = timespanContainer.getString("close");
-                    factory.day(OperatingHours.DAY_NAMES[i], startTime, endTime);
+                    factory.day(OperatingHours.getDayOfWeek(i), startTime, endTime);
                 }
             } catch (JSONException e) {
                 System.err.println("Possibly malformed parse cloud database entry for operating hours" +

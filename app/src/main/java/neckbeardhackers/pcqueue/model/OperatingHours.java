@@ -15,6 +15,10 @@ public final class OperatingHours {
     public static final String[] DAY_NAMES = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
     "Saturday", "Sunday"};
 
+    public static String getDayOfWeek(int dayNumber) {
+        return DAY_NAMES[dayNumber];
+    }
+
     public OperatingHours(Hashtable<String, DailyOperatingHours> weeklyHours) {
         this.weeklyHours = weeklyHours;
     }
@@ -37,11 +41,20 @@ public final class OperatingHours {
         // Call its isOpenNow() method and return that result
     }
 
+    public static boolean isValidDayName(String day) {
+        for (String validDayName : OperatingHours.DAY_NAMES) {
+            if (validDayName.equalsIgnoreCase(day)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public String toString() {
         StringBuilder s = new StringBuilder();
         s.append("Hours: ");
         for (DailyOperatingHours d : weeklyHours.values()) {
-            s.append(d);
+            s.append(d.toString());
             s.append("\n");
         }
 
@@ -67,29 +80,29 @@ final class OperatingHoursFactory {
     }
 
     public OperatingHoursFactory day(String dayName, String openTime, String closeTime) {
-        boolean hasValidDayName = false;
         // check validity of dayName name
-        for (String validDayName : OperatingHours.DAY_NAMES) {
-            if (dayName.equalsIgnoreCase(validDayName)) {
-                hasValidDayName = true;
-                break;
-            }
-        }
+        boolean hasValidDayName = OperatingHours.isValidDayName(dayName);
 
-        if (!hasValidDayName) {
+        if (!hasValidDayName)
             throw new IllegalArgumentException("Trying to construct OperatingHours with invalid dayName name: " + dayName);
-        }
 
         // check validity of start and end time
         // TODO
 
         // store
-        weeklyHours.put(dayName, new DailyOperatingHours(dayName, openTime, closeTime));
+        weeklyHours.put(convertToTitleCase(dayName), new DailyOperatingHours(dayName, openTime, closeTime));
         return this;
     }
 
     public OperatingHours build() {
         return new OperatingHours(weeklyHours);
+    }
+
+    private String convertToTitleCase(String str) {
+        StringBuilder titleCaseString = new StringBuilder();
+        titleCaseString.append(Character.toTitleCase(str.charAt(0)));
+        titleCaseString.append(str.substring(1).toLowerCase());
+        return titleCaseString.toString();
     }
 
 }
@@ -98,6 +111,7 @@ final class DailyOperatingHours {
     private final String dayName;
     private final String openTime;
     private final String closeTime;
+    private static final String DEFAULT_TIME = "12:00am";
 
     /**
      *
@@ -113,7 +127,11 @@ final class DailyOperatingHours {
 
     // Call this if you want to denote "open 24 hours per day"
     public DailyOperatingHours(String day) {
-        this(day, null, null);
+        this(day, DEFAULT_TIME, DEFAULT_TIME);
+    }
+
+    public static DailyOperatingHours getClosedInstance(String day) {
+        return new DailyOperatingHours(day, null, null);
     }
 
     public String getOpeningTimeString() {

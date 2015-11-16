@@ -18,6 +18,7 @@ import java.util.List;
 
 import neckbeardhackers.pcqueue.R;
 import neckbeardhackers.pcqueue.model.Restaurant;
+import neckbeardhackers.pcqueue.model.RestaurantManager;
 import neckbeardhackers.pcqueue.model.WaitTimeGroup;
 
 public class ReporterActivity extends AppCompatActivity {
@@ -46,9 +47,8 @@ public class ReporterActivity extends AppCompatActivity {
         // If we instantaited this ReporterActivity with an intent, unpack the restaurant
         if (intent != null) {
             String restaurantId = intent.getStringExtra("restaurantId");
-            ParseQuery<Restaurant> query = Restaurant.getQuery();
-            query.fromLocalDatastore();
-            query.whereEqualTo("objectId", restaurantId);
+            RestaurantManager restaurantManager = RestaurantManager.getInstance();
+            ParseQuery<Restaurant> query = restaurantManager.queryRestaurantById(restaurantId);
             try {
                 // synchronous, blocking call.
                 List<Restaurant> results = query.find();

@@ -35,7 +35,6 @@ public class CustomParsePushBroadcastReceiver extends ParsePushBroadcastReceiver
             return;
         }
 
-
         try {
             // Extract id of changed restaurant object
             String restaurantId = pushData.getString("restaurantObjectId");
