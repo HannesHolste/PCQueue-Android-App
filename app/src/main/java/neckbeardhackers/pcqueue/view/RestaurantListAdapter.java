@@ -46,6 +46,11 @@ public class RestaurantListAdapter
         }
     }
 
+    public void updateAll() {
+        RestaurantManager.getInstance().refreshAllRestaurantsHard();
+    }
+
+
     /**
      * ViewHolder representing a restaurant card in our UI,
      * based on the restaurant card layout XML,
