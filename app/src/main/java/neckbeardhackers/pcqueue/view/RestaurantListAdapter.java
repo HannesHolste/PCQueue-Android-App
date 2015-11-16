@@ -119,6 +119,9 @@ public class RestaurantListAdapter
         holder.currentWait.setText(restaurant.getWaitInMinutes() + " minute wait");
         WaitTimeGroup waitTimeGroup = restaurant.getWaitTimeGroup();
 
+        //DailyOperatingHours temp = new DailyOperatingHours();
+        System.out.println("The restaurant is: "+ restaurant.getName());
+        System.out.println("Is it open? " + restaurant.getHours().isOpenNow());
         // set color of currentWait label to green/orange/red
         int color = -1;
         switch (waitTimeGroup.getCurrentWait()) {
@@ -135,6 +138,12 @@ public class RestaurantListAdapter
         }
         if (color != -1) {
             holder.currentWait.setTextColor(context.getResources().getColor(color));
+        }
+
+        if (!restaurant.getHours().isOpenNow()) {
+            // TODO: Make the closed restaurant cards actually look closed. The below grey toggle
+            // looks like absolute poopy garbage
+            holder.cardView.setCardBackgroundColor(R.color.grey);
         }
 
         holder.updateButton.setOnClickListener(new View.OnClickListener() {

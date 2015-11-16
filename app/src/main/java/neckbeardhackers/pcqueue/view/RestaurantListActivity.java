@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+
 import neckbeardhackers.pcqueue.R;
 
 public class RestaurantListActivity extends AppCompatActivity {
