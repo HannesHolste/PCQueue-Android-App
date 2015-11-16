@@ -44,7 +44,7 @@ public final class OperatingHours {
         //if the day returns null, it means that the restaurant is closed
         if(weeklyHours.get(DAY_NAMES[actualDay]) == null) return false;
         //check if the restaurant is open given the day, which will check the hours
-        return weeklyHours.get(DAY_NAMES[0]).isOpenNow();
+        return weeklyHours.get(DAY_NAMES[actualDay]).isOpenNow();
 
     }
 
