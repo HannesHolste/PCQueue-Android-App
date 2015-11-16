@@ -16,9 +16,9 @@ import com.parse.ParseQueryAdapter;
 
 import neckbeardhackers.pcqueue.R;
 import neckbeardhackers.pcqueue.event.RestaurantChangeObserver;
-import neckbeardhackers.pcqueue.model.OperatingHours;
 import neckbeardhackers.pcqueue.model.Restaurant;
 import neckbeardhackers.pcqueue.model.RestaurantManager;
+import neckbeardhackers.pcqueue.model.RestaurantManager.ManagerRefreshCallback;
 import neckbeardhackers.pcqueue.model.WaitTimeGroup;
 
 /**
@@ -46,8 +46,8 @@ public class RestaurantListAdapter
         }
     }
 
-    public void updateAll() {
-        RestaurantManager.getInstance().refreshAllRestaurantsHard();
+    public void updateAll(ManagerRefreshCallback updateCompleteCallback) {
+        RestaurantManager.getInstance().refreshAllRestaurantsHard(updateCompleteCallback);
     }
 
 

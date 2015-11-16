@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import neckbeardhackers.pcqueue.R;
+import neckbeardhackers.pcqueue.model.RestaurantManager;
 
 public class RestaurantListActivity extends AppCompatActivity {
 
@@ -40,8 +41,13 @@ public class RestaurantListActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                infoGetter.updateAll();
-                swipeRefreshLayout.setRefreshing(false);
+                infoGetter.updateAll(new RestaurantManager.ManagerRefreshCallback() {
+
+                    @Override
+                    public void handleRefreshComplete() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                });
             }
         });
     }

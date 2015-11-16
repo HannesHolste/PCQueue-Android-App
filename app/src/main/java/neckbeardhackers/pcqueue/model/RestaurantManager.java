@@ -23,6 +23,10 @@ public class RestaurantManager implements RestaurantChangeSubject {
         NAME, WAIT_TIME
     }
 
+    public interface ManagerRefreshCallback {
+        void handleRefreshComplete();
+    }
+
     public static RestaurantManager getInstance() {
         return ourInstance;
     }
@@ -76,13 +80,24 @@ public class RestaurantManager implements RestaurantChangeSubject {
         executeQueryInBackground(query);
     }
 
+    public void refreshAllRestaurantsHard(ManagerRefreshCallback completeCallback) {
+        ParseQuery<Restaurant> query = queryForAllRestaurants(false);
+        executeQueryInBackground(query, completeCallback);
+    }
+
     public void executeQueryInBackground(ParseQuery<Restaurant> query) {
+        executeQueryInBackground(query, null);
+    }
+
+    public void executeQueryInBackground(ParseQuery<Restaurant> query, final ManagerRefreshCallback completeCallback) {
         query.findInBackground(new FindCallback<Restaurant>() {
 
         @Override
         public void done(final List<Restaurant> objects, ParseException e) {
             if (e == null)
                 refreshParseCacheAndNotify(objects);
+                if (completeCallback != null)
+                    completeCallback.handleRefreshComplete();
             }
         });
     }
@@ -127,4 +142,8 @@ public class RestaurantManager implements RestaurantChangeSubject {
             observer.update(restaurant);
         }
     }
+
 }
+
+
+
