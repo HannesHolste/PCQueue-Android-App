@@ -3,9 +3,7 @@ package neckbeardhackers.pcqueue.model;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Dictionary;
-import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
 /**
@@ -141,17 +139,12 @@ final class DailyOperatingHours {
     }
 
     public boolean isOpenNow() {
-        //Creating Calendar objects from openTime and closeTime strings obtained from
-        // parse
-        System.out.println("The current open time is: "+ openTime);
-        System.out.println("The current close time is: " + closeTime);
+        //Creating Calendar objects from openTime and closeTime strings obtained from parse
         //If open and close time are null, then it means the restaurant is closed
         if(openTime == "null" && closeTime == "null") return false;
         Calendar currentTime = Calendar.getInstance();
         Calendar open = getCalendarFromTimeString(openTime, false, currentTime);
         Calendar close = getCalendarFromTimeString(closeTime, true, currentTime);
-        //Obtains the current time
-        //Calendar currentTime = getCalendarFromTimeString("11:00pm");
         //Checking if close is equal to open, if so, the restaurant is 24 hours
         if(close.compareTo(open) == 0) return true;
 
@@ -169,9 +162,14 @@ final class DailyOperatingHours {
             appliedCalendar.setTime(parseTimeFormat.parse(time));
             appliedCalendar.set(baseCal.get(Calendar.YEAR), baseCal.get(Calendar.MONTH),
                     baseCal.get(Calendar.DAY_OF_MONTH));
+
+            // If shift is selected, then we want to advance the day by one day (Happens when
+            // a restaurant closes at sometime in the morning (e.g 1am)
             if (shiftIfAfterMidnight && appliedCalendar.get(Calendar.HOUR_OF_DAY) < 12)
                 appliedCalendar.add(Calendar.DAY_OF_MONTH, 1);
+
         }catch (Exception e){
+            // After the time is verified in the above TODO, this should never occur.
             System.err.print("Given time is not the appropriate format");
         }
 
