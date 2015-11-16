@@ -6,10 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
-import java.util.Hashtable;
 
 import neckbeardhackers.pcqueue.R;
-import neckbeardhackers.pcqueue.model.OperatingHours;
 
 public class RestaurantListActivity extends AppCompatActivity {
 

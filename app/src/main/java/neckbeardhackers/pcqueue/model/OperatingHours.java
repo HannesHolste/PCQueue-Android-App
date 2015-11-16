@@ -3,10 +3,8 @@ package neckbeardhackers.pcqueue.model;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Dictionary;
 import java.util.Hashtable;
-import java.util.Locale;
 
 /**
  * Immutable class OperatingHours
@@ -17,8 +15,8 @@ public final class OperatingHours {
     /**
      * Global constant, days of the week starting at Monday = index 0.
      */
-    public static final String[] DAY_NAMES = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
-            "Friday", "Saturday"};
+    public static final String[] DAY_NAMES = {"Sunday", "Monday", "Tuesday", "Wednesday",
+            "Thursday", "Friday", "Saturday"};
 
     public OperatingHours(Hashtable<String, DailyOperatingHours> weeklyHours) {
         this.weeklyHours = weeklyHours;
@@ -33,20 +31,18 @@ public final class OperatingHours {
         return weeklyHours.get(day);
     }
 
-    public boolean isOpenNow() throws Exception {
-        // TODO
-        //throw new Exception("Needs implementation");
-        // TODO:
-        // Find current dayName. Lookup dayName in weeklyHours to find corresponding DailyOperatingHours
-        // if weeklyHours.get(dayName) returns null, that means the restaurant is closed on that dayName.
-        // simply return false. Else:
-        // Call its isOpenNow() method and return that result
+    public boolean isOpenNow(){
 
+        //Get the current day
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK);
-        if(weeklyHours.get(DAY_NAMES[day-1]) == null) return false;
-
-        return weeklyHours.get(DAY_NAMES[day-1]).isOpenNow();
+        //Shift the day to correctly correspond with the appropriate DAY_NAME
+        //since java.util.Calendar returns 1 for Sunday and 7 for Saturday
+        int actualDay = day-1;
+        //if the day returns null, it means that the restaurant is closed
+        if(weeklyHours.get(DAY_NAMES[actualDay]) == null) return false;
+        //check if the restaurant is open given the day, which will check the hours
+        return weeklyHours.get(DAY_NAMES[actualDay]).isOpenNow();
 
     }
 
@@ -90,7 +86,8 @@ final class OperatingHoursFactory {
         }
 
         if (!hasValidDayName) {
-            throw new IllegalArgumentException("Trying to construct OperatingHours with invalid dayName name: " + dayName);
+            throw new IllegalArgumentException("Trying to construct OperatingHours with " +
+                    "invalid dayName name: " + dayName);
         }
 
         // check validity of start and end time
@@ -141,19 +138,40 @@ final class DailyOperatingHours {
         return dayName;
     }
 
-    public boolean isOpenNow() throws Exception {
+    public boolean isOpenNow() {
+        //Creating Calendar objects from openTime and closeTime strings obtained from
+        // parse
+        Calendar open = getCalendarFromTimeString(openTime);
+        Calendar close = getCalendarFromTimeString(closeTime);
+        //Obtains the current time
+        Calendar currentTime = Calendar.getInstance();
 
-        DateFormat timeFormat = new SimpleDateFormat("hh:mmaa");
-        Calendar open = Calendar.getInstance();
-        Calendar close = Calendar.getInstance();
-        Calendar time = Calendar.getInstance();
-        open.setTime(timeFormat.parse(openTime));
-        close.setTime(timeFormat.parse(closeTime));
+        //Checking if close is equal to open, if so, the restaurant is 24 hours
         if(close.compareTo(open) == 0) return true;
-        if(time.compareTo(open) > 0 && time.compareTo(close) < 0){
-            return true;
+
+        //Checking if the current time is within the bounds of the open and closing time
+        return timeIsWithinHours(currentTime, open, close);
+    }
+
+    private static Calendar getCalendarFromTimeString(String time){
+
+        //Creating a time format to allow the calendar object to be created
+        DateFormat parseTimeFormat = new SimpleDateFormat("hh:mmaa");
+        Calendar appliedCalendar = Calendar.getInstance();
+        //sets the appliedCalendar's time format to parseTimeFormat and parses the given
+        // time string
+        try {
+            appliedCalendar.setTime(parseTimeFormat.parse(time));
+        }catch (Exception e){
+            System.err.print("Given time is not the appropriate format");
         }
-        return false;
+        return appliedCalendar;
+    }
+
+    private static boolean timeIsWithinHours(Calendar currentTime, Calendar openTime,
+                                             Calendar closeTime){
+        //Checking if the currentTime is within the correct time bounds
+        return (currentTime.compareTo(openTime) >=0 && currentTime.compareTo(closeTime) <=0);
     }
 
     @Override
