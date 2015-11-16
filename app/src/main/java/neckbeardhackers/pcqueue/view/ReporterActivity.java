@@ -4,16 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
+import com.parse.FunctionCallback;
+import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.HashMap;
 import java.util.List;
 
 import neckbeardhackers.pcqueue.R;
@@ -88,6 +92,24 @@ public class ReporterActivity extends AppCompatActivity {
                 // finish activity and submit report. Show toast in main UI.
                 // TODO Submit Report to Parse (asynchronously!!)
                 WaitTimeGroup selectedWaitTimeGroup = (WaitTimeGroup) spinner.getSelectedItem();
+                // "Pull" the data from the activity
+                HashMap<String, Object> params = new HashMap<String, Object>();
+                int time = selectedWaitTimeGroup.getCurrentWait().getClockTimeHigh();
+                // Fallout if the activity's restaurant instance is null to prevent NULL_PTR_ERR
+                if (restaurant == null) finish();
+                String name = restaurant.getName();
+                // JSON format e.g. {"name":"D'Lush","time":5}
+                params.put("name", name);
+                params.put("time", time);
+                ParseCloud.callFunctionInBackground("attemptUpdate", params, new FunctionCallback<String>() {
+                    public void done(String results, ParseException e) {
+                        if (e == null) {
+                            // ratings is 4.5
+                            Log.d("RESPONSE WAS HAD", "" + results);
+                        } else
+                            Log.d("NO RESPONSE", e + "");
+                    }
+                });
                 finish();
             }
         });
