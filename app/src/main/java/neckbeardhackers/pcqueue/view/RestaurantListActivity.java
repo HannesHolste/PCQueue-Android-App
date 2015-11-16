@@ -6,7 +6,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+import java.util.Hashtable;
+
 import neckbeardhackers.pcqueue.R;
+import neckbeardhackers.pcqueue.model.OperatingHours;
 
 public class RestaurantListActivity extends AppCompatActivity {
 
@@ -27,7 +30,7 @@ public class RestaurantListActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
-    /* Load the restaurant list data */
+        /* Load the restaurant list data */
         RestaurantListAdapter infoGetter = new RestaurantListAdapter(this);
         RecyclerView restaurantListRecycler = (RecyclerView) this.findViewById(R.id.RestaurantListRecycler);
         restaurantListRecycler.setHasFixedSize(true);
