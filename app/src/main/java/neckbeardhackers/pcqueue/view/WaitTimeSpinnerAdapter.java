@@ -1,29 +1,27 @@
-package neckbeardhackers.pcqueue;
+package neckbeardhackers.pcqueue.view;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import neckbeardhackers.pcqueue.model.WaitTimeGroup;
 
 /**
  * Created by hannes on 11/8/15.
  */
-public class WaitTimeSpinnerAdapter extends ArrayAdapter<WaitTime> {
+public class WaitTimeSpinnerAdapter extends ArrayAdapter<WaitTimeGroup> {
 
     private Context context;
 
-    private WaitTime[] values;
+    private WaitTimeGroup[] values;
     private int textViewResourceId;
     private int dropDownResourceId;
 
     public WaitTimeSpinnerAdapter(Context context, int textViewResourceId,
-                                  WaitTime[] values) {
+                                  WaitTimeGroup[] values) {
         super(context, textViewResourceId, values);
         this.textViewResourceId = textViewResourceId;
         this.dropDownResourceId = textViewResourceId;
@@ -35,7 +33,7 @@ public class WaitTimeSpinnerAdapter extends ArrayAdapter<WaitTime> {
         return values.length;
     }
 
-    public WaitTime getItem(int position) {
+    public WaitTimeGroup getItem(int position) {
         return values[position];
     }
 

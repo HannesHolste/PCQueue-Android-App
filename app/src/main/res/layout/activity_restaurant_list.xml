@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:fitsSystemWindows="true"
-    tools:context="neckbeardhackers.pcqueue.RestaurantListActivity">
+    tools:context="neckbeardhackers.pcqueue.view.RestaurantListActivity">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -34,10 +34,15 @@
     </android.support.design.widget.AppBarLayout>
 
     <!-- Container for cards -->
-    <android.support.v7.widget.RecyclerView
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/RestaurantListRecycler" />
+        android:id="@+id/RestaurantListRefresher">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/RestaurantListRecycler" />
+        </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
 
 

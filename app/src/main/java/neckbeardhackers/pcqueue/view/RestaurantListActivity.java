@@ -1,17 +1,14 @@
-package neckbeardhackers.pcqueue;
+package neckbeardhackers.pcqueue.view;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.ListView;
-import android.widget.TextView;
+
+
+import neckbeardhackers.pcqueue.R;
 
 public class RestaurantListActivity extends AppCompatActivity {
 
@@ -32,11 +29,21 @@ public class RestaurantListActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
-    /* Load the restaurant list data */
-        RestaurantInfoAdapter infoGetter = new RestaurantInfoAdapter(this);
+        /* Load the restaurant list data */
+        final RestaurantListAdapter infoGetter = new RestaurantListAdapter(this);
         RecyclerView restaurantListRecycler = (RecyclerView) this.findViewById(R.id.RestaurantListRecycler);
         restaurantListRecycler.setHasFixedSize(true);
         restaurantListRecycler.setLayoutManager(new LinearLayoutManager(this));
         restaurantListRecycler.setAdapter(infoGetter);
+
+        /* Setup pull-to-refresh listener */
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) this.findViewById(R.id.RestaurantListRefresher);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                infoGetter.updateAll();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 }
