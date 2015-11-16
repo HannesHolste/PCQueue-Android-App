@@ -3,20 +3,10 @@ package neckbeardhackers.pcqueue.net;
 import android.content.Context;
 import android.content.Intent;
 
-import com.parse.DeleteCallback;
-import com.parse.FindCallback;
-import com.parse.GcmBroadcastReceiver;
-import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParsePushBroadcastReceiver;
-import com.parse.ParseQuery;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
-
-import neckbeardhackers.pcqueue.model.Restaurant;
 import neckbeardhackers.pcqueue.model.RestaurantManager;
 
 /**
