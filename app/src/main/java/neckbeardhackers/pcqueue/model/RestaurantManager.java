@@ -73,25 +73,39 @@ public class RestaurantManager implements RestaurantChangeSubject {
 
     public void refreshAllRestaurantsHard() {
         ParseQuery<Restaurant> query = queryForAllRestaurants(false);
+        executeQueryInBackground(query);
+    }
+
+    public void executeQueryInBackground(ParseQuery<Restaurant> query) {
         query.findInBackground(new FindCallback<Restaurant>() {
 
-            @Override
-            public void done(final List<Restaurant> objects, ParseException e) {
-                if (e == null) {
-                    ParseObject.unpinAllInBackground(objects, new DeleteCallback() {
+        @Override
+        public void done(final List<Restaurant> objects, ParseException e) {
+            if (e == null)
+                refreshParseCacheAndNotify(objects);
+            }
+        });
+    }
 
-                        @Override
-                        public void done(ParseException e) {
-                            if (e == null) {
-                                ParseObject.pinAllInBackground(objects);
-                                for (Restaurant restaurant : objects)
-                                    notifyObservers(restaurant);
-                            }
-                        }
-                    });
+
+    public void refreshParseCacheAndNotify(final List<Restaurant> objects) {
+        ParseObject.unpinAllInBackground(objects, new DeleteCallback() {
+
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    ParseObject.pinAllInBackground(objects);
+                    for (Restaurant restaurant : objects)
+                        notifyObservers(restaurant);
                 }
             }
         });
+    }
+
+    public void refreshIndividualRestaurantHard(String restaurantId) {
+        // Query the database from network to get the updated restaurant object
+        ParseQuery<Restaurant> query = queryRestaurantById(restaurantId, false);
+        executeQueryInBackground(query);
     }
 
     public ParseQuery<Restaurant> queryForAllRestaurants() {

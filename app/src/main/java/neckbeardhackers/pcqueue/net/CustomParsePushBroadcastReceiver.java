@@ -38,33 +38,7 @@ public class CustomParsePushBroadcastReceiver extends ParsePushBroadcastReceiver
         try {
             // Extract id of changed restaurant object
             String restaurantId = pushData.getString("restaurantObjectId");
-
-            // Query the database from network to get the updated restaurant object
-            ParseQuery<Restaurant> query = RestaurantManager.getInstance().queryRestaurantById(restaurantId, false);
-
-            // Make async request to avoid blocking current thread
-            query.findInBackground(new FindCallback<Restaurant>() {
-                @Override
-                public void done(final List<Restaurant> objects, ParseException e) {
-                    // Successful query
-                    if (e == null || objects.size() != 1) {
-                        final Restaurant updatedRestaurant = objects.get(0);
-
-                        // Remove previously cached local data storage restaurant object
-                        ParseObject.unpinAllInBackground(objects, new DeleteCallback() {
-                            public void done(ParseException e) {
-                                // Cache the updated restaurant object in the local data storage
-                                ParseObject.pinAllInBackground(objects);
-                                RestaurantManager.getInstance().notifyObservers(updatedRestaurant);
-
-                            }
-                        });
-                    } else {
-                        e.printStackTrace();
-                    }
-                }
-            });
-
+            RestaurantManager.getInstance().refreshIndividualRestaurantHard(restaurantId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
