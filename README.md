@@ -1,4 +1,4 @@
-CSE110 Project
-==============
-Readme contents go here
+CSE110 Project - Develop Branch
+===============================
 
+![Preview](screen.png)
