@@ -147,10 +147,10 @@ final class DailyOperatingHours {
         System.out.println("The current close time is: " + closeTime);
         //If open and close time are null, then it means the restaurant is closed
         if(openTime == "null" && closeTime == "null") return false;
-        Calendar open = getCalendarFromTimeString(openTime);
-        Calendar close = getCalendarFromTimeString(closeTime);
-        //Obtains the current time
         Calendar currentTime = Calendar.getInstance();
+        Calendar open = getCalendarFromTimeString(openTime, false, currentTime);
+        Calendar close = getCalendarFromTimeString(closeTime, true, currentTime);
+        //Obtains the current time
         //Calendar currentTime = getCalendarFromTimeString("11:00pm");
         //Checking if close is equal to open, if so, the restaurant is 24 hours
         if(close.compareTo(open) == 0) return true;
@@ -159,19 +159,22 @@ final class DailyOperatingHours {
         return timeIsWithinHours(currentTime, open, close);
     }
 
-    private static Calendar getCalendarFromTimeString(String time){
-        //if(time == null) System.out.println("Hellloooo");
-        //Creating a time format to allow the calendar object to be created
+    private static Calendar getCalendarFromTimeString(String time, boolean shiftIfAfterMidnight,
+                                                      Calendar baseCal) {
         DateFormat parseTimeFormat = new SimpleDateFormat("hh:mmaa");
         Calendar appliedCalendar = Calendar.getInstance();
         //sets the appliedCalendar's time format to parseTimeFormat and parses the given
         // time string
         try {
             appliedCalendar.setTime(parseTimeFormat.parse(time));
-
+            appliedCalendar.set(baseCal.get(Calendar.YEAR), baseCal.get(Calendar.MONTH),
+                    baseCal.get(Calendar.DAY_OF_MONTH));
+            if (shiftIfAfterMidnight && appliedCalendar.get(Calendar.HOUR_OF_DAY) < 12)
+                appliedCalendar.add(Calendar.DAY_OF_MONTH, 1);
         }catch (Exception e){
             System.err.print("Given time is not the appropriate format");
         }
+
         return appliedCalendar;
     }
 
@@ -179,24 +182,6 @@ final class DailyOperatingHours {
                                              Calendar closeTime){
 
         System.out.println("The current closing hour is: " + closeTime.get(Calendar.HOUR_OF_DAY));
-        if(closeTime.get(Calendar.HOUR_OF_DAY) == 0){
-
-            // reset hour, minutes, seconds and millis
-            closeTime.set(Calendar.HOUR_OF_DAY, 23);
-            closeTime.set(Calendar.MINUTE, 59);
-            closeTime.set(Calendar.SECOND, 59);
-            closeTime.set(Calendar.MILLISECOND, 99);
-            //closeTime.setTime(date.getTime());
-
-        }
-        openTime.set(currentTime.get(Calendar.YEAR), currentTime.get(Calendar.MONTH), currentTime.get(Calendar.DAY_OF_MONTH));
-        closeTime.set(currentTime.get(Calendar.YEAR), currentTime.get(Calendar.MONTH), currentTime.get(Calendar.DAY_OF_MONTH));
-        System.out.println("The time of openTime is:" + openTime.getTime());
-        System.out.println("The time of closeTime is:" + closeTime.getTime());
-        System.out.println("The time of currentTime is:" + currentTime.getTime());
-        //Checking if the currentTime is within the correct time bounds
-        System.out.println("The current time with open time is: " + currentTime.compareTo(openTime));
-        System.out.println("The current time with close time is: " + currentTime.compareTo(closeTime));
         return (currentTime.compareTo(openTime) >=0 && currentTime.compareTo(closeTime) <=0);
     }
 
