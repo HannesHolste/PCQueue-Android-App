@@ -135,7 +135,7 @@ public class RestaurantListAdapter
             holder.currentWait.setTextColor(context.getResources().getColor(color));
         }
 
-        if (restaurant.getHours().isOpenNow()) {
+        if (!restaurant.getHours().isOpenNow()) {
             // TODO: Make the closed restaurant cards actually look closed. The below grey toggle
             // looks like absolute poopy garbage
             holder.cardView.setCardBackgroundColor(R.color.grey);
