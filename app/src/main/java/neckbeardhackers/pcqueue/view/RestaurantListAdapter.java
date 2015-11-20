@@ -40,6 +40,7 @@ public class RestaurantListAdapter
             if (r.getId().equals(updatedRestaurant.getId())) {
                 // Update the view for this restaurant
                 super.loadObjects(); // temporary: simply reload all restaurant objects from parsequery
+                // TODO: Make this more efficient by updating only one restaurant
                 break;
             }
         }

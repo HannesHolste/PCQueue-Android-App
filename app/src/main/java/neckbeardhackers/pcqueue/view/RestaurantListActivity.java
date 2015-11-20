@@ -17,17 +17,11 @@ public class RestaurantListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // This sets the focus on this class on a particular XML file
         setContentView(R.layout.activity_restaurant_list);
 
         // This will locate the toolbar in activity_restaurant_list and
         Toolbar toolbar = (Toolbar) findViewById(R.id.mainToolbar);
         setSupportActionBar(toolbar);
-
-
-        //Testing to see if it will close the default action bar
-        if (this.getSupportActionBar() != null)
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
         /* Load the restaurant list data */
