@@ -2,7 +2,6 @@ package neckbeardhackers.pcqueue.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,9 +15,9 @@ import com.parse.ParseQueryAdapter;
 
 import neckbeardhackers.pcqueue.R;
 import neckbeardhackers.pcqueue.event.RestaurantChangeObserver;
-import neckbeardhackers.pcqueue.model.OperatingHours;
 import neckbeardhackers.pcqueue.model.Restaurant;
 import neckbeardhackers.pcqueue.model.RestaurantManager;
+import neckbeardhackers.pcqueue.model.RestaurantManager.ManagerRefreshCallback;
 import neckbeardhackers.pcqueue.model.WaitTimeGroup;
 
 /**
@@ -46,8 +45,8 @@ public class RestaurantListAdapter
         }
     }
 
-    public void updateAll() {
-        RestaurantManager.getInstance().refreshAllRestaurantsHard();
+    public void updateAll(ManagerRefreshCallback updateCompleteCallback) {
+        RestaurantManager.getInstance().refreshAllRestaurantsHard(updateCompleteCallback);
     }
 
 
