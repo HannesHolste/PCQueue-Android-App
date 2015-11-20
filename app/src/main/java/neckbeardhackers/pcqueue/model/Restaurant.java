@@ -37,6 +37,10 @@ public class Restaurant extends ParseObject {
         return getString("Phone");
     }
 
+    public String getDescription() {
+        return getString("description");
+    }
+
     public WaitTimeGroup getWaitTimeGroup() {
         return new WaitTimeGroup(getWaitInMinutes());
     }
