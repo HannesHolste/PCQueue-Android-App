@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#3D4550</color>
+    <color name="colorSecondary">#3D4550</color>
+
+    <color name="textColorPrimary">#484848</color>
+    <color name="textColorSecondary">#6E6E6E</color>
+    <color name="textColorTertiary">#A5A5A5</color>
+    <color name="textColorHighlight">#78A2D8</color>
+
+    <color name="buttonColorPrimary">#318EFA</color>
+    <color name="buttonTextColorPrimary">#ffffff</color>
 
     <!-- used for wait time labels -->
     <color name="green">#85DD00</color>
