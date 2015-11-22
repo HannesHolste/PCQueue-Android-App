@@ -14,6 +14,7 @@ import com.parse.ParseQuery;
 import java.util.List;
 
 import neckbeardhackers.pcqueue.R;
+import neckbeardhackers.pcqueue.model.OperatingHours;
 import neckbeardhackers.pcqueue.model.Restaurant;
 import neckbeardhackers.pcqueue.model.RestaurantManager;
 
@@ -24,7 +25,7 @@ public class RestaurantInfoActivity extends AppCompatActivity{
 
     private Restaurant restaurant = null;
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.restaurant_info_pane_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.mainToolbar);
@@ -62,32 +63,43 @@ public class RestaurantInfoActivity extends AppCompatActivity{
                 e.printStackTrace();
             }
         }
-        if(restaurant != null){
+        if (restaurant != null) {
             TextView restaurantName = (TextView) findViewById(R.id.info_restaurantName);
             restaurantName.setText(restaurant.getName());
 
             TextView waitTime = (TextView) findViewById(R.id.restaurantWaitTime);
             TextView openSign = (TextView) findViewById(R.id.info_openNow);
-            System.out.println("Is " + restaurant.getName()+" open now? "+ restaurant.getHours().isOpenNow());
+            System.out.println("Is " + restaurant.getName() + " open now? " + restaurant.getHours().isOpenNow());
             System.out.println("What is the current wait in minutes for this restaurant? " + restaurant.getWaitInMinutes());
             //waitTime.setText(restaurant.getWaitInMinutes() + " minutes");
-            if(restaurant.getHours().isOpenNow()){
+            if (restaurant.getHours().isOpenNow()) {
                 waitTime.setText(restaurant.getWaitInMinutes() + " minutes");
                 openSign.setText("Open Now");
                 openSign.setTextColor(getResources().getColor(R.color.textColorHighlight));
-            }else{
+            } else {
                 waitTime.setText("Not Open");
                 waitTime.setTextColor(getResources().getColor(R.color.grey));
                 openSign.setText("Closed Now");
                 openSign.setTextColor(getResources().getColor(R.color.red));
             }
-            TextView monHours = (TextView) findViewById(R.id.info_mondayHours);
-            monHours.setText(restaurant.getHours().toString());
+
+            int[] hourInfo = {R.id.info_sundayHours, R.id.info_mondayHours, R.id.info_tuesdayHours,
+                    R.id.info_wednesdayHours, R.id.info_thursdayHours, R.id.info_fridayHours, R.id.info_saturdayHours};
+            TextView fillDays;
+            for (int i = 0; i < OperatingHours.DAY_NAMES.length; i++) {
+                fillDays = (TextView) findViewById(hourInfo[i]);
+                if(!restaurant.getHours().getOperatingHours(OperatingHours.DAY_NAMES[i]).isClosed())
+                    fillDays.setText(restaurant.getHours().getOperatingHours(OperatingHours.DAY_NAMES[i]).getOpeningTimeString() +
+                        "-\n" + restaurant.getHours().getOperatingHours(OperatingHours.DAY_NAMES[i]).getCloseTimeString());
+                else
+                    fillDays.setText("Closed");
+            }
+
+            TextView infoDescription = (TextView) findViewById(R.id.info_descriptionText);
+            infoDescription.setText(restaurant.getDescription());
         }
-
-
     }
-    private static void fillDays(){
+    /*private static void fillDays(){
 
-    }
+    }*/
 }
