@@ -105,7 +105,6 @@ public class RestaurantListAdapter
     }
 
     @Override
-
     /**
      * Called by RecyclerView to display the data at the specified position.
      */
@@ -156,6 +155,16 @@ public class RestaurantListAdapter
             }
 
         });
+
+        holder.cardView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(v.getContext(), RestaurantInfoActivity.class);
+                intent.putExtra("restaurantId", restaurant.getId());
+                v.getContext().startActivity(intent);
+            }
+        });
+
 
 
     }

@@ -21,11 +21,12 @@
 
             <TextView
                 android:id="@+id/info_restaurantName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginRight="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="33dp"
-                android:text="Santorini Island Grill"
+                android:text="Restaurant Name"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="35dp"
                 android:textColor="@color/textColorPrimary"

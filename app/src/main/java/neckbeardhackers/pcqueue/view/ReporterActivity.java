@@ -51,6 +51,7 @@ public class ReporterActivity extends AppCompatActivity {
         // If we instantaited this ReporterActivity with an intent, unpack the restaurant
         if (intent != null) {
             String restaurantId = intent.getStringExtra("restaurantId");
+            //System.out.println("Restaurant id is: " + restaurantId);
             RestaurantManager restaurantManager = RestaurantManager.getInstance();
             ParseQuery<Restaurant> query = restaurantManager.queryRestaurantById(restaurantId);
             try {

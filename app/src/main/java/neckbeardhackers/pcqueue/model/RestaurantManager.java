@@ -19,6 +19,15 @@ public class RestaurantManager implements RestaurantChangeSubject {
     private static RestaurantManager ourInstance = new RestaurantManager();
     private List<RestaurantChangeObserver> observers;
 
+    private RestaurantManager() {
+        observers = new ArrayList<>();
+    }
+
+    public static RestaurantManager getInstance() {
+        return ourInstance;
+    }
+
+
     public enum RestaurantSortType {
         NAME, WAIT_TIME
     }
@@ -27,13 +36,6 @@ public class RestaurantManager implements RestaurantChangeSubject {
         void handleRefreshComplete();
     }
 
-    public static RestaurantManager getInstance() {
-        return ourInstance;
-    }
-
-    private RestaurantManager() {
-        observers = new ArrayList<>();
-    }
 
     public ParseQuery<Restaurant> queryRestaurantById(String id, boolean local) {
         // Query the database from network to get the updated restaurant object
