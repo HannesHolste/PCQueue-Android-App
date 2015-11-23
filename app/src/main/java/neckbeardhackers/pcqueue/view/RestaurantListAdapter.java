@@ -21,7 +21,6 @@ import neckbeardhackers.pcqueue.model.RestaurantManager.ManagerRefreshCallback;
 import neckbeardhackers.pcqueue.model.WaitTimeGroup;
 
 /**
- *
  * This adapter is meant to turn information about a Restaurant into a listview item. That is,
  * the information retrieved by this adapter will be used as an individual chunk of information
  * for building a single item on the RestaurantListUI
@@ -30,17 +29,26 @@ public class RestaurantListAdapter
         extends ParseRecyclerQueryAdapter<Restaurant, RestaurantListAdapter.RestaurantViewHolder>
         implements RestaurantChangeObserver {
 
+    private RestaurantManager.RestaurantSortType currentSortType = RestaurantManager.RestaurantSortType.NAME;
+
     @Override
     /**
      * Called when we need to update the corresponding Restaurant view
      */
     public void update(Restaurant updatedRestaurant) {
         for (int i = 0; i < getItemCount(); i++) {
-            Restaurant r = getItem(i);
-            if (r.getId().equals(updatedRestaurant.getId())) {
-                // Update the view for this restaurant
-                super.loadObjects(); // temporary: simply reload all restaurant objects from parsequery
-                // TODO: Make this more efficient by updating only one restaurant
+            Restaurant oldRestaurant = getItem(i);
+            if (oldRestaurant.getId().equals(updatedRestaurant.getId())) {
+
+                // check if we need to update sorting
+                if (oldRestaurant.getWaitInMinutes() != updatedRestaurant.getWaitInMinutes()) {
+                    sortAndUpdate(currentSortType);
+                } else {
+                    // TODO make more efficient by only updating that single restaurant rather than
+                    // requerying parse for all
+                    super.loadObjects(); // temporary: simply reload all restaurant objects from parsequery
+
+                }
                 break;
             }
         }
@@ -48,6 +56,19 @@ public class RestaurantListAdapter
 
     public void updateAll(ManagerRefreshCallback updateCompleteCallback) {
         RestaurantManager.getInstance().refreshAllRestaurantsHard(updateCompleteCallback);
+    }
+
+    public void sortAndUpdate(final RestaurantManager.RestaurantSortType sortType) {
+        this.currentSortType = sortType;
+        ParseQueryAdapter.QueryFactory<Restaurant> newFactory = new ParseQueryAdapter.QueryFactory<Restaurant>() {
+            public ParseQuery<Restaurant> create() {
+                return RestaurantManager.getInstance().queryForAllRestaurants(sortType);
+            }
+        };
+        // update query factory with new query type
+        super.setQueryFactory(newFactory);
+        // invalidate current set of loaded restaurants. reload!
+        super.loadObjects();
     }
 
 
@@ -64,19 +85,20 @@ public class RestaurantListAdapter
 
         RestaurantViewHolder(View itemView) {
             super(itemView);
-            cardView = (CardView)itemView.findViewById(R.id.restaurant_card);
+            cardView = (CardView) itemView.findViewById(R.id.restaurant_card);
             restaurantName = (TextView) itemView.findViewById(R.id.restaurantName);
             currentWait = (TextView) itemView.findViewById(R.id.restaurantWaitTime);
-            updateButton = (Button)itemView.findViewById(R.id.updateButton);
+            updateButton = (Button) itemView.findViewById(R.id.updateButton);
         }
     }
+
     private Context context;
 
     public RestaurantListAdapter(Context c) {
         // Create query Factory and setup superclass
         super(new ParseQueryAdapter.QueryFactory<Restaurant>() {
             public ParseQuery<Restaurant> create() {
-              return RestaurantManager.getInstance().queryForAllRestaurants();
+                return RestaurantManager.getInstance().queryForAllRestaurants();
             }
         }, false);
 
@@ -84,7 +106,7 @@ public class RestaurantListAdapter
         RestaurantManager.getInstance().registerRestaurantChangeListener(this);
     }
 
-    // TODO: Re-sort/sort restaurant methods
+    // TODO: Re-sortAndUpdate/sortAndUpdate restaurant methods
 
     @Override
     public int getItemCount() {
@@ -94,13 +116,23 @@ public class RestaurantListAdapter
     /**
      * Required method for RecyclerView. Upon creation, inflate the appropriate
      * Layout XML view and instantiate a RestaurantViewHolder.
+     *
      * @param viewGroup
      * @param i
      * @return
      */
     public RestaurantViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.restaurant_list_item,
-                                                                    viewGroup, false);
+        int layout = R.layout.restaurant_list_item;
+
+        final Restaurant restaurant = getItem(i);
+
+        // load different XML for cards showing closed restaurant
+        if (!restaurant.isOpenNow()) {
+            layout = R.layout.restaurant_list_item_closed;
+        }
+
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(layout,
+                viewGroup, false);
         return new RestaurantViewHolder(v);
     }
 
@@ -115,48 +147,44 @@ public class RestaurantListAdapter
         // Restaurant name
         holder.restaurantName.setText(restaurant.getName());
 
-        // Wait time label
-        holder.currentWait.setText(restaurant.getWaitInMinutes() + " minute wait");
-        WaitTimeGroup waitTimeGroup = restaurant.getWaitTimeGroup();
+        if (holder.currentWait != null) {
+            // Wait time label
+            holder.currentWait.setText(String.format(context.getResources().getString(R.string.restaurant_card_minute_wait),
+                    restaurant.getWaitInMinutes()));
+            WaitTimeGroup waitTimeGroup = restaurant.getWaitTimeGroup();
 
-        //DailyOperatingHours temp = new DailyOperatingHours();
-        System.out.println("The restaurant is: "+ restaurant.getName());
-        System.out.println("Is it open? " + restaurant.getHours().isOpenNow());
-        // set color of currentWait label to green/orange/red
-        int color = -1;
-        switch (waitTimeGroup.getCurrentWait()) {
-            case LOW:
-                color = R.color.green;
-                break;
-            case MEDIUM:
-                color = R.color.orange;
-                break;
-            case HIGH:
-            case VERY_HIGH:
-                color = R.color.red;
-                break;
-        }
-        if (color != -1) {
+
+            // set color of currentWait label to green/orange/red
+            int color;
+            switch (waitTimeGroup.getCurrentWait()) {
+                case LOW:
+                default:
+                    color = R.color.green;
+                    break;
+                case MEDIUM:
+                    color = R.color.orange;
+                    break;
+                case HIGH:
+                case VERY_HIGH:
+                    color = R.color.red;
+                    break;
+            }
             holder.currentWait.setTextColor(context.getResources().getColor(color));
         }
 
-        if (!restaurant.getHours().isOpenNow()) {
-            // TODO: Make the closed restaurant cards actually look closed. The below grey toggle
-            // looks like absolute poopy garbage
-            holder.cardView.setCardBackgroundColor(R.color.grey);
+        if (holder.updateButton != null) {
+
+            holder.updateButton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), ReporterActivity.class);
+                    intent.putExtra("restaurantId", restaurant.getId());
+                    v.getContext().startActivity(intent);
+                }
+
+            });
         }
-
-        holder.updateButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ReporterActivity.class);
-                intent.putExtra("restaurantId", restaurant.getId());
-                v.getContext().startActivity(intent);
-            }
-
-        });
-
 
     }
 

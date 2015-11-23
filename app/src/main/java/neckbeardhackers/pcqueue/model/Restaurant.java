@@ -81,6 +81,12 @@ public class Restaurant extends ParseObject {
         return factory.build();
     }
 
+    public boolean isOpenNow() {
+        return true;
+        // TODO
+//        return getBoolean("isOpen");
+    }
+
     @Override
     public String toString() {
         return "Restaurant {id: " + getObjectId() + ", name: " + getName() + "}";

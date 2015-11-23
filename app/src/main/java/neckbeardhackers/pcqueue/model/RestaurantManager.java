@@ -71,6 +71,8 @@ public class RestaurantManager implements RestaurantChangeSubject {
             query.orderByAscending("Name");
         } else if (t.equals(RestaurantSortType.WAIT_TIME)) {
             query.orderByAscending("WaitTime");
+            // if two restaurants have equal wait time, sort ascend. by name
+            query.addAscendingOrder("Name");
         }
         return query;
     }

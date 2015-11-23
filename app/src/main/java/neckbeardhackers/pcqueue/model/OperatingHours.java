@@ -35,6 +35,12 @@ public final class OperatingHours {
         return weeklyHours.get(day);
     }
 
+    /**
+     * Use Restaurant.isOpen() instead, which uses the server-side flag and therefore
+     * supports constructing parse queries that sort by open time
+     * @return
+     */
+    @Deprecated
     public boolean isOpenNow(){
 
         //Get the current day

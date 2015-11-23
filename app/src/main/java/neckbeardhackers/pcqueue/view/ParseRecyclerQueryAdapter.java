@@ -53,7 +53,7 @@ import java.util.List;
 public abstract class ParseRecyclerQueryAdapter<T extends ParseObject, U extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<U> {
 
-    private final QueryFactory<T> mFactory;
+    private QueryFactory<T> mFactory;
     private final boolean hasStableIds;
     private final List<T> mItems;
 
@@ -91,6 +91,9 @@ public abstract class ParseRecyclerQueryAdapter<T extends ParseObject, U extends
         }, hasStableIds);
     }
 
+    protected void setQueryFactory(final QueryFactory<T> factory) {
+        mFactory = factory;
+    }
 
   /*
    *  REQUIRED RECYCLERVIEW METHOD OVERRIDES

@@ -15,7 +15,30 @@
     <!-- Application bar -->
     <include layout="@layout/applicationbar"/>
 
-    <!-- Container for cards -->
+     <LinearLayout
+         android:layout_marginTop="10dp"
+         android:orientation="horizontal"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="center_horizontal"
+         >
+         <Button
+            android:id="@+id/sortByWaitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sort by wait time"
+             style="?android:attr/buttonBarButtonStyle"
+            />
+        <Button
+            android:id="@+id/sortByNameButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sort by name"
+            style="?android:attr/buttonBarButtonStyle"
+            />
+     </LinearLayout>
+
+        <!-- Container for cards -->
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -9,4 +9,5 @@
     </string-array>
     <string name="title_activity_report">Report</string>
     <string name="title_activity_restaurant_list">Restaurant List</string>
+    <string name="restaurant_card_minute_wait">%1$d minute wait</string>
 </resources>
