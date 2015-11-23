@@ -18,6 +18,7 @@ import neckbeardhackers.pcqueue.model.DailyOperatingHours;
 import neckbeardhackers.pcqueue.model.OperatingHours;
 import neckbeardhackers.pcqueue.model.Restaurant;
 import neckbeardhackers.pcqueue.model.RestaurantManager;
+import neckbeardhackers.pcqueue.model.WaitTimeGroup;
 
 /**
  * Created by brianna lam and katherine duan on 11/21/15.
@@ -87,12 +88,15 @@ public class RestaurantInfoActivity extends AppCompatActivity{
             int[] hourInfo = {R.id.info_sundayHours, R.id.info_mondayHours, R.id.info_tuesdayHours,
                     R.id.info_wednesdayHours, R.id.info_thursdayHours, R.id.info_fridayHours, R.id.info_saturdayHours};
             TextView fillDays;
+
             Calendar cal = Calendar.getInstance();
+
             for (int i = 0; i < OperatingHours.DAY_NAMES.length; i++) {
                 fillDays = (TextView) findViewById(hourInfo[i]);
                 DailyOperatingHours todaysHours = restaurant.getHours().getOperatingHours(OperatingHours.getDayOfWeek(i));
                 if(todaysHours.doesNotClose()){
                     fillDays.setText("24 Hours");
+                    fillDays.setTextColor(getResources().getColor(R.color.textColorHighlight));
                 }
                 else if(!todaysHours.isClosed()) {
                     fillDays.setText(String.format("%s-\n%s", todaysHours.getOpeningTimeString(), todaysHours.getCloseTimeString()));
@@ -106,6 +110,27 @@ public class RestaurantInfoActivity extends AppCompatActivity{
 
             TextView phoneNum = (TextView) findViewById(R.id.info_phoneNumber);
             phoneNum.setText(restaurant.getPhoneNumber());
+
+
+            WaitTimeGroup waitTimeGroup = restaurant.getWaitTimeGroup();
+
+            // set color of currentWait label to green/orange/red
+            int color = -1;
+            switch (waitTimeGroup.getCurrentWait()) {
+                case LOW:
+                    color = R.color.green;
+                    break;
+                case MEDIUM:
+                    color = R.color.orange;
+                    break;
+                case HIGH:
+                case VERY_HIGH:
+                    color = R.color.red;
+                    break;
+            }
+            if (color != -1) {
+                waitTime.setTextColor(getResources().getColor(color));
+            }
         }
     }
 }
