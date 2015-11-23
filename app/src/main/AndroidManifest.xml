@@ -43,6 +43,12 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
 
+        <activity
+            android:name=".view.RestaurantInfoActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+
         <service android:name="com.parse.PushService" />
         <receiver android:name="neckbeardhackers.pcqueue.net.CustomParsePushBroadcastReceiver"
             android:exported="false">
