@@ -2,6 +2,7 @@ package neckbeardhackers.pcqueue.model;
 
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -92,10 +93,10 @@ public class RestaurantManager implements RestaurantChangeSubject {
     public void executeQueryInBackground(ParseQuery<Restaurant> query, final ManagerRefreshCallback completeCallback) {
         query.findInBackground(new FindCallback<Restaurant>() {
 
-        @Override
-        public void done(final List<Restaurant> objects, ParseException e) {
-            if (e == null)
-                refreshParseCacheAndNotify(objects);
+            @Override
+            public void done(final List<Restaurant> objects, ParseException e) {
+                if (e == null)
+                    refreshParseCacheAndNotify(objects);
                 if (completeCallback != null)
                     completeCallback.handleRefreshComplete();
             }
@@ -121,6 +122,21 @@ public class RestaurantManager implements RestaurantChangeSubject {
         // Query the database from network to get the updated restaurant object
         ParseQuery<Restaurant> query = queryRestaurantById(restaurantId, false);
         executeQueryInBackground(query);
+    }
+
+    public void setLocalRestaurantWaitTime(String restaurantId, final int time) {
+        ParseQuery<Restaurant> query = queryRestaurantById(restaurantId, true);
+        query.getFirstInBackground(new GetCallback<Restaurant>() {
+
+            @Override
+            public void done(Restaurant object, ParseException e) {
+                object.put("CurrentWait", time);
+                object.saveInBackground();
+                List<Restaurant> individualList = new ArrayList<Restaurant>();
+                individualList.add(object);
+                refreshParseCacheAndNotify(individualList);
+            }
+        });
     }
 
     public ParseQuery<Restaurant> queryForAllRestaurants() {

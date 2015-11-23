@@ -1,5 +1,6 @@
 package neckbeardhackers.pcqueue.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
@@ -152,7 +153,9 @@ public class RestaurantListAdapter
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ReporterActivity.class);
                 intent.putExtra("restaurantId", restaurant.getId());
-                v.getContext().startActivity(intent);
+                RestaurantListActivity encapsulatedActivity = (RestaurantListActivity) context;
+                encapsulatedActivity.startActivityForResult(intent, 100);
+
             }
 
         });
