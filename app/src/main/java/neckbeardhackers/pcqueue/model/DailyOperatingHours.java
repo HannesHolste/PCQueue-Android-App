@@ -29,6 +29,12 @@ public final class DailyOperatingHours {
         return false;
     }
 
+    public boolean doesNotClose(){
+        if(openTime.equals("12:00am") && closeTime.equals("12:00am")){
+            return true;
+        }
+        return false;
+    }
     // Call this if you want to denote "open 24 hours per day"
     public DailyOperatingHours(String day) {
         this(day, DEFAULT_TIME, DEFAULT_TIME);

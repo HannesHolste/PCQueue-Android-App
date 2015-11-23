@@ -1,6 +1,5 @@
 package neckbeardhackers.pcqueue.view;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,9 +10,11 @@ import android.widget.TextView;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
+import java.util.Calendar;
 import java.util.List;
 
 import neckbeardhackers.pcqueue.R;
+import neckbeardhackers.pcqueue.model.DailyOperatingHours;
 import neckbeardhackers.pcqueue.model.OperatingHours;
 import neckbeardhackers.pcqueue.model.Restaurant;
 import neckbeardhackers.pcqueue.model.RestaurantManager;
@@ -86,11 +87,16 @@ public class RestaurantInfoActivity extends AppCompatActivity{
             int[] hourInfo = {R.id.info_sundayHours, R.id.info_mondayHours, R.id.info_tuesdayHours,
                     R.id.info_wednesdayHours, R.id.info_thursdayHours, R.id.info_fridayHours, R.id.info_saturdayHours};
             TextView fillDays;
+            Calendar cal = Calendar.getInstance();
             for (int i = 0; i < OperatingHours.DAY_NAMES.length; i++) {
                 fillDays = (TextView) findViewById(hourInfo[i]);
-                if(!restaurant.getHours().getOperatingHours(OperatingHours.DAY_NAMES[i]).isClosed())
-                    fillDays.setText(restaurant.getHours().getOperatingHours(OperatingHours.DAY_NAMES[i]).getOpeningTimeString() +
-                        "-\n" + restaurant.getHours().getOperatingHours(OperatingHours.DAY_NAMES[i]).getCloseTimeString());
+                DailyOperatingHours todaysHours = restaurant.getHours().getOperatingHours(OperatingHours.getDayOfWeek(i));
+                if(todaysHours.doesNotClose()){
+                    fillDays.setText("24 Hours");
+                }
+                else if(!todaysHours.isClosed()) {
+                    fillDays.setText(String.format("%s-\n%s", todaysHours.getOpeningTimeString(), todaysHours.getCloseTimeString()));
+                }
                 else
                     fillDays.setText("Closed");
             }
@@ -102,7 +108,4 @@ public class RestaurantInfoActivity extends AppCompatActivity{
             phoneNum.setText(restaurant.getPhoneNumber());
         }
     }
-    /*private static void fillDays(){
-
-    }*/
 }
