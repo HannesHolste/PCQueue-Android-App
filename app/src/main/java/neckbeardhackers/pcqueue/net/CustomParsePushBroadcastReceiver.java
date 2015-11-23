@@ -2,6 +2,7 @@ package neckbeardhackers.pcqueue.net;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
@@ -34,32 +35,28 @@ public class CustomParsePushBroadcastReceiver extends ParsePushBroadcastReceiver
         JSONObject pushData = getPushData(intent);
 
         if (pushData == null
-                || !pushData.has("restaurantObjectId") || !pushData.has("restaurantObjectIds")) {
+                || (!pushData.has("restaurantObjectId") && !pushData.has("restaurantObjectIds"))) {
+            Log.d("onPushReceive", "Fields didn't match");
             return;
         }
 
         if (pushData.has("restaurantObjectId")) {
+            Log.d("onPushReceive", "Got a JSON object with a single restaurant");
             // This is for the single restaurant case
             try {
                 // Extract id of changed restaurant object
                 String restaurantId = pushData.getString("restaurantObjectId");
                 RestaurantManager.getInstance().refreshIndividualRestaurantHard(restaurantId);
             } catch (JSONException e) {
+                Log.d("onPushReceive", "Had a problem for: Got a JSON object with a single restaurant");
                 e.printStackTrace();
             }
         } else if (pushData.has("restaurantObjectIds")) {
+            Log.d("onPushReceive", "Got a JSON object with a MANY single restaurant");
             // Sometimes we want to update all the restaurants at once (e.g. on a decremement)
             // and so the server sends us all the restaurant data
-            try {
-                // Extract id of changed restaurant object
-                JSONArray jsonlist = pushData.getJSONArray("restaurantObjectIds");
-                for (int i=0; i<jsonlist.length(); i++) {
-                    String restaurantId = jsonlist.getString(i);
-                    RestaurantManager.getInstance().refreshIndividualRestaurantHard(restaurantId);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            Log.d("onPushReceive", "Updating MANY restaurant");
+            RestaurantManager.getInstance().refreshAllRestaurantsHard();
         }
 
     }
