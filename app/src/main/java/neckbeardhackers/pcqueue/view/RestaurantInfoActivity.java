@@ -97,6 +97,9 @@ public class RestaurantInfoActivity extends AppCompatActivity{
 
             TextView infoDescription = (TextView) findViewById(R.id.info_descriptionText);
             infoDescription.setText(restaurant.getDescription());
+
+            TextView phoneNum = (TextView) findViewById(R.id.info_phoneNumber);
+            phoneNum.setText(restaurant.getPhoneNumber());
         }
     }
     /*private static void fillDays(){

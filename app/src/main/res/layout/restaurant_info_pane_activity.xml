@@ -298,7 +298,7 @@
             <TextView
                 android:id="@+id/info_phoneNumber"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_below="@+id/info_phone"
                 android:text="(858) 952-3824"
                 android:textColor="@color/textColorTertiary"
