@@ -11,9 +11,11 @@ import com.parse.ParseObject;
 import com.parse.ParsePushBroadcastReceiver;
 import com.parse.ParseQuery;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import neckbeardhackers.pcqueue.model.Restaurant;
@@ -31,17 +33,35 @@ public class CustomParsePushBroadcastReceiver extends ParsePushBroadcastReceiver
         //super.onPushReceive(context, intent); // do not show push notification
         JSONObject pushData = getPushData(intent);
 
-        if (pushData == null || !pushData.has("restaurantObjectId")) {
+        if (pushData == null
+                || !pushData.has("restaurantObjectId") || !pushData.has("restaurantObjectIds")) {
             return;
         }
 
-        try {
-            // Extract id of changed restaurant object
-            String restaurantId = pushData.getString("restaurantObjectId");
-            RestaurantManager.getInstance().refreshIndividualRestaurantHard(restaurantId);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if (pushData.has("restaurantObjectId")) {
+            // This is for the single restaurant case
+            try {
+                // Extract id of changed restaurant object
+                String restaurantId = pushData.getString("restaurantObjectId");
+                RestaurantManager.getInstance().refreshIndividualRestaurantHard(restaurantId);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else if (pushData.has("restaurantObjectIds")) {
+            // Sometimes we want to update all the restaurants at once (e.g. on a decremement)
+            // and so the server sends us all the restaurant data
+            try {
+                // Extract id of changed restaurant object
+                JSONArray jsonlist = pushData.getJSONArray("restaurantObjectIds");
+                for (int i=0; i<jsonlist.length(); i++) {
+                    String restaurantId = jsonlist.getString(i);
+                    RestaurantManager.getInstance().refreshIndividualRestaurantHard(restaurantId);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
     private JSONObject getPushData(Intent intent) {
