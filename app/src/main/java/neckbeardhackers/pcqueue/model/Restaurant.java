@@ -81,15 +81,18 @@ public class Restaurant extends ParseObject {
         return factory.build();
     }
 
+    // The reason isClosed is an int, not a boolean, in the parse db is because
+    // And the reason why we use isClosed server-side is because Parse doesn't
+    // support ascending and descending ordering in the same query
+    // and sorting doesn't work on booleans at all
     public boolean isOpenNow() {
-        return true;
-        // TODO
-//        return getBoolean("isOpen");
+        return getInt("isClosed") == 0;
     }
 
     @Override
     public String toString() {
-        return "Restaurant {id: " + getObjectId() + ", name: " + getName() + "}";
+        return "Restaurant {id: " + getObjectId() + ", name: " + getName() + ", waitTime: " + getWaitInMinutes() + "," +
+                "isOpen: " + isOpenNow() + "}";
     }
 
     /**

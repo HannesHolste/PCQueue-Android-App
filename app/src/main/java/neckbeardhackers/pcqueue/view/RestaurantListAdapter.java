@@ -30,6 +30,8 @@ public class RestaurantListAdapter
         implements RestaurantChangeObserver {
 
     private RestaurantManager.RestaurantSortType currentSortType = RestaurantManager.RestaurantSortType.NAME;
+    public static final int CARD_VIEW_OPEN_RESTAURANT = 0;
+    public static final int CARD_VIEW_CLOSED_RESTAURANT = 1;
 
     @Override
     /**
@@ -39,16 +41,7 @@ public class RestaurantListAdapter
         for (int i = 0; i < getItemCount(); i++) {
             Restaurant oldRestaurant = getItem(i);
             if (oldRestaurant.getId().equals(updatedRestaurant.getId())) {
-
-                // check if we need to update sorting
-                if (oldRestaurant.getWaitInMinutes() != updatedRestaurant.getWaitInMinutes()) {
-                    sortAndUpdate(currentSortType);
-                } else {
-                    // TODO make more efficient by only updating that single restaurant rather than
-                    // requerying parse for all
-                    super.loadObjects(); // temporary: simply reload all restaurant objects from parsequery
-
-                }
+                sortAndUpdate(currentSortType);
                 break;
             }
         }
@@ -113,23 +106,35 @@ public class RestaurantListAdapter
         return super.getItemCount();
     }
 
+
+    @Override
+    // load different XML for cards showing closed restaurant
+    public int getItemViewType(int position) {
+        return getItem(position).isOpenNow() ? CARD_VIEW_OPEN_RESTAURANT : CARD_VIEW_CLOSED_RESTAURANT;
+    }
+
     /**
      * Required method for RecyclerView. Upon creation, inflate the appropriate
      * Layout XML view and instantiate a RestaurantViewHolder.
      *
      * @param viewGroup
-     * @param i
+     * @param viewType
      * @return
      */
-    public RestaurantViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        int layout = R.layout.restaurant_list_item;
-
-        final Restaurant restaurant = getItem(i);
+    public RestaurantViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        int layout;
 
         // load different XML for cards showing closed restaurant
-        if (!restaurant.isOpenNow()) {
-            layout = R.layout.restaurant_list_item_closed;
+        switch (viewType) {
+            case CARD_VIEW_CLOSED_RESTAURANT:
+                layout = R.layout.restaurant_list_item_closed;
+                break;
+            case CARD_VIEW_OPEN_RESTAURANT:
+            default:
+                layout = R.layout.restaurant_list_item;
+                break;
         }
+
 
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(layout,
                 viewGroup, false);

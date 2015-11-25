@@ -66,13 +66,13 @@ public class RestaurantManager implements RestaurantChangeSubject {
         if (local)
             query.fromLocalDatastore();
 
+        query.orderByAscending("isClosed");
         if (t.equals(RestaurantSortType.NAME)) {
             // sort alphabetically by restaurant name
-            query.orderByAscending("Name");
-        } else if (t.equals(RestaurantSortType.WAIT_TIME)) {
-            query.orderByAscending("WaitTime");
-            // if two restaurants have equal wait time, sort ascend. by name
             query.addAscendingOrder("Name");
+        } else if (t.equals(RestaurantSortType.WAIT_TIME)) {
+            // show open restaurants first
+            query.addAscendingOrder("CurrentWait");
         }
         return query;
     }
@@ -94,10 +94,10 @@ public class RestaurantManager implements RestaurantChangeSubject {
     public void executeQueryInBackground(ParseQuery<Restaurant> query, final ManagerRefreshCallback completeCallback) {
         query.findInBackground(new FindCallback<Restaurant>() {
 
-        @Override
-        public void done(final List<Restaurant> objects, ParseException e) {
-            if (e == null)
-                refreshParseCacheAndNotify(objects);
+            @Override
+            public void done(final List<Restaurant> objects, ParseException e) {
+                if (e == null)
+                    refreshParseCacheAndNotify(objects);
                 if (completeCallback != null)
                     completeCallback.handleRefreshComplete();
             }
