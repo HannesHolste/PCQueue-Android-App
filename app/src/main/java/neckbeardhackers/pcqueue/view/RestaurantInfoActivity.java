@@ -96,7 +96,7 @@ public class RestaurantInfoActivity extends AppCompatActivity{
                 DailyOperatingHours todaysHours = restaurant.getHours().getOperatingHours(OperatingHours.getDayOfWeek(i));
                 if(todaysHours.doesNotClose()){
                     fillDays.setText("24 Hours");
-                    fillDays.setTextColor(getResources().getColor(R.color.textColorHighlight));
+                    //fillDays.setTextColor(getResources().getColor(R.color.textColorHighlight));
                 }
                 else if(!todaysHours.isClosed()) {
                     fillDays.setText(String.format("%s-\n%s", todaysHours.getOpeningTimeString(), todaysHours.getCloseTimeString()));
