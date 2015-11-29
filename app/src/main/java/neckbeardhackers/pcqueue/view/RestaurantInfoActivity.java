@@ -71,14 +71,20 @@ public class RestaurantInfoActivity extends AppCompatActivity{
 
             TextView waitTime = (TextView) findViewById(R.id.restaurantWaitTime);
             TextView openSign = (TextView) findViewById(R.id.info_openNow);
-            System.out.println("Is " + restaurant.getName() + " open now? " + restaurant.getHours().isOpenNow());
+            System.out.println("Is " + restaurant.getName() + " open now? " + restaurant.isClosed());
             System.out.println("What is the current wait in minutes for this restaurant? " + restaurant.getWaitInMinutes());
             //waitTime.setText(restaurant.getWaitInMinutes() + " minutes");
-            if (restaurant.getHours().isOpenNow()) {
+//            if (restaurant.getHours().isOpenNow()) {
+//                waitTime.setText(restaurant.getWaitInMinutes() + " minutes");
+//                openSign.setText("Open Now");
+//                openSign.setTextColor(getResources().getColor(R.color.textColorHighlight));
+//            }
+            if(restaurant.isClosed() == 0){
                 waitTime.setText(restaurant.getWaitInMinutes() + " minutes");
                 openSign.setText("Open Now");
                 openSign.setTextColor(getResources().getColor(R.color.textColorHighlight));
-            } else {
+            }
+            else {
                 waitTime.setText("Not Open");
                 waitTime.setTextColor(getResources().getColor(R.color.grey));
                 openSign.setText("Closed Now");
@@ -98,7 +104,7 @@ public class RestaurantInfoActivity extends AppCompatActivity{
                     fillDays.setText("24 Hours");
                     //fillDays.setTextColor(getResources().getColor(R.color.textColorHighlight));
                 }
-                else if(!todaysHours.isClosed()) {
+                else if(!todaysHours.closedAllDay()) {
                     fillDays.setText(String.format("%s-\n%s", todaysHours.getOpeningTimeString(), todaysHours.getCloseTimeString()));
                 }
                 else
