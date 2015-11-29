@@ -11,6 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 
 import com.parse.FunctionCallback;
@@ -23,6 +26,23 @@ import neckbeardhackers.pcqueue.R;
 import neckbeardhackers.pcqueue.model.RestaurantManager;
 
 public class RestaurantListActivity extends AppCompatActivity {
+    private int listScrollPosition = 0;
+
+    public synchronized void addScrollAction(int dScroll) {
+        listScrollPosition += dScroll;
+        changeHeaderImageHeightBasedOnScroll();
+    }
+
+    private synchronized void changeHeaderImageHeightBasedOnScroll() {
+        ImageView headerImage = (ImageView)findViewById(R.id.restaurant_list_header_image);
+        int newHeight = (400 - listScrollPosition);
+        if (newHeight < 0)
+            newHeight = 0;
+        else if (newHeight > 400)
+            newHeight = 400;
+        System.err.println(newHeight);
+        headerImage.setLayoutParams(new LinearLayout.LayoutParams(headerImage.getWidth(), newHeight));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +51,7 @@ public class RestaurantListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_restaurant_list);
 
         // This will locate the toolbar in activity_restaurant_list and
-        Toolbar toolbar = (Toolbar) findViewById(R.id.mainToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.restaurant_list_toolbar);
         setSupportActionBar(toolbar);
 
 
@@ -56,7 +76,14 @@ public class RestaurantListActivity extends AppCompatActivity {
                 });
             }
         });
-    }
+        restaurantListRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                //((RestaurantListActivity)recyclerView.getContext()).addScrollAction(dy);
+            }
+        });
+   }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

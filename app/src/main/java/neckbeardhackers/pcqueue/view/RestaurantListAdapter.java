@@ -156,7 +156,6 @@ public class RestaurantListAdapter
                 encapsulatedActivity.startActivityForResult(intent, 100);
 
             }
-
         });
 
         holder.cardView.setOnClickListener(new View.OnClickListener(){
@@ -167,8 +166,6 @@ public class RestaurantListAdapter
                 v.getContext().startActivity(intent);
             }
         });
-
-
 
     }
 
