@@ -55,7 +55,7 @@ public class RestaurantInfoActivity extends AppCompatActivity implements Restaur
                 List<Restaurant> results = query.find();
 
                 // ensure we only got one result
-                if (results.size() > 1) {
+                if (results.size() != 1) {
                     throw new ParseException(ParseException.OBJECT_NOT_FOUND,
                             "More than one objectId for restaurant " + restaurantId);
                 }
