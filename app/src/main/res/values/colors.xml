@@ -4,6 +4,7 @@
     <color name="colorSecondary">#3D4550</color>
 
     <color name="textColorPrimary">#484848</color>
+
     <color name="textColorSecondary">#6E6E6E</color>
     <color name="textColorTertiary">#A5A5A5</color>
     <color name="textColorHighlight">#78A2D8</color>
@@ -16,4 +17,16 @@
     <color name="orange">#ECA000</color>
     <color name="red">#AD1F02</color>
     <color name="grey">#888888</color>
+
+
+    <!-- used if the restaurant is closed -->
+    <color name="transparent_grey">#22000000</color>
+    <color name="transparentTextColorPrimary">#33484848</color>
+    <color name="transparentTextColorSecondary">#776E6E6E</color>
+    <color name="transparentGreen">#5716710a</color>
+    <color name="transparentRed">#57AD1F02</color>
+    <color name="transparentOrange">#67ECA000</color>
+    <color name="transparentbuttonColorPrimary">#67318EFA</color>
+
+
 </resources>

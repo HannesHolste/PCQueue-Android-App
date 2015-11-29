@@ -3,12 +3,14 @@ package neckbeardhackers.pcqueue.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.parse.ParseQuery;
@@ -62,6 +64,8 @@ public class RestaurantListAdapter
         TextView restaurantName;
         TextView currentWait;
         Button updateButton;
+        RelativeLayout cardItem;
+        Bitmap refreshIcon;
 
         RestaurantViewHolder(View itemView) {
             super(itemView);
@@ -69,6 +73,7 @@ public class RestaurantListAdapter
             restaurantName = (TextView) itemView.findViewById(R.id.restaurantName);
             currentWait = (TextView) itemView.findViewById(R.id.restaurantWaitTime);
             updateButton = (Button)itemView.findViewById(R.id.updateButton);
+            cardItem = (RelativeLayout) itemView.findViewById(R.id.card_item);
         }
     }
     private Context context;
@@ -121,26 +126,70 @@ public class RestaurantListAdapter
 
         // set color of currentWait label to green/orange/red
         int color = -1;
-        switch (waitTimeGroup.getCurrentWait()) {
-            case LOW:
-                color = R.color.green;
-                break;
-            case MEDIUM:
-                color = R.color.orange;
-                break;
-            case HIGH:
-            case VERY_HIGH:
-                color = R.color.red;
-                break;
+        // set currentWait time label to vibrant color if open
+        if(restaurant.isClosed() == 0) {
+            switch (waitTimeGroup.getCurrentWait()) {
+                case LOW:
+                    color = R.color.green;
+                    break;
+                case MEDIUM:
+                    color = R.color.orange;
+                    break;
+                case HIGH:
+                case VERY_HIGH:
+                    color = R.color.red;
+                    break;
+            }
+            if (color != -1) {
+                holder.currentWait.setTextColor(context.getResources().getColor(color));
+            }
         }
-        if (color != -1) {
-            holder.currentWait.setTextColor(context.getResources().getColor(color));
+        // set currentWait time label to a more opaque color
+        else{
+            switch (waitTimeGroup.getCurrentWait()) {
+                case LOW:
+                    color = R.color.transparentGreen;
+                    break;
+                case MEDIUM:
+                    color = R.color.transparentOrange;
+                    break;
+                case HIGH:
+                case VERY_HIGH:
+                    color = R.color.transparentRed;
+                    break;
+            }
+            if (color != -1) {
+                holder.currentWait.setTextColor(context.getResources().getColor(color));
+            }
         }
 
-        if (!restaurant.getHours().isOpenNow()) {
-            // TODO: Make the closed restaurant cards actually look closed. The below grey toggle
-            // looks like absolute poopy garbage
-            holder.cardView.setCardBackgroundColor(R.color.grey);
+        System.out.println("Is "+ restaurant.getName()+ " closed? " + restaurant.isClosed());
+//        if (!restaurant.getHours().isOpenNow()) {
+//            // TODO: Make the closed restaurant cards actually look closed. The below grey toggle
+//            // looks like absolute poopy garbage
+//            holder.cardView.setCardBackgroundColor(R.color.grey);
+//
+//            holder.cardItem.setBackgroundColor(context.getResources().getColor(R.color.transparent_grey));
+//            holder.restaurantName.setTextColor(context.getResources().getColor(R.color.transparentTextColorSecondary));
+//            //holder.currentWait.setText("Closed");
+//            //holder.currentWait.setTextColor(context.getResources().getColor(R.color.transparentRed));
+//            holder.updateButton.setEnabled(false);
+//            holder.updateButton.setTextColor(context.getResources().getColor(R.color.transparentTextColorSecondary));
+//        }
+
+        //Checking if restaurant is closed
+        if(restaurant.isClosed() == 1){
+            // apply grey transparency to card
+            holder.cardItem.setBackgroundColor(context.getResources().getColor(R.color.transparent_grey));
+            // make the restaurant name a little more transparent
+            holder.restaurantName.setTextColor(context.getResources().getColor(R.color.transparentTextColorSecondary));
+            //holder.currentWait.setText("Closed");
+            //holder.currentWait.setTextColor(context.getResources().getColor(R.color.transparentRed));
+
+            // disable the update button from being clickable when the restaurant is closed
+            holder.updateButton.setEnabled(false);
+            // make the button more transparent
+            holder.updateButton.setTextColor(context.getResources().getColor(R.color.transparentbuttonColorPrimary));
         }
 
         holder.updateButton.setOnClickListener(new View.OnClickListener() {
