@@ -20,7 +20,7 @@
 
 
     <!-- used if the restaurant is closed -->
-    <color name="transparent_grey">#22000000</color>
+    <color name="transparent_grey">#11000000</color>
     <color name="transparentTextColorPrimary">#33484848</color>
     <color name="transparentTextColorSecondary">#776E6E6E</color>
     <color name="transparentGreen">#5716710a</color>
