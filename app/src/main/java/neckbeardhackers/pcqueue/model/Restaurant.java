@@ -49,7 +49,9 @@ public class Restaurant extends ParseObject {
         return getInt("CurrentWait");
     }
 
-    public int isClosed() { return getInt("isClosed"); }
+    public boolean isClosed() {
+        return (getInt("isClosed") == 1);
+    }
     /**
      * Create and serialize an OperatingHours wrapper object from the raw JSON array in
      * Parse cloud, which follows the JSON object format:

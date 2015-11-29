@@ -127,7 +127,7 @@ public class RestaurantListAdapter
         // set color of currentWait label to green/orange/red
         int color = -1;
         // set currentWait time label to vibrant color if open
-        if(restaurant.isClosed() == 0) {
+        if(!restaurant.isClosed()) {
             switch (waitTimeGroup.getCurrentWait()) {
                 case LOW:
                     color = R.color.green;
@@ -163,33 +163,27 @@ public class RestaurantListAdapter
             }
         }
 
-        System.out.println("Is "+ restaurant.getName()+ " closed? " + restaurant.isClosed());
-//        if (!restaurant.getHours().isOpenNow()) {
-//            // TODO: Make the closed restaurant cards actually look closed. The below grey toggle
-//            // looks like absolute poopy garbage
-//            holder.cardView.setCardBackgroundColor(R.color.grey);
-//
-//            holder.cardItem.setBackgroundColor(context.getResources().getColor(R.color.transparent_grey));
-//            holder.restaurantName.setTextColor(context.getResources().getColor(R.color.transparentTextColorSecondary));
-//            //holder.currentWait.setText("Closed");
-//            //holder.currentWait.setTextColor(context.getResources().getColor(R.color.transparentRed));
-//            holder.updateButton.setEnabled(false);
-//            holder.updateButton.setTextColor(context.getResources().getColor(R.color.transparentTextColorSecondary));
-//        }
 
         //Checking if restaurant is closed
-        if(restaurant.isClosed() == 1){
+        if (restaurant.isClosed()) {
             // apply grey transparency to card
             holder.cardItem.setBackgroundColor(context.getResources().getColor(R.color.transparent_grey));
             // make the restaurant name a little more transparent
             holder.restaurantName.setTextColor(context.getResources().getColor(R.color.transparentTextColorSecondary));
-            //holder.currentWait.setText("Closed");
-            //holder.currentWait.setTextColor(context.getResources().getColor(R.color.transparentRed));
 
             // disable the update button from being clickable when the restaurant is closed
             holder.updateButton.setEnabled(false);
             // make the button more transparent
             holder.updateButton.setTextColor(context.getResources().getColor(R.color.transparentbuttonColorPrimary));
+            holder.currentWait.setText("CLOSED");
+        }
+        else {
+            /* The restaurant is open - reset all values to default card */
+            holder.cardItem.setBackgroundColor(context.getResources().getColor(R.color.cardview_light_background));
+            holder.restaurantName.setTextColor(context.getResources().getColor(R.color.textColorPrimary));
+            holder.updateButton.setEnabled(true);
+            holder.updateButton.setTextColor(context.getResources().getColor(R.color.buttonColorPrimary));
+            holder.currentWait.setText(restaurant.getWaitInMinutes() + " minute wait");
         }
 
         holder.updateButton.setOnClickListener(new View.OnClickListener() {
