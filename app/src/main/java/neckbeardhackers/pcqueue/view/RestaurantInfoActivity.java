@@ -10,10 +10,10 @@ import android.widget.TextView;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
-import java.util.Calendar;
 import java.util.List;
 
 import neckbeardhackers.pcqueue.R;
+import neckbeardhackers.pcqueue.event.RestaurantChangeObserver;
 import neckbeardhackers.pcqueue.model.DailyOperatingHours;
 import neckbeardhackers.pcqueue.model.OperatingHours;
 import neckbeardhackers.pcqueue.model.Restaurant;
@@ -22,7 +22,7 @@ import neckbeardhackers.pcqueue.model.RestaurantManager;
 /**
  * Created by brianna lam and katherine duan on 11/21/15.
  */
-public class RestaurantInfoActivity extends AppCompatActivity{
+public class RestaurantInfoActivity extends AppCompatActivity implements RestaurantChangeObserver {
 
     private Restaurant restaurant = null;
     @Override
@@ -41,6 +41,8 @@ public class RestaurantInfoActivity extends AppCompatActivity{
             }
         });
 
+        // Register for changes
+        RestaurantManager.getInstance().registerRestaurantChangeListener(this);
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -59,12 +61,28 @@ public class RestaurantInfoActivity extends AppCompatActivity{
                 }
 
                 restaurant = results.get(0);
+                update(restaurant);
 
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
+
+    }
+
+    @Override
+    public void onStop() {
+        RestaurantManager.getInstance().unregisterRestaurantChangeListener(this);
+        super.onStop();
+    }
+
+    @Override
+    public void update(Restaurant updatedRestaurant) {
         if (restaurant != null) {
+            if (updatedRestaurant.getId().equals(restaurant.getId()))
+                restaurant = updatedRestaurant;
+
+            // Set the restaurant name
             TextView restaurantName = (TextView) findViewById(R.id.info_restaurantName);
             restaurantName.setText(restaurant.getName());
 
@@ -72,22 +90,22 @@ public class RestaurantInfoActivity extends AppCompatActivity{
             TextView openSign = (TextView) findViewById(R.id.info_openNow);
             System.out.println("Is " + restaurant.getName() + " open now? " + restaurant.getHours().isOpenNow());
             System.out.println("What is the current wait in minutes for this restaurant? " + restaurant.getWaitInMinutes());
-            //waitTime.setText(restaurant.getWaitInMinutes() + " minutes");
             if (restaurant.getHours().isOpenNow()) {
                 waitTime.setText(restaurant.getWaitInMinutes() + " minutes");
                 openSign.setText("Open Now");
                 openSign.setTextColor(getResources().getColor(R.color.textColorHighlight));
             } else {
                 waitTime.setText("Not Open");
-                waitTime.setTextColor(getResources().getColor(R.color.grey));
                 openSign.setText("Closed Now");
+                waitTime.setTextColor(getResources().getColor(R.color.grey));
                 openSign.setTextColor(getResources().getColor(R.color.red));
             }
 
+            // Put all the hour columns into an array so we can loop through them
             int[] hourInfo = {R.id.info_sundayHours, R.id.info_mondayHours, R.id.info_tuesdayHours,
                     R.id.info_wednesdayHours, R.id.info_thursdayHours, R.id.info_fridayHours, R.id.info_saturdayHours};
             TextView fillDays;
-            Calendar cal = Calendar.getInstance();
+
             for (int i = 0; i < OperatingHours.DAY_NAMES.length; i++) {
                 fillDays = (TextView) findViewById(hourInfo[i]);
                 DailyOperatingHours todaysHours = restaurant.getHours().getOperatingHours(OperatingHours.getDayOfWeek(i));

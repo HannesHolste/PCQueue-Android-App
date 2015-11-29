@@ -161,6 +161,11 @@ public class RestaurantManager implements RestaurantChangeSubject {
         }
     }
 
+    @Override
+    public synchronized void unregisterRestaurantChangeListener(RestaurantChangeObserver observer) {
+        observers.remove(observer);
+    }
+
 }
 
 
