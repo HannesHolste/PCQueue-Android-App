@@ -69,11 +69,11 @@ public class RestaurantManager implements RestaurantChangeSubject {
         if (local)
             query.fromLocalDatastore();
 
-        query.orderByAscending("isClosed");
         if (t.equals(RestaurantSortType.NAME)) {
             // sort alphabetically by restaurant name
-            query.addAscendingOrder("Name");
+            query.orderByAscending("Name");
         } else if (t.equals(RestaurantSortType.WAIT_TIME)) {
+            query.orderByAscending("isClosed");
             // show open restaurants first
             query.addAscendingOrder("CurrentWait");
         }
