@@ -2,6 +2,7 @@ package neckbeardhackers.pcqueue.model;
 
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -19,6 +20,15 @@ public class RestaurantManager implements RestaurantChangeSubject {
     private static RestaurantManager ourInstance = new RestaurantManager();
     private List<RestaurantChangeObserver> observers;
 
+    private RestaurantManager() {
+        observers = new ArrayList<>();
+    }
+
+    public static RestaurantManager getInstance() {
+        return ourInstance;
+    }
+
+
     public enum RestaurantSortType {
         NAME, WAIT_TIME
     }
@@ -27,13 +37,6 @@ public class RestaurantManager implements RestaurantChangeSubject {
         void handleRefreshComplete();
     }
 
-    public static RestaurantManager getInstance() {
-        return ourInstance;
-    }
-
-    private RestaurantManager() {
-        observers = new ArrayList<>();
-    }
 
     public ParseQuery<Restaurant> queryRestaurantById(String id, boolean local) {
         // Query the database from network to get the updated restaurant object
@@ -123,6 +126,21 @@ public class RestaurantManager implements RestaurantChangeSubject {
         // Query the database from network to get the updated restaurant object
         ParseQuery<Restaurant> query = queryRestaurantById(restaurantId, false);
         executeQueryInBackground(query);
+    }
+
+    public void setLocalRestaurantWaitTime(String restaurantId, final int time) {
+        ParseQuery<Restaurant> query = queryRestaurantById(restaurantId, true);
+        query.getFirstInBackground(new GetCallback<Restaurant>() {
+
+            @Override
+            public void done(Restaurant object, ParseException e) {
+                object.put("CurrentWait", time);
+                object.saveInBackground();
+                List<Restaurant> individualList = new ArrayList<Restaurant>();
+                individualList.add(object);
+                refreshParseCacheAndNotify(individualList);
+            }
+        });
     }
 
     public ParseQuery<Restaurant> queryForAllRestaurants() {

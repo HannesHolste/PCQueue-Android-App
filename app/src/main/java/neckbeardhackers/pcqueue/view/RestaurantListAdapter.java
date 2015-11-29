@@ -1,5 +1,6 @@
 package neckbeardhackers.pcqueue.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
@@ -21,6 +22,7 @@ import neckbeardhackers.pcqueue.model.RestaurantManager.ManagerRefreshCallback;
 import neckbeardhackers.pcqueue.model.WaitTimeGroup;
 
 /**
+ *
  * This adapter is meant to turn information about a Restaurant into a listview item. That is,
  * the information retrieved by this adapter will be used as an individual chunk of information
  * for building a single item on the RestaurantListUI
@@ -99,8 +101,6 @@ public class RestaurantListAdapter
         RestaurantManager.getInstance().registerRestaurantChangeListener(this);
     }
 
-    // TODO: Re-sortAndUpdate/sortAndUpdate restaurant methods
-
     @Override
     public int getItemCount() {
         return super.getItemCount();
@@ -142,7 +142,6 @@ public class RestaurantListAdapter
     }
 
     @Override
-
     /**
      * Called by RecyclerView to display the data at the specified position.
      */
@@ -185,13 +184,25 @@ public class RestaurantListAdapter
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), ReporterActivity.class);
                     intent.putExtra("restaurantId", restaurant.getId());
-                    v.getContext().startActivity(intent);
+                    RestaurantListActivity encapsulatedActivity = (RestaurantListActivity) context;
+                    encapsulatedActivity.startActivityForResult(intent, 100);
+
                 }
 
             });
+
+            holder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), RestaurantInfoActivity.class);
+                    intent.putExtra("restaurantId", restaurant.getId());
+                    v.getContext().startActivity(intent);
+                }
+            });
+
+
         }
 
     }
-
 }
 

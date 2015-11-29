@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
         applicationId "neckbeardhackers.pcqueue"
-        minSdkVersion 19
+        minSdkVersion 20
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
