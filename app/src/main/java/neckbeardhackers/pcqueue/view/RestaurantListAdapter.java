@@ -237,6 +237,9 @@ public class RestaurantListAdapter
 
             });
 
+        }
+
+        if (holder.cardView != null) {
             holder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -245,7 +248,6 @@ public class RestaurantListAdapter
                     v.getContext().startActivity(intent);
                 }
             });
-
 
         }
 
