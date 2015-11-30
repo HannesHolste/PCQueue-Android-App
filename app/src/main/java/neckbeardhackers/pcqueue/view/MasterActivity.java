@@ -51,6 +51,12 @@ public class MasterActivity extends AppCompatActivity implements NetworkConnecti
         registerNetworkConnectionListener(this);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerNetworkConnectionListener(this);
+    }
+
     public void onNetworkConnectivityChange(boolean hasConnection) {
         View bar = findViewById(R.id.no_internet_bar);
 

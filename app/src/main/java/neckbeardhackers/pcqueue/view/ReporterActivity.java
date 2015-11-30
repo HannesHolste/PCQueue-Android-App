@@ -7,6 +7,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -44,7 +45,10 @@ public class ReporterActivity extends MasterActivity {
             if (!hasConnection) {
                 btn.setBackgroundColor(Color.GRAY);
             } else {
-                btn.setBackgroundColor(getApplicationContext().getColor(R.color.buttonColorPrimary));
+                //int color = ContextCompat.getColor(getApplicationContext(), R.color.buttonColorPrimary);
+                //int color = getResources().getColor(R.color.buttonColorPrimary, null);
+                int color = Color.parseColor("#318EFA");
+                btn.setBackgroundColor(color);
             }
         }
     }
