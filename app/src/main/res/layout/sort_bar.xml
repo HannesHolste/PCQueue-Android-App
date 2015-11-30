@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+         xmlns:android="http://schemas.android.com/apk/res/android"
+         android:layout_marginTop="130dp"
+         android:orientation="horizontal"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:background="@android:color/transparent"
+         android:layout_gravity="center_horizontal"
+         >
+
+         <!-- if want icon, add android:drawableLeft="@drawable/ic_sort_wait_inactive" to button-->
+         <Button
+             android:id="@+id/sortByWaitButton"
+             android:background="@android:color/transparent"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Sort by wait time"
+             android:textColor="@color/textColorTertiary"
+             style="?android:attr/buttonBarButtonStyle"
+             android:drawableLeft="@drawable/ic_sort_wait_inactive"
+             android:drawablePadding="4dp"
+            />
+
+         <!--Bar underneath sort by wait if active-->
+         <View
+             android:id="@+id/waitTimeSortActive"
+             android:background="@android:color/transparent"
+             android:layout_width="250dp"
+             android:layout_height="5dp"
+             android:layout_alignBottom="@+id/sortByWaitButton"
+             android:layout_alignParentStart="true"
+             android:layout_toStartOf="@+id/sortByNameButton"
+             />
+
+         <!-- if want icon, add android:drawableLeft="@drawable/ic_sort_name_active"-->
+         <Button
+             android:id="@+id/sortByNameButton"
+             android:background="@android:color/transparent"
+             android:layout_width="wrap_content"
+             android:layout_marginLeft="10dp"
+             android:layout_height="wrap_content"
+             android:text="Sort by name"
+             android:textColor="@color/textColorSecondary"
+             style="?android:attr/buttonBarButtonStyle"
+             android:layout_alignParentTop="true"
+             android:drawableLeft="@drawable/ic_sort_name_active"
+             android:layout_toEndOf="@+id/sortByWaitButton"
+             android:drawablePadding="4dp"/>
+
+         <!--bar underneath sort by name if active-->
+         <View
+             android:id="@+id/nameSortActive"
+             android:layout_width="300dp"
+             android:layout_height="5dp"
+             android:background="@android:color/transparent"
+             android:layout_alignBottom="@+id/waitTimeSortActive"
+             android:layout_alignStart="@+id/sortByNameButton"
+             android:layout_alignEnd="@+id/sortByNameButton"
+             android:layout_alignTop="@+id/waitTimeSortActive" />
+
+     </RelativeLayout>
