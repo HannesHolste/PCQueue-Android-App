@@ -10,7 +10,7 @@
 
     <!-- Application bar -->
     <!-- <include layout="@layout/applicationbar"/> -->
-    <include layout="@layout/no_internet_bar"/>
+    <include layout="@layout/no_internet_bar" />
 
 
 
@@ -21,10 +21,21 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:id="@+id/RestaurantListRefresher">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <include layout="@layout/sort_bar"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/RestaurantListRecycler" />
+        </LinearLayout>
+
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.AppBarLayout
@@ -64,9 +75,6 @@
                 app:layout_scrollFlags="scroll|enterAlways"
              />
 
-            <include layout="@layout/sort_bar"
-                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
-                />
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
