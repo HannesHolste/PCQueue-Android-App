@@ -11,6 +11,7 @@
 
     <color name="buttonColorPrimary">#318EFA</color>
     <color name="buttonTextColorPrimary">#ffffff</color>
+    <color name="buttonTextColorPrimaryInActive">#55c2bebe</color>
 
     <color name="backgroundColorDisabled">#ECECEC</color>
 

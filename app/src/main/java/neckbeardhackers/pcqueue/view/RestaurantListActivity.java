@@ -1,7 +1,7 @@
 package neckbeardhackers.pcqueue.view;
 
-import android.app.FragmentManager;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -44,19 +44,54 @@ public class RestaurantListActivity extends AppCompatActivity {
         restaurantListRecycler.setAdapter(infoGetter);
 
         // Sorting button event listeners
-        Button sortByWaitButton = (Button) findViewById(R.id.sortByWaitButton);
-        Button sortByNameButton = (Button) findViewById(R.id.sortByNameButton);
+        final Button sortByWaitButton = (Button) findViewById(R.id.sortByWaitButton);
+        final Button sortByNameButton = (Button) findViewById(R.id.sortByNameButton);
+//        final Drawable alphabetSortIconActive = getResources().getDrawable(R.drawable.ic_sort_by_alpha_black_18dp);
+//        final Drawable alphabetSortIconInactive = getResources().getDrawable(R.drawable.ic_sort_name_inactive);
+//
+//        final Drawable waitTimeSortIconActive = getResources().getDrawable(R.drawable.ic_query_builder_black_18dp);
+//        final Drawable waitTimeSortIconInActive = getResources().getDrawable(R.drawable.ic_sort_wait_inactive);
+
+        // the bars that will appear underneath the respective sort that is active
+        final View sortWaitTimeUnderline = (View) findViewById(R.id.waitTimeSortActive);
+        final View sortNameUnderline = (View) findViewById(R.id.nameSortActive);
 
         sortByNameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 infoGetter.sortAndUpdate(RestaurantManager.RestaurantSortType.NAME);
+
+                // highlighting and greying out the sorts depending on which one is clicked
+                sortByNameButton.setTextAppearance(getApplicationContext(), R.style.sortButton_active);
+                sortByWaitButton.setTextAppearance(getApplicationContext(), R.style.sortButton_inactive);
+
+                // Attempt to alter icon color
+                //sortByNameButton.setCompoundDrawables(alphabetSortIconActive, null, null, null);
+                //sortByWaitButton.setCompoundDrawables(waitTimeSortIconInActive, null, null, null);
+
+                // Making the unactive sort bar invisible and make the other visible
+                sortWaitTimeUnderline.setVisibility(View.INVISIBLE);
+                sortNameUnderline.setVisibility(View.VISIBLE);
+
+                // setting the color to white (This is done because when the app opens for the first time,
+                // the bar will by default be underneath SORT BY NAME since we sort it alphabetically first
+                sortNameUnderline.setBackgroundResource(R.color.buttonTextColorPrimary);
             }
         });
         sortByWaitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 infoGetter.sortAndUpdate(RestaurantManager.RestaurantSortType.WAIT_TIME);
+
+                sortByWaitButton.setTextAppearance(getApplicationContext(), R.style.sortButton_active);
+                sortByNameButton.setTextAppearance(getApplicationContext(), R.style.sortButton_inactive);
+
+                //sortByNameButton.setCompoundDrawables(alphabetSortIconInactive, null, null, null);
+                //sortByWaitButton.setCompoundDrawables(waitTimeSortIconActive, null, null, null);
+
+                sortNameUnderline.setVisibility(View.INVISIBLE);
+                sortWaitTimeUnderline.setVisibility(View.VISIBLE);
+                sortWaitTimeUnderline.setBackgroundResource(R.color.buttonTextColorPrimary);
             }
         });
 

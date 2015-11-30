@@ -26,10 +26,14 @@
     </style>
 
 
-    <style name="sortButton">
+    <style name="sortButton_active">
         <item name="android:textColor">@color/buttonTextColorPrimary</item>
         <item name="android:background">@android:color/transparent</item>
+    </style>
 
+    <style name="sortButton_inactive">
+        <item name="android:textColor">@color/buttonTextColorPrimaryInActive</item>
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
 </resources>
