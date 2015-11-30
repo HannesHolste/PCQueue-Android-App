@@ -26,7 +26,7 @@ import neckbeardhackers.pcqueue.model.Restaurant;
 import neckbeardhackers.pcqueue.model.RestaurantManager;
 import neckbeardhackers.pcqueue.model.WaitTimeGroup;
 
-public class ReporterActivity extends AppCompatActivity {
+public class ReporterActivity extends MasterActivity {
 
     private Restaurant restaurant = null;
 
