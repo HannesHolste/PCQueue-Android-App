@@ -2,6 +2,7 @@ package neckbeardhackers.pcqueue.view;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -19,6 +20,7 @@ import android.widget.LinearLayout;
 import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.HashMap;
 
@@ -54,6 +56,15 @@ public class RestaurantListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.restaurant_list_toolbar);
         setSupportActionBar(toolbar);
 
+
+        // create our manager instance after the content view is set
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        // enable status bar tint
+        tintManager.setStatusBarTintEnabled(true);
+        // enable navigation bar tint
+        tintManager.setNavigationBarTintEnabled(true);
+        // set the transparent color of the status bar, 40% darker
+        tintManager.setTintColor(Color.parseColor("#40000000"));
 
         /* Load the restaurant list data */
         final RestaurantListAdapter infoGetter = new RestaurantListAdapter(this);

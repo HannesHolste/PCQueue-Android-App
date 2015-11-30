@@ -34,7 +34,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/restaurant_list_appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="160dp"
         android:fitsSystemWindows="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -43,8 +43,9 @@
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginStart="48dp"
-            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="18dp"
+            app:expandedTitleMarginEnd="14dp"
+            app:expandedTitleMarginBottom="18dp"
             android:fitsSystemWindows="true">
 
             <!-- Header image -->
