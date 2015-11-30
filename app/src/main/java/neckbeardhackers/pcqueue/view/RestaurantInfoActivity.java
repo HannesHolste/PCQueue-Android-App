@@ -114,8 +114,6 @@ public class RestaurantInfoActivity extends MasterActivity implements Restaurant
                     R.id.info_wednesdayHours, R.id.info_thursdayHours, R.id.info_fridayHours, R.id.info_saturdayHours};
             TextView fillDays;
 
-            Calendar cal = Calendar.getInstance();
-
             for (int i = 0; i < OperatingHours.DAY_NAMES.length; i++) {
                 fillDays = (TextView) findViewById(hourInfo[i]);
                 DailyOperatingHours todaysHours = restaurant.getHours().getOperatingHours(OperatingHours.getDayOfWeek(i));
