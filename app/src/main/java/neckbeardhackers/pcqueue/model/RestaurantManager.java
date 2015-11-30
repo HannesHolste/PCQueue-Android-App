@@ -73,7 +73,9 @@ public class RestaurantManager implements RestaurantChangeSubject {
             // sort alphabetically by restaurant name
             query.orderByAscending("Name");
         } else if (t.equals(RestaurantSortType.WAIT_TIME)) {
-            query.orderByAscending("WaitTime");
+            query.orderByAscending("isClosed");
+            // show open restaurants first
+            query.addAscendingOrder("CurrentWait");
         }
         return query;
     }
@@ -86,6 +88,11 @@ public class RestaurantManager implements RestaurantChangeSubject {
     public void refreshAllRestaurantsHard(ManagerRefreshCallback completeCallback) {
         ParseQuery<Restaurant> query = queryForAllRestaurants(false);
         executeQueryInBackground(query, completeCallback);
+    }
+
+    public void refreshAllRestaurantsSoft(RestaurantSortType sortType) {
+        ParseQuery<Restaurant> query = queryForAllRestaurants(sortType, true);
+        executeQueryInBackground(query);
     }
 
     public void executeQueryInBackground(ParseQuery<Restaurant> query) {

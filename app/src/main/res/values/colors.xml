@@ -7,9 +7,13 @@
     <color name="textColorSecondary">#6E6E6E</color>
     <color name="textColorTertiary">#A5A5A5</color>
     <color name="textColorHighlight">#78A2D8</color>
+    <color name="textColorDisabled">#B9B9B9</color>
 
     <color name="buttonColorPrimary">#318EFA</color>
     <color name="buttonTextColorPrimary">#ffffff</color>
+    <color name="buttonTextColorPrimaryInActive">#55c2bebe</color>
+
+    <color name="backgroundColorDisabled">#ECECEC</color>
 
     <!-- used for wait time labels -->
     <color name="green">#85DD00</color>

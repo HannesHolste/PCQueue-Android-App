@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="200dp">
+    android:background="@color/backgroundColorDisabled"
+    android:layout_height="140dp">
 
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/restaurant_card"
@@ -13,12 +14,14 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
         card_view:cardCornerRadius="7dp"
+        android:background="@color/backgroundColorDisabled"
         card_view:cardUseCompatPadding="true">
 
         <RelativeLayout
-            android:id="@+id/restaurant_card_rel_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/backgroundColorDisabled"
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/restaurantName"
@@ -30,6 +33,7 @@
                 android:layout_marginStart="35dp"
                 android:fontFamily="sans-serif-light"
                 android:text="Restaurant Name"
+                android:textColor="@color/textColorDisabled"
                 android:textSize="34sp" />
 
             <LinearLayout
@@ -41,37 +45,12 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/restaurantWaitTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="4dp"
-                    android:text="0 minute wait"
-                    android:textColor="@color/green"
-                    android:textSize="17sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:text="– as of last report"
-                    android:textColor="#A0A0A0"
+                    android:text="Currently closed"
+                    android:textColor="@color/textColorDisabled"
                     android:textSize="17sp" />
             </LinearLayout>
-
-            <Button
-                android:id="@+id/updateButton"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/restaurantName"
-                android:layout_marginBottom="10dp"
-                android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/ic_sync_blue"
-                android:text="Report Queue Length"
-                android:textColor="@color/textColorHighlight">
-
-            </Button>
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

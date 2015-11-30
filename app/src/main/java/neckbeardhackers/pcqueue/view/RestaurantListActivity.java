@@ -1,7 +1,7 @@
 package neckbeardhackers.pcqueue.view;
 
-import android.app.FragmentManager;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 
 import com.parse.FunctionCallback;
@@ -23,6 +24,7 @@ import neckbeardhackers.pcqueue.R;
 import neckbeardhackers.pcqueue.model.RestaurantManager;
 
 public class RestaurantListActivity extends MasterActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +39,79 @@ public class RestaurantListActivity extends MasterActivity {
 
         /* Load the restaurant list data */
         final RestaurantListAdapter infoGetter = new RestaurantListAdapter(this);
-        RecyclerView restaurantListRecycler = (RecyclerView) this.findViewById(R.id.RestaurantListRecycler);
+        final RecyclerView restaurantListRecycler = (RecyclerView) this.findViewById(R.id.RestaurantListRecycler);
         restaurantListRecycler.setHasFixedSize(true);
         restaurantListRecycler.setLayoutManager(new LinearLayoutManager(this));
         restaurantListRecycler.setAdapter(infoGetter);
+
+        // Sorting button event listeners
+        final Button sortByWaitButton = (Button) findViewById(R.id.sortByWaitButton);
+        final Button sortByNameButton = (Button) findViewById(R.id.sortByNameButton);
+
+        // the bars that will appear underneath the respective sort that is active
+        final View sortWaitTimeUnderline = findViewById(R.id.waitTimeSortActive);
+        final View sortNameUnderline = findViewById(R.id.nameSortActive);
+
+        sortByNameButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                infoGetter.sortAndUpdateForcingASingleRestaurant(RestaurantManager.RestaurantSortType.NAME,
+                        new RestaurantManager.ManagerRefreshCallback() {
+                            @Override
+                            public void handleRefreshComplete() {
+                                restaurantListRecycler.scrollToPosition(0);
+                            }
+                        }, null, true);
+
+                // highlighting and greying out the sorts depending on which one is clicked
+                sortByNameButton.setTextAppearance(getApplicationContext(), R.style.sortButton_active);
+                sortByWaitButton.setTextAppearance(getApplicationContext(), R.style.sortButton_inactive);
+
+                // set icons
+                sortByNameButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_sort_name_active, 0, 0, 0);
+                sortByWaitButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_sort_wait_inactive, 0, 0, 0);
+
+
+                // Making the unactive sort bar invisible and make the other visible
+                sortWaitTimeUnderline.setVisibility(View.INVISIBLE);
+                sortNameUnderline.setVisibility(View.VISIBLE);
+
+                // setting the color to white (This is done because when the app opens for the first time,
+                // the bar will by default be underneath SORT BY NAME since we sort it alphabetically first
+                sortNameUnderline.setBackgroundResource(R.color.textColorSecondary);
+            
+            }
+        });
+
+        sortByWaitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                infoGetter.sortAndUpdateForcingASingleRestaurant(RestaurantManager.RestaurantSortType.WAIT_TIME,
+                        new RestaurantManager.ManagerRefreshCallback() {
+
+                            @Override
+                            public void handleRefreshComplete() {
+                                restaurantListRecycler.scrollToPosition(0);
+                            }
+                        }, null, true);
+
+
+                sortByWaitButton.setTextAppearance(getApplicationContext(), R.style.sortButton_active);
+                sortByNameButton.setTextAppearance(getApplicationContext(), R.style.sortButton_inactive);
+
+                // set icons
+                sortByNameButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_sort_name_inactive, 0, 0, 0);
+                sortByWaitButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_sort_wait_active, 0, 0, 0);
+
+
+                sortNameUnderline.setVisibility(View.INVISIBLE);
+                sortWaitTimeUnderline.setVisibility(View.VISIBLE);
+                sortWaitTimeUnderline.setBackgroundResource(R.color.textColorSecondary);
+            }
+        });
+
+        sortByWaitButton.callOnClick();
 
         /* Setup pull-to-refresh listener */
         final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) this.findViewById(R.id.RestaurantListRefresher);
@@ -56,7 +127,9 @@ public class RestaurantListActivity extends MasterActivity {
                 });
             }
         });
+
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
