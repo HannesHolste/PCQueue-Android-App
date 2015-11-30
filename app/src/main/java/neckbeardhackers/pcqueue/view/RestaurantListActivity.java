@@ -46,15 +46,10 @@ public class RestaurantListActivity extends AppCompatActivity {
         // Sorting button event listeners
         final Button sortByWaitButton = (Button) findViewById(R.id.sortByWaitButton);
         final Button sortByNameButton = (Button) findViewById(R.id.sortByNameButton);
-//        final Drawable alphabetSortIconActive = getResources().getDrawable(R.drawable.ic_sort_by_alpha_black_18dp);
-//        final Drawable alphabetSortIconInactive = getResources().getDrawable(R.drawable.ic_sort_name_inactive);
-//
-//        final Drawable waitTimeSortIconActive = getResources().getDrawable(R.drawable.ic_query_builder_black_18dp);
-//        final Drawable waitTimeSortIconInActive = getResources().getDrawable(R.drawable.ic_sort_wait_inactive);
 
         // the bars that will appear underneath the respective sort that is active
-        final View sortWaitTimeUnderline = (View) findViewById(R.id.waitTimeSortActive);
-        final View sortNameUnderline = (View) findViewById(R.id.nameSortActive);
+        final View sortWaitTimeUnderline = findViewById(R.id.waitTimeSortActive);
+        final View sortNameUnderline = findViewById(R.id.nameSortActive);
 
         sortByNameButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,9 +60,10 @@ public class RestaurantListActivity extends AppCompatActivity {
                 sortByNameButton.setTextAppearance(getApplicationContext(), R.style.sortButton_active);
                 sortByWaitButton.setTextAppearance(getApplicationContext(), R.style.sortButton_inactive);
 
-                // Attempt to alter icon color
-                //sortByNameButton.setCompoundDrawables(alphabetSortIconActive, null, null, null);
-                //sortByWaitButton.setCompoundDrawables(waitTimeSortIconInActive, null, null, null);
+                // set icons
+                sortByNameButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_sort_name_active, 0, 0, 0);
+                sortByWaitButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_sort_wait_inactive, 0, 0, 0);
+
 
                 // Making the unactive sort bar invisible and make the other visible
                 sortWaitTimeUnderline.setVisibility(View.INVISIBLE);
@@ -75,7 +71,7 @@ public class RestaurantListActivity extends AppCompatActivity {
 
                 // setting the color to white (This is done because when the app opens for the first time,
                 // the bar will by default be underneath SORT BY NAME since we sort it alphabetically first
-                sortNameUnderline.setBackgroundResource(R.color.buttonTextColorPrimary);
+                sortNameUnderline.setBackgroundResource(R.color.textColorSecondary);
             }
         });
         sortByWaitButton.setOnClickListener(new View.OnClickListener() {
@@ -86,14 +82,18 @@ public class RestaurantListActivity extends AppCompatActivity {
                 sortByWaitButton.setTextAppearance(getApplicationContext(), R.style.sortButton_active);
                 sortByNameButton.setTextAppearance(getApplicationContext(), R.style.sortButton_inactive);
 
-                //sortByNameButton.setCompoundDrawables(alphabetSortIconInactive, null, null, null);
-                //sortByWaitButton.setCompoundDrawables(waitTimeSortIconActive, null, null, null);
+                // set icons
+                sortByNameButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_sort_name_inactive, 0, 0, 0);
+                sortByWaitButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_sort_wait_active, 0, 0, 0);
+
 
                 sortNameUnderline.setVisibility(View.INVISIBLE);
                 sortWaitTimeUnderline.setVisibility(View.VISIBLE);
-                sortWaitTimeUnderline.setBackgroundResource(R.color.buttonTextColorPrimary);
+                sortWaitTimeUnderline.setBackgroundResource(R.color.textColorSecondary);
             }
         });
+
+        sortByWaitButton.callOnClick();
 
         /* Setup pull-to-refresh listener */
         final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) this.findViewById(R.id.RestaurantListRefresher);
