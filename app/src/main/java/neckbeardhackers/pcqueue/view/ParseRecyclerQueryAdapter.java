@@ -29,7 +29,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 
 import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter.QueryFactory;

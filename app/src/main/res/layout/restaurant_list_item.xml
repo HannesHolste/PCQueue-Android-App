@@ -17,6 +17,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp">
         <RelativeLayout
+            android:id="@+id/restaurant_card_rel_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -47,7 +48,7 @@
                 android:layout_marginRight="4dp"
                 android:text="0 minute wait"
                 android:textSize="17sp"
-                android:textColor="#87D820"
+                android:textColor="@color/green"
                  />
             <TextView
                 android:layout_width="wrap_content"
@@ -68,7 +69,7 @@
                 android:text="Report Queue Length"
                 style="?android:attr/borderlessButtonStyle"
                 android:drawableLeft="@drawable/ic_sync_blue"
-                android:textColor="#78A2D8"
+                android:textColor="@color/textColorHighlight"
                 android:layout_marginBottom="10dp"
                 >
 

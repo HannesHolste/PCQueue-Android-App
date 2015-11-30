@@ -1,8 +1,8 @@
 package neckbeardhackers.pcqueue.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,9 +16,9 @@ import com.parse.ParseQueryAdapter;
 
 import neckbeardhackers.pcqueue.R;
 import neckbeardhackers.pcqueue.event.RestaurantChangeObserver;
-import neckbeardhackers.pcqueue.model.OperatingHours;
 import neckbeardhackers.pcqueue.model.Restaurant;
 import neckbeardhackers.pcqueue.model.RestaurantManager;
+import neckbeardhackers.pcqueue.model.RestaurantManager.ManagerRefreshCallback;
 import neckbeardhackers.pcqueue.model.WaitTimeGroup;
 
 /**
@@ -41,13 +41,14 @@ public class RestaurantListAdapter
             if (r.getId().equals(updatedRestaurant.getId())) {
                 // Update the view for this restaurant
                 super.loadObjects(); // temporary: simply reload all restaurant objects from parsequery
+                // TODO: Make this more efficient by updating only one restaurant
                 break;
             }
         }
     }
 
-    public void updateAll() {
-        RestaurantManager.getInstance().refreshAllRestaurantsHard();
+    public void updateAll(ManagerRefreshCallback updateCompleteCallback) {
+        RestaurantManager.getInstance().refreshAllRestaurantsHard(updateCompleteCallback);
     }
 
 
@@ -105,7 +106,6 @@ public class RestaurantListAdapter
     }
 
     @Override
-
     /**
      * Called by RecyclerView to display the data at the specified position.
      */
@@ -152,10 +152,22 @@ public class RestaurantListAdapter
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ReporterActivity.class);
                 intent.putExtra("restaurantId", restaurant.getId());
-                v.getContext().startActivity(intent);
+                RestaurantListActivity encapsulatedActivity = (RestaurantListActivity) context;
+                encapsulatedActivity.startActivityForResult(intent, 100);
+
             }
 
         });
+
+        holder.cardView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(v.getContext(), RestaurantInfoActivity.class);
+                intent.putExtra("restaurantId", restaurant.getId());
+                v.getContext().startActivity(intent);
+            }
+        });
+
 
 
     }

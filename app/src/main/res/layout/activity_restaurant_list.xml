@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:fitsSystemWindows="true"
-    tools:context="neckbeardhackers.pcqueue.view.RestaurantListActivity">
+    tools:context="neckbeardhackers.pcqueue.view.RestaurantListActivity"
+    android:id="@+id/restaurant_list_coord_layout">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -13,25 +14,8 @@
         android:background="#F0F0F0">
 
     <!-- Application bar -->
-    <android.support.design.widget.AppBarLayout android:layout_height="wrap_content"
-        android:layout_width="match_parent" android:theme="@style/AppTheme.AppBarOverlay">
+    <include layout="@layout/applicationbar"/>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/mainToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#303740"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Price Center Queue"
-                android:textSize="20dp"
-                android:textColor="#ffffff"
-                android:id="@+id/mainToolbar_title"/>
-
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
 
     <!-- Container for cards -->
     <android.support.v4.widget.SwipeRefreshLayout
@@ -43,7 +27,10 @@
             android:layout_height="match_parent"
             android:id="@+id/RestaurantListRecycler" />
         </android.support.v4.widget.SwipeRefreshLayout>
+
     </LinearLayout>
+
+
 
 
 </android.support.design.widget.CoordinatorLayout>

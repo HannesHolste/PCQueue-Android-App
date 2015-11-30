@@ -6,6 +6,9 @@
         <item name="colorPrimary">#3D4550</item>
         <item name="colorPrimaryDark">#303740</item>
         <item name="colorAccent">#318EFA</item>
+        <item name="android:colorPrimary">#3D4550</item>
+        <item name="android:colorPrimaryDark">#303740</item>
+        <item name="android:colorAccent">#318EFA</item>
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

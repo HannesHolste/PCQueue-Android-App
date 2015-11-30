@@ -2,6 +2,7 @@ package neckbeardhackers.pcqueue.model;
 
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -19,17 +20,23 @@ public class RestaurantManager implements RestaurantChangeSubject {
     private static RestaurantManager ourInstance = new RestaurantManager();
     private List<RestaurantChangeObserver> observers;
 
-    public enum RestaurantSortType {
-        NAME, WAIT_TIME
+    private RestaurantManager() {
+        observers = new ArrayList<>();
     }
 
     public static RestaurantManager getInstance() {
         return ourInstance;
     }
 
-    private RestaurantManager() {
-        observers = new ArrayList<>();
+
+    public enum RestaurantSortType {
+        NAME, WAIT_TIME
     }
+
+    public interface ManagerRefreshCallback {
+        void handleRefreshComplete();
+    }
+
 
     public ParseQuery<Restaurant> queryRestaurantById(String id, boolean local) {
         // Query the database from network to get the updated restaurant object
@@ -76,13 +83,24 @@ public class RestaurantManager implements RestaurantChangeSubject {
         executeQueryInBackground(query);
     }
 
+    public void refreshAllRestaurantsHard(ManagerRefreshCallback completeCallback) {
+        ParseQuery<Restaurant> query = queryForAllRestaurants(false);
+        executeQueryInBackground(query, completeCallback);
+    }
+
     public void executeQueryInBackground(ParseQuery<Restaurant> query) {
+        executeQueryInBackground(query, null);
+    }
+
+    public void executeQueryInBackground(ParseQuery<Restaurant> query, final ManagerRefreshCallback completeCallback) {
         query.findInBackground(new FindCallback<Restaurant>() {
 
-        @Override
-        public void done(final List<Restaurant> objects, ParseException e) {
-            if (e == null)
-                refreshParseCacheAndNotify(objects);
+            @Override
+            public void done(final List<Restaurant> objects, ParseException e) {
+                if (e == null)
+                    refreshParseCacheAndNotify(objects);
+                if (completeCallback != null)
+                    completeCallback.handleRefreshComplete();
             }
         });
     }
@@ -108,6 +126,21 @@ public class RestaurantManager implements RestaurantChangeSubject {
         executeQueryInBackground(query);
     }
 
+    public void setLocalRestaurantWaitTime(String restaurantId, final int time) {
+        ParseQuery<Restaurant> query = queryRestaurantById(restaurantId, true);
+        query.getFirstInBackground(new GetCallback<Restaurant>() {
+
+            @Override
+            public void done(Restaurant object, ParseException e) {
+                object.put("CurrentWait", time);
+                object.saveInBackground();
+                List<Restaurant> individualList = new ArrayList<Restaurant>();
+                individualList.add(object);
+                refreshParseCacheAndNotify(individualList);
+            }
+        });
+    }
+
     public ParseQuery<Restaurant> queryForAllRestaurants() {
         return queryForAllRestaurants(RestaurantSortType.NAME);
     }
@@ -127,4 +160,13 @@ public class RestaurantManager implements RestaurantChangeSubject {
             observer.update(restaurant);
         }
     }
+
+    @Override
+    public synchronized void unregisterRestaurantChangeListener(RestaurantChangeObserver observer) {
+        observers.remove(observer);
+    }
+
 }
+
+
+
