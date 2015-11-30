@@ -22,7 +22,7 @@ import neckbeardhackers.pcqueue.model.RestaurantManager;
 /**
  * Created by brianna lam and katherine duan on 11/21/15.
  */
-public class RestaurantInfoActivity extends AppCompatActivity implements RestaurantChangeObserver {
+public class RestaurantInfoActivity extends MasterActivity implements RestaurantChangeObserver {
 
     private Restaurant restaurant = null;
     @Override

@@ -37,6 +37,9 @@
             </intent-filter>
         </activity>
 
+
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
         <activity
             android:name=".view.ReporterActivity"
             android:label="@string/app_name"
@@ -66,6 +69,12 @@
 
                 <!-- package name for receiver -->
                 <category android:name="neckbeardhackers.pcqueue" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".net.NetworkStateReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
 
