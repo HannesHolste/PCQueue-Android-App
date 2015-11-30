@@ -24,6 +24,15 @@ import neckbeardhackers.pcqueue.R;
 import neckbeardhackers.pcqueue.model.RestaurantManager;
 
 public class RestaurantListActivity extends AppCompatActivity {
+    private int currentScroll = 0;
+
+    public synchronized void addScroll(int dy) {
+        currentScroll += dy;
+    }
+
+    public synchronized int getCurrentScroll() {
+        return currentScroll;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +47,7 @@ public class RestaurantListActivity extends AppCompatActivity {
 
         /* Load the restaurant list data */
         final RestaurantListAdapter infoGetter = new RestaurantListAdapter(this);
-        RecyclerView restaurantListRecycler = (RecyclerView) this.findViewById(R.id.RestaurantListRecycler);
+        final RecyclerView restaurantListRecycler = (RecyclerView) this.findViewById(R.id.RestaurantListRecycler);
         restaurantListRecycler.setHasFixedSize(true);
         restaurantListRecycler.setLayoutManager(new LinearLayoutManager(this));
         restaurantListRecycler.setAdapter(infoGetter);
@@ -48,15 +57,31 @@ public class RestaurantListActivity extends AppCompatActivity {
         Button sortByNameButton = (Button) findViewById(R.id.sortByNameButton);
 
         sortByNameButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                infoGetter.sortAndUpdate(RestaurantManager.RestaurantSortType.NAME);
+                infoGetter.sortAndUpdateForcingASingleRestaurant(RestaurantManager.RestaurantSortType.NAME,
+                        new RestaurantManager.ManagerRefreshCallback() {
+                            @Override
+                            public void handleRefreshComplete() {
+                                restaurantListRecycler.scrollToPosition(0);
+                            }
+                        }, null, true);
+
             }
         });
+
         sortByWaitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                infoGetter.sortAndUpdate(RestaurantManager.RestaurantSortType.WAIT_TIME);
+                infoGetter.sortAndUpdateForcingASingleRestaurant(RestaurantManager.RestaurantSortType.WAIT_TIME,
+                        new RestaurantManager.ManagerRefreshCallback() {
+
+                            @Override
+                            public void handleRefreshComplete() {
+                                restaurantListRecycler.scrollToPosition(0);
+                            }
+                        }, null, true);
             }
         });
 
@@ -74,7 +99,16 @@ public class RestaurantListActivity extends AppCompatActivity {
                 });
             }
         });
+
+        restaurantListRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                addScroll(dy);
+            }
+        });
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

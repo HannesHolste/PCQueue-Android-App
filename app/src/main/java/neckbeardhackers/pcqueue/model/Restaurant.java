@@ -108,4 +108,25 @@ public class Restaurant extends ParseObject {
         return ParseQuery.getQuery(Restaurant.class);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Restaurant))
+            return false;
+
+        return ((Restaurant)o).getId().equals(this.getId());
+    }
+
+    public boolean hasDifferences(Object o) {
+        if (!(o instanceof Restaurant))
+            return true;
+
+        Restaurant toCompare = (Restaurant)o;
+        if (!(toCompare.getName().equals(this.getName())))
+            return true;
+        if (toCompare.getWaitInMinutes() != this.getWaitInMinutes())
+            return true;
+
+        return false;
+    }
+
 }
