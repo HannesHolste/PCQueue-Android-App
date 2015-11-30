@@ -5,6 +5,7 @@
     android:background="#95000000"
     android:id="@+id/no_internet_bar"
     android:padding="10dp"
+    android:visibility="gone"
     >
     <TextView
         android:layout_width="match_parent"
