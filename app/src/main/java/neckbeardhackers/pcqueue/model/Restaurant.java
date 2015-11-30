@@ -49,6 +49,7 @@ public class Restaurant extends ParseObject {
         return getInt("CurrentWait");
     }
 
+    public int isClosed() { return getInt("isClosed"); }
     /**
      * Create and serialize an OperatingHours wrapper object from the raw JSON array in
      * Parse cloud, which follows the JSON object format:
@@ -85,9 +86,18 @@ public class Restaurant extends ParseObject {
         return factory.build();
     }
 
+    // The reason isClosed is an int, not a boolean, in the parse db is because
+    // And the reason why we use isClosed server-side is because Parse doesn't
+    // support ascending and descending ordering in the same query
+    // and sorting doesn't work on booleans at all
+    public boolean isOpenNow() {
+        return getInt("isClosed") == 0;
+    }
+
     @Override
     public String toString() {
-        return "Restaurant {id: " + getObjectId() + ", name: " + getName() + "}";
+        return "Restaurant {id: " + getObjectId() + ", name: " + getName() + ", waitTime: " + getWaitInMinutes() + "," +
+                "isOpen: " + isOpenNow() + "}";
     }
 
     /**
@@ -97,6 +107,27 @@ public class Restaurant extends ParseObject {
      */
     public static ParseQuery<Restaurant> getQuery() {
         return ParseQuery.getQuery(Restaurant.class);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Restaurant))
+            return false;
+
+        return ((Restaurant)o).getId().equals(this.getId());
+    }
+
+    public boolean hasDifferences(Object o) {
+        if (!(o instanceof Restaurant))
+            return true;
+
+        Restaurant toCompare = (Restaurant)o;
+        if (!(toCompare.getName().equals(this.getName())))
+            return true;
+        if (toCompare.getWaitInMinutes() != this.getWaitInMinutes())
+            return true;
+
+        return false;
     }
 
 }

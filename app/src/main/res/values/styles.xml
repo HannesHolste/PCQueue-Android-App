@@ -9,10 +9,17 @@
         <item name="android:colorPrimary">#3D4550</item>
         <item name="android:colorPrimaryDark">#303740</item>
         <item name="android:colorAccent">#318EFA</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">#3D4550</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+    <style name="TransparentText" parent="@android:style/TextAppearance">
+        <item name="android:textColor">#00666666</item>
     </style>
 
 
@@ -23,6 +30,17 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
+    </style>
+
+
+    <style name="sortButton_active">
+        <item name="android:textColor">@color/textColorSecondary</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="sortButton_inactive">
+        <item name="android:textColor">@color/textColorTertiary</item>
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
 </resources>

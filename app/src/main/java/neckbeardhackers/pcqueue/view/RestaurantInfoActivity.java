@@ -18,11 +18,12 @@ import neckbeardhackers.pcqueue.model.DailyOperatingHours;
 import neckbeardhackers.pcqueue.model.OperatingHours;
 import neckbeardhackers.pcqueue.model.Restaurant;
 import neckbeardhackers.pcqueue.model.RestaurantManager;
+import neckbeardhackers.pcqueue.model.WaitTimeGroup;
 
 /**
  * Created by brianna lam and katherine duan on 11/21/15.
  */
-public class RestaurantInfoActivity extends AppCompatActivity implements RestaurantChangeObserver {
+public class RestaurantInfoActivity extends MasterActivity implements RestaurantChangeObserver {
 
     private Restaurant restaurant = null;
     @Override
@@ -88,13 +89,20 @@ public class RestaurantInfoActivity extends AppCompatActivity implements Restaur
 
             TextView waitTime = (TextView) findViewById(R.id.restaurantWaitTime);
             TextView openSign = (TextView) findViewById(R.id.info_openNow);
-            System.out.println("Is " + restaurant.getName() + " open now? " + restaurant.getHours().isOpenNow());
+            System.out.println("Is " + restaurant.getName() + " open now? " + restaurant.isClosed());
             System.out.println("What is the current wait in minutes for this restaurant? " + restaurant.getWaitInMinutes());
-            if (restaurant.getHours().isOpenNow()) {
+            //waitTime.setText(restaurant.getWaitInMinutes() + " minutes");
+//            if (restaurant.getHours().isOpenNow()) {
+//                waitTime.setText(restaurant.getWaitInMinutes() + " minutes");
+//                openSign.setText("Open Now");
+//                openSign.setTextColor(getResources().getColor(R.color.textColorHighlight));
+//            }
+            if(restaurant.isClosed() == 0){
                 waitTime.setText(restaurant.getWaitInMinutes() + " minutes");
                 openSign.setText("Open Now");
                 openSign.setTextColor(getResources().getColor(R.color.textColorHighlight));
-            } else {
+            }
+            else {
                 waitTime.setText("Not Open");
                 openSign.setText("Closed Now");
                 waitTime.setTextColor(getResources().getColor(R.color.grey));
@@ -111,8 +119,9 @@ public class RestaurantInfoActivity extends AppCompatActivity implements Restaur
                 DailyOperatingHours todaysHours = restaurant.getHours().getOperatingHours(OperatingHours.getDayOfWeek(i));
                 if(todaysHours.doesNotClose()){
                     fillDays.setText("24 Hours");
+                    //fillDays.setTextColor(getResources().getColor(R.color.textColorHighlight));
                 }
-                else if(!todaysHours.isClosed()) {
+                else if(!todaysHours.closedAllDay()) {
                     fillDays.setText(String.format("%s-\n%s", todaysHours.getOpeningTimeString(), todaysHours.getCloseTimeString()));
                 }
                 else
@@ -124,6 +133,27 @@ public class RestaurantInfoActivity extends AppCompatActivity implements Restaur
 
             TextView phoneNum = (TextView) findViewById(R.id.info_phoneNumber);
             phoneNum.setText(restaurant.getPhoneNumber());
+
+
+            WaitTimeGroup waitTimeGroup = restaurant.getWaitTimeGroup();
+
+            // set color of currentWait label to green/orange/red
+            int color = -1;
+            switch (waitTimeGroup.getCurrentWait()) {
+                case LOW:
+                    color = R.color.green;
+                    break;
+                case MEDIUM:
+                    color = R.color.orange;
+                    break;
+                case HIGH:
+                case VERY_HIGH:
+                    color = R.color.red;
+                    break;
+            }
+            if (color != -1) {
+                waitTime.setTextColor(getResources().getColor(color));
+            }
         }
     }
 }
