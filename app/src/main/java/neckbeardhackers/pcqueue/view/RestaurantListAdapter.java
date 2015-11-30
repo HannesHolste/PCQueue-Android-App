@@ -1,6 +1,5 @@
 package neckbeardhackers.pcqueue.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
@@ -11,8 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
+
+import java.util.List;
 
 import neckbeardhackers.pcqueue.R;
 import neckbeardhackers.pcqueue.event.RestaurantChangeObserver;
@@ -43,7 +46,7 @@ public class RestaurantListAdapter
         for (int i = 0; i < getItemCount(); i++) {
             Restaurant oldRestaurant = getItem(i);
             if (oldRestaurant.getId().equals(updatedRestaurant.getId())) {
-                sortAndUpdate(currentSortType);
+                sortAndUpdateForcingASingleRestaurant(currentSortType, null, updatedRestaurant, false);
                 break;
             }
         }
@@ -53,17 +56,60 @@ public class RestaurantListAdapter
         RestaurantManager.getInstance().refreshAllRestaurantsHard(updateCompleteCallback);
     }
 
-    public void sortAndUpdate(final RestaurantManager.RestaurantSortType sortType) {
+    public void sortAndUpdateForcingASingleRestaurant(final RestaurantManager.RestaurantSortType sortType,
+                                                      final ManagerRefreshCallback callback,
+                                                      final Restaurant forcedUpdate, final boolean animations) {
         this.currentSortType = sortType;
         ParseQueryAdapter.QueryFactory<Restaurant> newFactory = new ParseQueryAdapter.QueryFactory<Restaurant>() {
             public ParseQuery<Restaurant> create() {
                 return RestaurantManager.getInstance().queryForAllRestaurants(sortType);
             }
         };
-        // update query factory with new query type
+
+        ParseQuery<Restaurant> sortedQuery = newFactory.create();
+        sortedQuery.findInBackground(new FindCallback<Restaurant>() {
+            @Override
+            public void done(List<Restaurant> objects, ParseException e) {
+                if (e != null)
+                    return;
+
+                for (int i = 0; i < objects.size(); ++i) {
+                    if ((((getItemCount() - 1) < i || !objects.get(i).hasDifferences(getItem(i))))
+                        && (forcedUpdate == null || !objects.get(i).equals(forcedUpdate)))
+                        continue;
+                    else {
+                        if (animations) {
+                            removeItem(i);
+                            notifyItemRemoved(i);
+                            addItem(i, objects.get(i));
+                            notifyItemInserted(i);
+                        }
+                        else {
+                            setItem(i, objects.get(i));
+                            notifyItemChanged(i);
+                        }
+                    }
+                }
+                if (callback != null)
+                    callback.handleRefreshComplete();
+            }
+        });
+    }
+
+    public void sortAndUpdate(final RestaurantManager.RestaurantSortType sortType,
+                              final ManagerRefreshCallback callback) {
+        sortAndUpdateForcingASingleRestaurant(sortType, callback, null, false);
+
+    }
+
+    public void sortAndUpdate(final RestaurantManager.RestaurantSortType sortType) {
+        sortAndUpdate(sortType, null);
+
+        /*// update query factory with new query type
         super.setQueryFactory(newFactory);
         // invalidate current set of loaded restaurants. reload!
         super.loadObjects();
+        */
     }
 
 

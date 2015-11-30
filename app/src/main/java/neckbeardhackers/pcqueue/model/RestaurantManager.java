@@ -90,6 +90,11 @@ public class RestaurantManager implements RestaurantChangeSubject {
         executeQueryInBackground(query, completeCallback);
     }
 
+    public void refreshAllRestaurantsSoft(RestaurantSortType sortType) {
+        ParseQuery<Restaurant> query = queryForAllRestaurants(sortType, true);
+        executeQueryInBackground(query);
+    }
+
     public void executeQueryInBackground(ParseQuery<Restaurant> query) {
         executeQueryInBackground(query, null);
     }

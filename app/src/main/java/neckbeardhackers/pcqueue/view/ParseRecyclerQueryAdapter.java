@@ -36,6 +36,8 @@ import com.parse.ParseQueryAdapter.QueryFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import neckbeardhackers.pcqueue.model.Restaurant;
+
 
 /**
  * NEARLY IDENTICAL REPLACEMENT FOR ParseQueryAdapter ON ListView.
@@ -120,6 +122,17 @@ public abstract class ParseRecyclerQueryAdapter<T extends ParseObject, U extends
         return mItems;
     }
 
+    public void removeItem(int position) {
+        mItems.remove(position);
+    }
+
+    public void addItem(int position, T toAdd) {
+        mItems.add(position, toAdd);
+    }
+
+    public void setItem(int position, T item) {
+        mItems.set(position, item);
+    }
 
     /**
      * Apply alterations to query prior to running findInBackground.
