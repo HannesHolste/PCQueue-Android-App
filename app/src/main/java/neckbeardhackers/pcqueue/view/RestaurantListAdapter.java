@@ -18,6 +18,7 @@ import com.parse.ParseQueryAdapter;
 import java.util.List;
 
 import neckbeardhackers.pcqueue.R;
+import neckbeardhackers.pcqueue.event.NetworkConnectionChangeObserver;
 import neckbeardhackers.pcqueue.event.RestaurantChangeObserver;
 import neckbeardhackers.pcqueue.model.Restaurant;
 import neckbeardhackers.pcqueue.model.RestaurantManager;
@@ -32,7 +33,7 @@ import neckbeardhackers.pcqueue.model.WaitTimeGroup;
  */
 public class RestaurantListAdapter
         extends ParseRecyclerQueryAdapter<Restaurant, RestaurantListAdapter.RestaurantViewHolder>
-        implements RestaurantChangeObserver {
+        implements RestaurantChangeObserver, NetworkConnectionChangeObserver {
 
     private RestaurantManager.RestaurantSortType currentSortType = RestaurantManager.RestaurantSortType.NAME;
     public static final int CARD_VIEW_OPEN_RESTAURANT = 0;
@@ -110,6 +111,11 @@ public class RestaurantListAdapter
         // invalidate current set of loaded restaurants. reload!
         super.loadObjects();
         */
+    }
+
+    @Override
+    public void onNetworkConnectivityChange(boolean hasConnection) {
+        
     }
 
 
