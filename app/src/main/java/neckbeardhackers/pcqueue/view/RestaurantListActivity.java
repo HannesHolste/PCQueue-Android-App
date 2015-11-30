@@ -22,7 +22,7 @@ import java.util.HashMap;
 import neckbeardhackers.pcqueue.R;
 import neckbeardhackers.pcqueue.model.RestaurantManager;
 
-public class RestaurantListActivity extends AppCompatActivity {
+public class RestaurantListActivity extends MasterActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

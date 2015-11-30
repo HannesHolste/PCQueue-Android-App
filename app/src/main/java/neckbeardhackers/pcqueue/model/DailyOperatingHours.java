@@ -22,7 +22,7 @@ public final class DailyOperatingHours {
         this.closeTime = closeTime;
     }
 
-    public boolean isClosed(){
+    public boolean closedAllDay(){
         if(openTime == "null" && closeTime == "null"){
             return true;
         }
@@ -30,7 +30,7 @@ public final class DailyOperatingHours {
     }
 
     public boolean doesNotClose(){
-        if(openTime.equals("12:00am") && closeTime.equals("12:00am")){
+        if(openTime.equals("11:59pm") && closeTime.equals("11:59pm")){
             return true;
         }
         return false;

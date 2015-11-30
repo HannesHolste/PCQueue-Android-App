@@ -16,6 +16,8 @@
     <!-- Application bar -->
     <include layout="@layout/applicationbar"/>
 
+    <include layout="@layout/no_internet_bar"/>
+
 
     <!-- Container for cards -->
     <android.support.v4.widget.SwipeRefreshLayout

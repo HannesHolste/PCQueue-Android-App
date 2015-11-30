@@ -1,6 +1,13 @@
 package neckbeardhackers.pcqueue;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.view.View;
+import android.widget.Toast;
+
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseException;
@@ -12,7 +19,9 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
+import neckbeardhackers.pcqueue.event.NetworkConnectionChangeObserver;
 import neckbeardhackers.pcqueue.model.Restaurant;
+import neckbeardhackers.pcqueue.net.NetworkStateReceiver;
 
 /**
  * Main entry point for the application
@@ -65,5 +74,7 @@ public class PCQueue extends Application {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
     }
+
 }
