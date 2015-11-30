@@ -236,7 +236,6 @@ public class RestaurantListAdapter
                 }
 
             });
-
         }
 
         if (holder.cardView != null) {
