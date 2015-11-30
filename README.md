@@ -9,6 +9,6 @@ The application can be used to report and view queue times at restaurants (thoug
 
 
 # Media
-![Preview](screen.png =300x)
+![](screen.png)
 
 [Click to view video demo on YouTube](https://www.youtube.com/watch?v=mUBFcjbh5ds&feature=youtu.be)
