@@ -63,8 +63,8 @@ public class RestaurantListActivity extends AppCompatActivity {
         tintManager.setStatusBarTintEnabled(true);
         // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
-        // set the transparent color of the status bar, 40% darker
-        tintManager.setTintColor(Color.parseColor("#40000000"));
+        // set the transparent color of the status bar, 10% darker
+        tintManager.setTintColor(Color.parseColor("#10000000"));
 
         /* Load the restaurant list data */
         final RestaurantListAdapter infoGetter = new RestaurantListAdapter(this);
