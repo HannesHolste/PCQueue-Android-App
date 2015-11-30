@@ -2,6 +2,8 @@ package neckbeardhackers.pcqueue.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -31,8 +33,28 @@ public class ReporterActivity extends MasterActivity {
     private Restaurant restaurant = null;
 
     @Override
+    public void onNetworkConnectivityChange(boolean hasConnection) {
+        super.onNetworkConnectivityChange(hasConnection);
+        Button btn = (Button) findViewById(R.id.reporter_updateButton);
+
+        if (btn != null) {
+            btn.setEnabled(hasConnection);
+
+            // TODO: refactor into XML button  state definition
+            if (!hasConnection) {
+                btn.setBackgroundColor(Color.GRAY);
+            } else {
+                btn.setBackgroundColor(getApplicationContext().getColor(R.color.buttonColorPrimary));
+            }
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        registerNetworkConnectionListener(this);
+
         setContentView(R.layout.activity_report);
         Toolbar toolbar = (Toolbar) findViewById(R.id.mainToolbar);
         setSupportActionBar(toolbar);

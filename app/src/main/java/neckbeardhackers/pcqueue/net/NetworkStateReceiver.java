@@ -18,6 +18,7 @@ import neckbeardhackers.pcqueue.event.NetworkConnectionChangeSubject;
 
 public class NetworkStateReceiver extends BroadcastReceiver implements NetworkConnectionChangeSubject {
     protected List<NetworkConnectionChangeObserver> observerList;
+    protected boolean hasNetwork = true;
 
     public NetworkStateReceiver() {
         observerList = new ArrayList<>();
@@ -27,19 +28,21 @@ public class NetworkStateReceiver extends BroadcastReceiver implements NetworkCo
         if (intent.getExtras() != null) {
             NetworkInfo ni = (NetworkInfo) intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
             if (ni != null && ni.isConnectedOrConnecting()) {
-                notifyObservers(true);
-            } else{ //if (intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, Boolean.FALSE)) {
-                notifyObservers(false);
+                hasNetwork = true;
+
+            } else { //if (intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, Boolean.FALSE)) {
+                hasNetwork = false;
             }
-
-
-
+            notifyObservers(hasNetwork);
         }
     }
 
     @Override
     public void registerNetworkConnectionChangeListener(NetworkConnectionChangeObserver observer) {
-        observerList.add(observer);
+        observer.onNetworkConnectivityChange(hasNetwork);
+        if (!observerList.contains(observer)) {
+            observerList.add(observer);
+        }
     }
 
     @Override

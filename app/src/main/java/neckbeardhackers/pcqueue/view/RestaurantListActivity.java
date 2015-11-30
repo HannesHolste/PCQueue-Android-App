@@ -38,6 +38,8 @@ public class RestaurantListActivity extends MasterActivity {
 
         setContentView(R.layout.activity_restaurant_list);
 
+        registerNetworkConnectionListener(this);
+
         // This will locate the toolbar in activity_restaurant_list and
         Toolbar toolbar = (Toolbar) findViewById(R.id.restaurant_list_toolbar);
         setSupportActionBar(toolbar);

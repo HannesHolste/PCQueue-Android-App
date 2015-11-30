@@ -29,6 +29,9 @@ public class RestaurantInfoActivity extends MasterActivity implements Restaurant
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        registerNetworkConnectionListener(this);
+
         setContentView(R.layout.restaurant_info_pane_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.mainToolbar);
         setSupportActionBar(toolbar);

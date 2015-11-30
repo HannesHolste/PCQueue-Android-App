@@ -7,309 +7,311 @@
     android:fitsSystemWindows="true"
     tools:context="neckbeardhackers.pcqueue.view.ReporterActivity">
 
-    <include layout="@layout/no_internet_bar"/>
-
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        >
         <!--Application bar-->
-        <include layout="@layout/applicationbar"/>
+        <include layout="@layout/applicationbar" />
         <include layout="@layout/no_internet_bar"/>
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/info_restaurantName"
-                android:layout_width="match_parent"
-                android:layout_marginRight="50dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="33dp"
-                android:text="Restaurant Name"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="35dp"
-                android:textColor="@color/textColorPrimary"
-                android:fontFamily="sans-serif-light"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
 
 
-            <TextView
-                android:id="@+id/info_currentWait"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="33dp"
-                android:text="Current wait"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="27dp"
-                android:textColor="@color/textColorSecondary"
-                android:fontFamily="sans-serif-light"
-                android:layout_below="@+id/info_restaurantName"
-                android:layout_alignStart="@+id/info_restaurantName" />
-            <TextView
-                android:id="@+id/restaurantWaitTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2 minutes"
-                android:textSize="18sp"
-                android:textColor="@color/green"
-                android:layout_marginStart="18dp"
-                android:layout_marginTop="5dp"
-                android:layout_alignTop="@+id/info_currentWait"
-                android:layout_toRightOf="@+id/info_currentWait" />
 
-            <TextView
-                android:id="@+id/info_hours"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="33dp"
-                android:text="Hours"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="27dp"
-                android:textColor="@color/textColorSecondary"
-                android:fontFamily="sans-serif-light"
-                android:layout_below="@+id/info_currentWait"
-                android:layout_alignStart="@+id/info_currentWait" />
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/info_openNow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Open now"
-                android:textSize="18sp"
-                android:textColor="@color/textColorHighlight"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="9dp"
-                android:layout_alignTop="@+id/info_hours"
-                android:layout_toRightOf="@+id/info_hours" />
-
-            <TextView
-                android:id="@+id/info_monday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mon"
-                android:textSize="18dp"
-                android:textColor="@color/textColorTertiary"
-                android:layout_below="@+id/info_hours"
-                android:layout_alignStart="@+id/info_hours"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="5dp"
-                />
-
-            <TextView
-                android:id="@+id/info_mondayHours"
-                android:layout_width="55dp"
-                android:layout_height="wrap_content"
-                android:text="9:00am-\n10:30pm"
-                android:textSize="12dp"
-                android:textColor="@color/textColorTertiary"
-                android:layout_below="@+id/info_monday"
-                android:layout_alignStart="@+id/info_monday"
-                android:layout_marginTop="7dp"/>
+                    <TextView
+                        android:id="@+id/info_restaurantName"
+                        android:layout_width="match_parent"
+                        android:layout_marginRight="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="33dp"
+                        android:text="Restaurant Name"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="35dp"
+                        android:textColor="@color/textColorPrimary"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true" />
 
 
-            <TextView
-                android:id="@+id/info_tuesday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tue"
-                android:textSize="18dp"
-                android:textColor="@color/textColorTertiary"
-                android:layout_below="@+id/info_hours"
-                android:layout_toRightOf="@+id/info_monday"
-                android:layout_alignTop="@+id/info_monday"
-                android:layout_marginStart="33dp"
-                />
+                    <TextView
+                        android:id="@+id/info_currentWait"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="33dp"
+                        android:text="Current wait"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="27dp"
+                        android:textColor="@color/textColorSecondary"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_below="@+id/info_restaurantName"
+                        android:layout_alignStart="@+id/info_restaurantName" />
 
-            <TextView
-                android:id="@+id/info_tuesdayHours"
-                android:layout_width="55dp"
-                android:layout_height="wrap_content"
-                android:text="9am-\n10pm"
-                android:textSize="12dp"
-                android:textColor="@color/textColorTertiary"
-                android:layout_below="@+id/info_tuesday"
-                android:layout_alignStart="@+id/info_tuesday"
-                android:layout_marginTop="7dp"/>
+                    <TextView
+                        android:id="@+id/restaurantWaitTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2 minutes"
+                        android:textSize="18sp"
+                        android:textColor="@color/green"
+                        android:layout_marginStart="18dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_alignTop="@+id/info_currentWait"
+                        android:layout_toRightOf="@+id/info_currentWait" />
 
-            <TextView
-                android:id="@+id/info_wednesday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Wed"
-                android:textSize="18dp"
-                android:textColor="@color/textColorTertiary"
-                android:layout_below="@+id/info_hours"
-                android:layout_toRightOf="@+id/info_tuesday"
-                android:layout_alignTop="@+id/info_tuesday"
-                android:layout_marginStart="33dp"
-                />
+                    <TextView
+                        android:id="@+id/info_hours"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="33dp"
+                        android:text="Hours"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="27dp"
+                        android:textColor="@color/textColorSecondary"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_below="@+id/info_currentWait"
+                        android:layout_alignStart="@+id/info_currentWait" />
 
-            <TextView
-                android:id="@+id/info_wednesdayHours"
-                android:layout_width="55dp"
-                android:layout_height="wrap_content"
-                android:text="9am-\n10pm"
-                android:textSize="12dp"
-                android:textColor="@color/textColorTertiary"
-                android:layout_below="@+id/info_wednesday"
-                android:layout_alignStart="@+id/info_wednesday"
-                android:layout_marginTop="7dp"/>
+                    <TextView
+                        android:id="@+id/info_openNow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Open now"
+                        android:textSize="18sp"
+                        android:textColor="@color/textColorHighlight"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="9dp"
+                        android:layout_alignTop="@+id/info_hours"
+                        android:layout_toRightOf="@+id/info_hours" />
 
+                    <TextView
+                        android:id="@+id/info_monday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mon"
+                        android:textSize="18dp"
+                        android:textColor="@color/textColorTertiary"
+                        android:layout_below="@+id/info_hours"
+                        android:layout_alignStart="@+id/info_hours"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="5dp" />
 
-            <TextView
-                android:id="@+id/info_thursday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Thu"
-                android:textSize="18dp"
-                android:textColor="@color/textColorTertiary"
-                android:layout_toRightOf="@+id/info_wednesday"
-                android:layout_alignTop="@+id/info_wednesday"
-                android:layout_marginStart="33dp"
-                />
-
-            <TextView
-                android:id="@+id/info_thursdayHours"
-                android:layout_width="55dp"
-                android:layout_height="wrap_content"
-                android:text="9am-\n10pm"
-                android:textSize="12dp"
-                android:textColor="@color/textColorTertiary"
-                android:layout_below="@+id/info_thursday"
-                android:layout_alignStart="@+id/info_thursday"
-                android:layout_marginTop="7dp"/>
-
-
-            <TextView
-                android:id="@+id/info_friday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Fri"
-                android:textSize="18dp"
-                android:textColor="@color/textColorTertiary"
-                android:layout_toRightOf="@+id/info_thursday"
-                android:layout_alignTop="@+id/info_thursday"
-                android:layout_marginStart="33dp"
-                />
-
-            <TextView
-                android:id="@+id/info_fridayHours"
-                android:layout_width="55dp"
-                android:layout_height="wrap_content"
-                android:text="12:00am-\n10pm"
-                android:textSize="12dp"
-                android:textColor="@color/textColorTertiary"
-                android:layout_below="@+id/info_friday"
-                android:layout_alignStart="@+id/info_friday"
-                android:layout_marginTop="7dp"/>
-
-            <TextView
-                android:id="@+id/info_saturday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sat"
-                android:textSize="18dp"
-                android:textColor="@color/textColorTertiary"
-                android:layout_below="@+id/info_mondayHours"
-                android:layout_alignStart="@+id/info_hours"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="5dp"
-                />
-
-            <TextView
-                android:id="@+id/info_saturdayHours"
-                android:layout_width="55dp"
-                android:layout_height="wrap_content"
-                android:text="CLOSED"
-                android:textSize="12dp"
-                android:textColor="@color/textColorTertiary"
-                android:layout_below="@+id/info_saturday"
-                android:layout_alignStart="@+id/info_monday"
-                android:layout_marginTop="7dp"/>
-
-            <TextView
-                android:id="@+id/info_sunday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sun"
-                android:textSize="18dp"
-                android:textColor="@color/textColorTertiary"
-                android:layout_toRightOf="@+id/info_saturday"
-                android:layout_alignTop="@+id/info_saturday"
-                android:layout_alignStart="@+id/info_tuesday"
-                />
-
-            <TextView
-                android:id="@+id/info_sundayHours"
-                android:layout_width="55dp"
-                android:layout_height="wrap_content"
-                android:text="CLOSED"
-                android:textSize="12dp"
-                android:textColor="@color/textColorTertiary"
-                android:layout_below="@+id/info_sunday"
-                android:layout_alignStart="@+id/info_sunday"
-                android:layout_marginTop="7dp"/>
-
-            <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/info_description"
-            android:layout_alignStart="@+id/info_hours"
-            android:layout_below="@+id/info_saturdayHours"
-            android:layout_marginTop="35dp"
-            android:text="Description"
-            android:textSize="27dp"
-            android:textColor="@color/textColorSecondary"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:fontFamily="sans-serif-light"/>
-
-            <TextView
-                android:id="@+id/info_descriptionText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/info_description"
-                android:text="yaydujisdhfkjsdfhfsdfsdfsfdhjgsdfjhsdgfjhsdgfjhsdfgsdjhfgsdhjfsgdjfhhjgsdfjhsgdfjhsdhgsjhdfgjhsjkdfhsdkjfhsdkjfshdfklasfhsdkjfhskjdfhsdkjflhsdfsdjkfsdkjfhsakdjfhsdakgghkjhkjbdhftnjfkhdvkjshdfsldfhshskjdflhsdfjhsdfkjdfhsdkfjshhsdkjfhsdlfkjsdfkjdsvhskdjvkjsdgfhkjfgshdskjdfslkdjfglkdjfglkdgjkfgjdfklgjdkdlgjflfdkg"
-                android:textColor="@color/textColorTertiary"
-                android:layout_marginRight="40dp"
-                android:maxLines="5"
-                android:layout_alignStart="@+id/info_description"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"/>
+                    <TextView
+                        android:id="@+id/info_mondayHours"
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:text="9:00am-\n10:30pm"
+                        android:textSize="12dp"
+                        android:textColor="@color/textColorTertiary"
+                        android:layout_below="@+id/info_monday"
+                        android:layout_alignStart="@+id/info_monday"
+                        android:layout_marginTop="7dp" />
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/info_phone"
-                android:layout_alignStart="@+id/info_hours"
-                android:layout_below="@+id/info_descriptionText"
-                android:layout_marginTop="35dp"
-                android:text="Phone number"
-                android:textSize="27dp"
-                android:textColor="@color/textColorSecondary"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:fontFamily="sans-serif-light"/>
+                    <TextView
+                        android:id="@+id/info_tuesday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tue"
+                        android:textSize="18dp"
+                        android:textColor="@color/textColorTertiary"
+                        android:layout_below="@+id/info_hours"
+                        android:layout_toRightOf="@+id/info_monday"
+                        android:layout_alignTop="@+id/info_monday"
+                        android:layout_marginStart="33dp" />
 
-            <TextView
-                android:id="@+id/info_phoneNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_below="@+id/info_phone"
-                android:text="(858) 952-3824"
-                android:textColor="@color/textColorTertiary"
-                android:layout_alignStart="@+id/info_descriptionText"
-                android:layout_marginTop="5dp"/>
-        </RelativeLayout>
+                    <TextView
+                        android:id="@+id/info_tuesdayHours"
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:text="9am-\n10pm"
+                        android:textSize="12dp"
+                        android:textColor="@color/textColorTertiary"
+                        android:layout_below="@+id/info_tuesday"
+                        android:layout_alignStart="@+id/info_tuesday"
+                        android:layout_marginTop="7dp" />
+
+                    <TextView
+                        android:id="@+id/info_wednesday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Wed"
+                        android:textSize="18dp"
+                        android:textColor="@color/textColorTertiary"
+                        android:layout_below="@+id/info_hours"
+                        android:layout_toRightOf="@+id/info_tuesday"
+                        android:layout_alignTop="@+id/info_tuesday"
+                        android:layout_marginStart="33dp" />
+
+                    <TextView
+                        android:id="@+id/info_wednesdayHours"
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:text="9am-\n10pm"
+                        android:textSize="12dp"
+                        android:textColor="@color/textColorTertiary"
+                        android:layout_below="@+id/info_wednesday"
+                        android:layout_alignStart="@+id/info_wednesday"
+                        android:layout_marginTop="7dp" />
+
+
+                    <TextView
+                        android:id="@+id/info_thursday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Thu"
+                        android:textSize="18dp"
+                        android:textColor="@color/textColorTertiary"
+                        android:layout_toRightOf="@+id/info_wednesday"
+                        android:layout_alignTop="@+id/info_wednesday"
+                        android:layout_marginStart="33dp" />
+
+                    <TextView
+                        android:id="@+id/info_thursdayHours"
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:text="9am-\n10pm"
+                        android:textSize="12dp"
+                        android:textColor="@color/textColorTertiary"
+                        android:layout_below="@+id/info_thursday"
+                        android:layout_alignStart="@+id/info_thursday"
+                        android:layout_marginTop="7dp" />
+
+
+                    <TextView
+                        android:id="@+id/info_friday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fri"
+                        android:textSize="18dp"
+                        android:textColor="@color/textColorTertiary"
+                        android:layout_toRightOf="@+id/info_thursday"
+                        android:layout_alignTop="@+id/info_thursday"
+                        android:layout_marginStart="33dp" />
+
+                    <TextView
+                        android:id="@+id/info_fridayHours"
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:text="12:00am-\n10pm"
+                        android:textSize="12dp"
+                        android:textColor="@color/textColorTertiary"
+                        android:layout_below="@+id/info_friday"
+                        android:layout_alignStart="@+id/info_friday"
+                        android:layout_marginTop="7dp" />
+
+                    <TextView
+                        android:id="@+id/info_saturday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sat"
+                        android:textSize="18dp"
+                        android:textColor="@color/textColorTertiary"
+                        android:layout_below="@+id/info_mondayHours"
+                        android:layout_alignStart="@+id/info_hours"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="5dp" />
+
+                    <TextView
+                        android:id="@+id/info_saturdayHours"
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:text="CLOSED"
+                        android:textSize="12dp"
+                        android:textColor="@color/textColorTertiary"
+                        android:layout_below="@+id/info_saturday"
+                        android:layout_alignStart="@+id/info_monday"
+                        android:layout_marginTop="7dp" />
+
+                    <TextView
+                        android:id="@+id/info_sunday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sun"
+                        android:textSize="18dp"
+                        android:textColor="@color/textColorTertiary"
+                        android:layout_toRightOf="@+id/info_saturday"
+                        android:layout_alignTop="@+id/info_saturday"
+                        android:layout_alignStart="@+id/info_tuesday" />
+
+                    <TextView
+                        android:id="@+id/info_sundayHours"
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:text="CLOSED"
+                        android:textSize="12dp"
+                        android:textColor="@color/textColorTertiary"
+                        android:layout_below="@+id/info_sunday"
+                        android:layout_alignStart="@+id/info_sunday"
+                        android:layout_marginTop="7dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/info_description"
+                        android:layout_alignStart="@+id/info_hours"
+                        android:layout_below="@+id/info_saturdayHours"
+                        android:layout_marginTop="35dp"
+                        android:text="Description"
+                        android:textSize="27dp"
+                        android:textColor="@color/textColorSecondary"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:fontFamily="sans-serif-light" />
+
+                    <TextView
+                        android:id="@+id/info_descriptionText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/info_description"
+                        android:text="yaydujisdhfkjsdfhfsdfsdfsfdhjgsdfjhsdgfjhsdgfjhsdfgsdjhfgsdhjfsgdjfhhjgsdfjhsgdfjhsdhgsjhdfgjhsjkdfhsdkjfhsdkjfshdfklasfhsdkjfhskjdfhsdkjflhsdfsdjkfsdkjfhsakdjfhsdakgghkjhkjbdhftnjfkhdvkjshdfsldfhshskjdflhsdfjhsdfkjdfhsdkfjshhsdkjfhsdlfkjsdfkjdsvhskdjvkjsdgfhkjfgshdskjdfslkdjfglkdjfglkdgjkfgjdfklgjdkdlgjflfdkg"
+                        android:textColor="@color/textColorTertiary"
+                        android:layout_marginRight="40dp"
+                        android:maxLines="5"
+                        android:layout_alignStart="@+id/info_description"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/info_phone"
+                        android:layout_alignStart="@+id/info_hours"
+                        android:layout_below="@+id/info_descriptionText"
+                        android:layout_marginTop="35dp"
+                        android:text="Phone number"
+                        android:textSize="27dp"
+                        android:textColor="@color/textColorSecondary"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:fontFamily="sans-serif-light" />
+
+                    <TextView
+                        android:id="@+id/info_phoneNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/info_phone"
+                        android:text="(858) 952-3824"
+                        android:textColor="@color/textColorTertiary"
+                        android:layout_alignStart="@+id/info_descriptionText"
+                        android:layout_marginTop="5dp" />
+                </RelativeLayout>
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
-    </ScrollView>
+
 
 </android.support.design.widget.CoordinatorLayout>
