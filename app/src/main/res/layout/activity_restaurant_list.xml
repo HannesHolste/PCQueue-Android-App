@@ -31,6 +31,7 @@
             android:layout_width="match_parent"
             android:id="@+id/include"
             android:layout_marginStart="36dp"
+            android:layout_marginLeft="50dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true" />
 
@@ -59,9 +60,8 @@
             app:expandedTitleMarginStart="18dp"
             app:expandedTitleMarginEnd="14dp"
             app:expandedTitleMarginBottom="18dp"
-            app:expandedTitleTextAppearance="@style/TransparentText"
-            app:collapsedTitleTextAppearance="@style/TransparentText"
             android:fitsSystemWindows="true">
+
 
             <!-- Header image -->
             <ImageView
