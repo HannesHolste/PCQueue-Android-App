@@ -33,12 +33,29 @@ public class PCQueue extends Application {
     private final String PARSE_APP_ID = "***REMOVED***";
     private final String PARSE_CLIENT_KEY = "***REMOVED***";
 
+    private static boolean isTestMode() {
+        boolean result;
+        try {
+            Class.forName("neckbeardhackers.pcqueue.RestaurantListTest");
+            result = true;
+        } catch (final Exception e) {
+            result = false;
+        }
+        return result;
+    }
 
     /**
      * When the application is run first, run initialization procedures.
      */
     @Override
     public void onCreate() {
+        String parseAppId = PARSE_APP_ID;
+        String parseClientKey = PARSE_CLIENT_KEY;
+        if (isTestMode()) {
+            System.err.println("TESTING!");
+            parseAppId = "***REMOVED***";
+            parseClientKey = "***REMOVED***";
+        }
         super.onCreate();
 
         // Enable storing data locally first. We'll take care of syncing it.
@@ -49,7 +66,7 @@ public class PCQueue extends Application {
         ParseObject.registerSubclass(Restaurant.class);
 
         // Initialize Parse client with authentication information
-        Parse.initialize(this, PARSE_APP_ID, PARSE_CLIENT_KEY);
+        Parse.initialize(this, parseAppId, parseClientKey);
         // Register client with Parse (for push notificatons)
         ParseInstallation.getCurrentInstallation().saveInBackground();
 
@@ -70,7 +87,10 @@ public class PCQueue extends Application {
         ParseQuery<Restaurant> query = Restaurant.getQuery();
         try {
             // TODO: Show a loading app indicator in the UI while this is happening
-            ParseObject.pinAll(query.find());
+            List<Restaurant> list = query.find();
+            for (Restaurant r : list)
+                System.err.println(r.toString());
+            ParseObject.pinAll(list);
         } catch (ParseException e) {
             e.printStackTrace();
         }
