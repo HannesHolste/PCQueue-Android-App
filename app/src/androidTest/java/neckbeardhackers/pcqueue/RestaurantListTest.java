@@ -40,7 +40,6 @@ public class RestaurantListTest extends ActivityInstrumentationTestCase2<Restaur
     @Before
     public void setUp() throws Exception {
         super.setUp();
-        System.err.println(this.getClass().getName());
         injectInstrumentation(InstrumentationRegistry.getInstrumentation());
         openRestaurants = fillOpenRestaurantDict(openRestaurants);
         closedRestaurants = fillClosedRestaurantDict(closedRestaurants);
