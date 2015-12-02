@@ -13,7 +13,7 @@ import neckbeardhackers.pcqueue.event.NetworkConnectionChangeObserver;
 import neckbeardhackers.pcqueue.net.NetworkStateReceiver;
 
 public class MasterActivity extends AppCompatActivity implements NetworkConnectionChangeObserver {
-    protected static NetworkStateReceiver networkConnectionReceiver = null;
+    protected NetworkStateReceiver networkConnectionReceiver = null;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,11 +27,6 @@ public class MasterActivity extends AppCompatActivity implements NetworkConnecti
             filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
 
             NetworkStateReceiver receiver = new NetworkStateReceiver();
-            try {
-                unregisterReceiver(receiver);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
             registerReceiver(receiver, filter);
 
             networkConnectionReceiver = receiver;
@@ -39,7 +34,7 @@ public class MasterActivity extends AppCompatActivity implements NetworkConnecti
         }
     }
 
-    public static void registerNetworkConnectionListener(NetworkConnectionChangeObserver o) {
+    public void registerNetworkConnectionListener(NetworkConnectionChangeObserver o) {
         if (networkConnectionReceiver != null) {
             networkConnectionReceiver.registerNetworkConnectionChangeListener(o);
         }
@@ -58,4 +53,18 @@ public class MasterActivity extends AppCompatActivity implements NetworkConnecti
             bar.setVisibility(!hasConnection ? View.VISIBLE : View.GONE);
         }
     }
+
+    @Override
+    public void onStop() {
+        try {
+            unregisterReceiver(networkConnectionReceiver);
+            networkConnectionReceiver = null;
+        }
+        catch (IllegalArgumentException e) {
+            // Do nothing. This is expected sometimes
+        }
+        super.onStop();
+    }
+
+
 }
