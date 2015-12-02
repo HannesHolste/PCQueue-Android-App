@@ -67,12 +67,7 @@ public class PCQueue extends Application {
 
         // Initialize Parse client with authentication information
         Parse.initialize(this, parseAppId, parseClientKey);
-        // Register client with Parse (for push notificatons)
-        ParseInstallation.getCurrentInstallation().saveInBackground();
 
-        // Subscribe to channel to listen for updates to the restaurant objects, e.g. waittime
-        // modifications per object from cloud code
-        ParsePush.subscribeInBackground("restaurantUpdates");
 
         // Enable anonymous users, so we can save data to the local data store without logging in
         // We shall never log them out and anonymoous users can sync with Parse cloud
@@ -88,13 +83,20 @@ public class PCQueue extends Application {
         try {
             // TODO: Show a loading app indicator in the UI while this is happening
             List<Restaurant> list = query.find();
-            for (Restaurant r : list)
-                System.err.println(r.toString());
             ParseObject.pinAll(list);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
+        if (!isTestMode()) {
+            // Register client with Parse (for push notificatons)
+            ParseInstallation.getCurrentInstallation().saveInBackground();
+
+            // Subscribe to channel to listen for updates to the restaurant objects, e.g. waittime
+            // modifications per object from cloud code
+            ParsePush.subscribeInBackground("restaurantUpdates");
+        }
     }
+
 
 }

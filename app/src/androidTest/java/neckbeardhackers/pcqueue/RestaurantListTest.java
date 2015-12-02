@@ -131,8 +131,7 @@ public class RestaurantListTest extends ActivityInstrumentationTestCase2<Restaur
 
 
         /* Then nothing should happen */
-        onView(withId(R.id.ReporterActivity)).check(ViewAssertions.matches(
-                not(ViewMatchers.isDisplayed())));
+        onView(withId(R.id.ReporterActivity)).check(ViewAssertions.doesNotExist());
     }
 
     public void testOpenReportPaneOnButtonClick() {
