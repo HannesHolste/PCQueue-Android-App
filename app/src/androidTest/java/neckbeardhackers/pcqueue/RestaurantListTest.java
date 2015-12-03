@@ -3,13 +3,18 @@ package neckbeardhackers.pcqueue;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
+import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
+import android.support.v7.widget.RecyclerView;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
 
 import java.util.Dictionary;
@@ -21,6 +26,7 @@ import neckbeardhackers.pcqueue.view.RestaurantListActivity;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.not;
@@ -94,6 +100,37 @@ public class RestaurantListTest extends ActivityInstrumentationTestCase2<Restaur
         }
     }
 
+    public void testOpenRestaurantReporterViewReportButtonOnPress() {
+        Enumeration<String> openRestaurantNames = openRestaurants.keys();
+        while (openRestaurantNames.hasMoreElements()) {
+            String restaurantName = openRestaurantNames.nextElement();
+
+            int restaurantIndex = openRestaurants.get(restaurantName);
+
+            /* Given a restaurant card*/
+            onView(withId(R.id.RestaurantListRecycler)).
+                    perform(RecyclerViewActions.scrollToPosition(restaurantIndex));
+
+            /* When I click on its report wait time button */
+            onView(withId(R.id.RestaurantListRecycler)).perform(
+                    RecyclerViewActions.actionOnItemAtPosition(restaurantIndex,
+                            ExtendedViewAction.clickChildViewWithId(R.id.updateButton)));
+
+        /* Then the reporter view for this restaurant should display itself */
+            onView(withId(R.id.reporter_restaurantName))
+                    .check(ViewAssertions.matches((withText(restaurantName))));
+
+            /* Given I am on the reporter view, when I press the report button*/
+            onView(withId(R.id.reporter_updateButton)).perform(click());
+
+            /* Then the reporter view should close */
+            onView(withId(R.id.ReporterActivity)).check(ViewAssertions.doesNotExist());
+        }
+    }
+
+
+
+
     private void testInformationPaneIsAccessible(int restaurantIndex, String restaurantName) {
         onView(withId(R.id.RestaurantListRecycler)).perform(RecyclerViewActions.scrollToPosition(restaurantIndex));
         onView(withId(R.id.RestaurantListRecycler))
@@ -142,15 +179,9 @@ public class RestaurantListTest extends ActivityInstrumentationTestCase2<Restaur
             testReportPaneIsAccessible(openRestaurants.get(name), name);
         }
     }
-    public void testClosedReportPaneOnButtonClick() {
-        Enumeration<String> closedRestaurantNames = closedRestaurants.keys();
-        while (closedRestaurantNames.hasMoreElements()) {
-            String name = closedRestaurantNames.nextElement();
-            testReportPaneIsNotAccessible(closedRestaurants.get(name), name);
-        }
-    }
 }
 
+// Adapted from: http://stackoverflow.com/questions/28476507/
 class ExtendedViewAction {
     public static ViewAction clickChildViewWithId(final int id) {
         return new ViewAction() {
