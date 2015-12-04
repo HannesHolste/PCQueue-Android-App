@@ -103,17 +103,7 @@ public final class WaitTimeGroup {
     public WaitTimeGroup(WAIT_TIME_GROUPS wait) {
         this.currentWait = wait;
     }
-
-    /**
-     * **********I THINK THIS SHOULD BE DELETED SOMEONE VERIFY PLEASE***********
-     *
-     * Description: Creates a WaitTimeGroup object from the LOW WAIT_TIME_GROUPS enum value
-     */
-    public WaitTimeGroup() {
-        this(WAIT_TIME_GROUPS.LOW);
-    }
-
-
+    
     /**
      * Description: Finds the appropriate WAIT_TIME_GROUPS object that captures the given wait time,
      * and instantiates a WaitTimeGroup object containing that group.
