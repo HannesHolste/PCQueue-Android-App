@@ -149,9 +149,9 @@ public final class DailyOperatingHours {
         s.append(dayName);
         s.append(": ");
 
-        if (openTime == "null" || closeTime == "null") {
+        if (closedAllDay()) {
             s.append("closed");
-        } else if (openTime.equals("12:00am") && closeTime.equals("11:59pm")) {
+        } else if (doesNotClose()) {
             s.append("24 hours");
         } else {
             s.append(openTime);

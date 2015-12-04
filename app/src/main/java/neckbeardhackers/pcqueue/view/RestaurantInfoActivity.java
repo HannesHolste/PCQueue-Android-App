@@ -92,7 +92,7 @@ public class RestaurantInfoActivity extends MasterActivity implements Restaurant
 
             TextView waitTime = (TextView) findViewById(R.id.restaurantWaitTime);
             TextView openSign = (TextView) findViewById(R.id.info_openNow);
-            System.out.println("Is " + restaurant.getName() + " open now? " + restaurant.isClosed());
+            System.out.println("Is " + restaurant.getName() + " open now? " + restaurant.isOpenNow());
             System.out.println("What is the current wait in minutes for this restaurant? " + restaurant.getWaitInMinutes());
             //waitTime.setText(restaurant.getWaitInMinutes() + " minutes");
 //            if (restaurant.getHours().isOpenNow()) {
@@ -100,7 +100,7 @@ public class RestaurantInfoActivity extends MasterActivity implements Restaurant
 //                openSign.setText("Open Now");
 //                openSign.setTextColor(getResources().getColor(R.color.textColorHighlight));
 //            }
-            if(restaurant.isClosed() == 0){
+            if(restaurant.isOpenNow()){
                 waitTime.setText(restaurant.getWaitInMinutes() + " minutes");
                 openSign.setText("Open Now");
                 openSign.setTextColor(getResources().getColor(R.color.textColorHighlight));

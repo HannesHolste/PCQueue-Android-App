@@ -9,7 +9,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Represents an Restaurant objects with its attributes.
+ * Class:Restaurant
+ * Description: Represents an Restaurant objects with its attributes.
  * Extends ParseObject to give it querying capabilities.
  */
 @ParseClassName("Restaurant")
@@ -20,7 +21,7 @@ public class Restaurant extends ParseObject {
     }
 
     /**
-     * Returns Parse ID for this object
+     * Description: Returns Parse ID for this object
      *
      * @return String containing Parse ID for this object
      */
@@ -28,28 +29,54 @@ public class Restaurant extends ParseObject {
         return getObjectId();
     }
 
+    /**
+     * Description: Getter function for obtaining the location from the db
+     *
+     * @return A string that is the address of the restaurant
+     */
     public String getLocation() {
         // return location from Parse document for this Restaurant object
         return getString("Location");
     }
 
+    /**
+     * Description: Getter function for obtaining the phone number from the db
+     *
+     * @return A string that is the phone number of the restaurant
+     */
     public String getPhoneNumber() {
         return getString("Phone");
     }
 
+    /**
+     * Description: Getter function for obtaining the restaurant description from the db
+     *
+     * @return A string that is the general description of the restaurant
+     */
     public String getDescription() {
         return getString("description");
     }
 
+    /**
+     * Description: This function instantiates a new wait time group, which will hold all of the
+     * wait times for restaurants
+     *
+     * @return A new waittimegroup object with current restaurant wait times
+     */
     public WaitTimeGroup getWaitTimeGroup() {
         return new WaitTimeGroup(getWaitInMinutes());
     }
 
+    /**
+     * Description: Getter function for obtaining the current wait time for each restaurant
+     *
+     * @return A string that shows what the current predicted wait time is
+     */
     public int getWaitInMinutes() {
         return getInt("CurrentWait");
     }
 
-    public int isClosed() { return getInt("isClosed"); }
+
     /**
      * Create and serialize an OperatingHours wrapper object from the raw JSON array in
      * Parse cloud, which follows the JSON object format:
@@ -86,10 +113,19 @@ public class Restaurant extends ParseObject {
         return factory.build();
     }
 
-    // The reason isClosed is an int, not a boolean, in the parse db is because
-    // And the reason why we use isClosed server-side is because Parse doesn't
-    // support ascending and descending ordering in the same query
-    // and sorting doesn't work on booleans at all
+    /**
+     *
+     * The reason isClosed is an int, not a boolean, in the parse db is because
+     * And the reason why we use isClosed server-side is because Parse doesn't
+     * support ascending and descending ordering in the same query and sorting doesn't work
+     * on booleans at all
+     *
+     * Description: A function that checks if the restaurant is closed or not based on the report
+     * from parse
+     *
+     * @return true The restaurant is open
+     * @return false The restaurant is closed
+     */
     public boolean isOpenNow() {
         return getInt("isClosed") == 0;
     }
@@ -101,7 +137,7 @@ public class Restaurant extends ParseObject {
     }
 
     /**
-     * Creates a new Parse query for the given Restaurant subclass type.
+     * Description: Creates a new Parse query for the given Restaurant subclass type.
      *
      * @return A new ParseQuery
      */
@@ -110,6 +146,12 @@ public class Restaurant extends ParseObject {
     }
 
     @Override
+    /**
+     * Description: Function to check if another restaurant shares its id
+     *
+     * @return true The restaurant has a duplicate
+     * @return false The restaurant is unique in the database
+     */
     public boolean equals(Object o) {
         if (!(o instanceof Restaurant))
             return false;
@@ -117,6 +159,15 @@ public class Restaurant extends ParseObject {
         return ((Restaurant)o).getId().equals(this.getId());
     }
 
+    /**
+     * Description: Function to chek if another restaurant has differences in name and wait time
+     *
+     * @param o The object to compare with the current restaurant
+     * @return true The restaurant names are not equal or the wait time is not the same, or the object
+     * is not a restaurant
+     * @return false The restaurant has differences in wait time or name, and o is an instance of
+     * restaurant
+     */
     public boolean hasDifferences(Object o) {
         if (!(o instanceof Restaurant))
             return true;
