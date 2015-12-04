@@ -26,11 +26,12 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import java.util.HashMap;
 
 import neckbeardhackers.pcqueue.R;
+import neckbeardhackers.pcqueue.event.NetworkConnectionChangeObserver;
 import neckbeardhackers.pcqueue.model.RestaurantManager;
 
 public class RestaurantListActivity extends MasterActivity {
 
-    
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +132,7 @@ public class RestaurantListActivity extends MasterActivity {
         sortByNameButton.callOnClick();
 
         /* Setup pull-to-refresh listener */
-        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) this.findViewById(R.id.RestaurantListRefresher);
+        swipeRefreshLayout = (SwipeRefreshLayout) this.findViewById(R.id.RestaurantListRefresher);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -202,4 +203,25 @@ public class RestaurantListActivity extends MasterActivity {
         }
     });
     }
+
+    /**
+     * If we lose connectivity, we should disable the pull-to-refresh capabilities
+     *
+     * @param hasConnection: whether or not internet is working
+     **/
+    @Override
+    public void onNetworkConnectivityChange(boolean hasConnection) {
+        if (swipeRefreshLayout != null) {
+            if (hasConnection) {
+                Log.d("swipeToRefresh", "Enabling swipe-to-refresh, hasConnection="+hasConnection);
+                swipeRefreshLayout.setEnabled(true);
+            } else {
+                Log.d("swipeToRefresh", "Disabling swipe-to-refresh, hasConnection="+hasConnection);
+                swipeRefreshLayout.setEnabled(false);
+            }
+        }
+        // Do the stuff from the parent method (show the "no-internet" bar)
+        super.onNetworkConnectivityChange(hasConnection);
+    }
+
 }
