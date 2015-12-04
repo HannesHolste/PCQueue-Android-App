@@ -142,4 +142,7 @@ public class ReporterActivity extends MasterActivity {
     }
 
 
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
 }

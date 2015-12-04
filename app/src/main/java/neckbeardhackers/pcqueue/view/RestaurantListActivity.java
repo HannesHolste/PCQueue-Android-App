@@ -128,7 +128,7 @@ public class RestaurantListActivity extends MasterActivity {
             }
         });
 
-        sortByWaitButton.callOnClick();
+        sortByNameButton.callOnClick();
 
         /* Setup pull-to-refresh listener */
         final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) this.findViewById(R.id.RestaurantListRefresher);
