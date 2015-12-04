@@ -211,7 +211,6 @@ public class RestaurantListActivity extends MasterActivity {
      **/
     @Override
     public void onNetworkConnectivityChange(boolean hasConnection) {
-//        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) this.findViewById(R.id.RestaurantListRefresher);
         if (swipeRefreshLayout != null) {
             if (hasConnection) {
                 Log.d("swipeToRefresh", "Enabling swipe-to-refresh, hasConnection="+hasConnection);
@@ -221,11 +220,8 @@ public class RestaurantListActivity extends MasterActivity {
                 swipeRefreshLayout.setEnabled(false);
             }
         }
-        // Do the stuff from the parent method
-        View bar = findViewById(R.id.no_internet_bar);
-        if (bar != null) {
-            bar.setVisibility(!hasConnection ? View.VISIBLE : View.GONE);
-        }
+        // Do the stuff from the parent method (show the "no-internet" bar)
+        super.onNetworkConnectivityChange(hasConnection);
     }
 
 }
