@@ -1,8 +1,6 @@
 package neckbeardhackers.pcqueue.view;
 
 
-import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,11 +15,10 @@ public class MasterActivity extends AppCompatActivity implements NetworkConnecti
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        registerNetworkConnectionChangeBroadcastReceiver();
-
+        registerNetworkConnectionChangeReceiver();
     }
 
-    protected void registerNetworkConnectionChangeBroadcastReceiver() {
+    protected void registerNetworkConnectionChangeReceiver() {
         if (networkConnectionReceiver == null) {
             IntentFilter filter = new IntentFilter();
             filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
@@ -43,13 +40,13 @@ public class MasterActivity extends AppCompatActivity implements NetworkConnecti
     @Override
     protected void onResume() {
         super.onResume();
-        registerNetworkConnectionListener(this);
+        registerNetworkConnectionChangeReceiver();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        registerNetworkConnectionListener(this);
+        registerNetworkConnectionChangeReceiver();
     }
 
     public void onNetworkConnectivityChange(boolean hasConnection) {
@@ -60,8 +57,18 @@ public class MasterActivity extends AppCompatActivity implements NetworkConnecti
         }
     }
 
+    public void onPause() {
+        unregisterNetworkConnectionChangeReceiver();
+        super.onPause();
+    }
+
     @Override
     public void onStop() {
+        unregisterNetworkConnectionChangeReceiver();
+        super.onStop();
+    }
+
+    protected void unregisterNetworkConnectionChangeReceiver() {
         try {
             unregisterReceiver(networkConnectionReceiver);
             networkConnectionReceiver = null;
@@ -69,7 +76,6 @@ public class MasterActivity extends AppCompatActivity implements NetworkConnecti
         catch (IllegalArgumentException e) {
             // Do nothing. This is expected sometimes
         }
-        super.onStop();
     }
 
 
