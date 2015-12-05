@@ -20,7 +20,7 @@ This application requires a Parse.com account and database.
 
 
 # Screenshots
-<img src="screen.png" alt="Screenshot" width="300px"><img src="screen2.png" alt="Screenshot" width="300px"><img src="screen3.png" alt="Screenshot" width="300px">
+<img src="screen.png" alt="Screenshot" width="240px"><img src="screen2.png" alt="Screenshot" width="240px"><img src="screen3.png" alt="Screenshot" width="240px">
 
 # Video Demonstration
 [Click to view video demo on YouTube](https://www.youtube.com/watch?v=mUBFcjbh5ds&feature=youtu.be)
