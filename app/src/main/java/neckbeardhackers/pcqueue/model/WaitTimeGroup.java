@@ -103,7 +103,7 @@ public final class WaitTimeGroup {
     public WaitTimeGroup(WAIT_TIME_GROUPS wait) {
         this.currentWait = wait;
     }
-    
+
     /**
      * Description: Finds the appropriate WAIT_TIME_GROUPS object that captures the given wait time,
      * and instantiates a WaitTimeGroup object containing that group.
