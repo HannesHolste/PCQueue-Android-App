@@ -33,6 +33,10 @@ public class ReporterActivity extends MasterActivity {
 
     private Restaurant restaurant = null;
 
+    /**
+     *
+     * @param hasConnection
+     */
     @Override
     public void onNetworkConnectivityChange(boolean hasConnection) {
         super.onNetworkConnectivityChange(hasConnection);
@@ -45,8 +49,6 @@ public class ReporterActivity extends MasterActivity {
             if (!hasConnection) {
                 btn.setBackgroundColor(Color.GRAY);
             } else {
-                //int color = ContextCompat.getColor(getApplicationContext(), R.color.buttonColorPrimary);
-                //int color = getResources().getColor(R.color.buttonColorPrimary, null);
                 int color = Color.parseColor("#318EFA");
                 btn.setBackgroundColor(color);
             }
@@ -142,6 +144,10 @@ public class ReporterActivity extends MasterActivity {
     }
 
 
+    /**
+     * Getter function that returns the restaurant object
+     * @return Restaurant object
+     */
     public Restaurant getRestaurant() {
         return restaurant;
     }

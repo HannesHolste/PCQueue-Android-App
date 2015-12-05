@@ -105,9 +105,9 @@ public abstract class ParseRecyclerQueryAdapter<T extends ParseObject, U extends
     }
 
     /**
-     * Gets the item at a given position
-     * @param position The position of the item to get
-     * @return The item at the given position
+     * Getter for an item at a particular position in the mItems list
+     * @param position Index to access mItems to obtain the item
+     * @return The item T in mItems
      */
     public T getItem(int position) {
         return mItems.get(position);
@@ -132,10 +132,10 @@ public abstract class ParseRecyclerQueryAdapter<T extends ParseObject, U extends
     }
 
     /**
-     * Sets the given item in the given position with the provided item and overwrites it if it
-     * already exists
-     * @param position The position to put the item in
-     * @param item The item to insert into the RecyclerView
+     * Sets an item at a particular position and will overwrite items in that position if there
+     * exists one.
+     * @param position Index to insert the item
+     * @param item Item to insert or replace in the list
      */
     public void setItem(int position, T item) {
         mItems.set(position, item);

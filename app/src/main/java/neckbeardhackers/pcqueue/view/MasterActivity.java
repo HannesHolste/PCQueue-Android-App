@@ -17,6 +17,8 @@ import neckbeardhackers.pcqueue.net.NetworkStateReceiver;
  * connection is lost. All other activities should extend this activity.
  */
 public class MasterActivity extends AppCompatActivity implements NetworkConnectionChangeObserver {
+
+
     protected NetworkStateReceiver networkConnectionReceiver = null;
 
     /**
