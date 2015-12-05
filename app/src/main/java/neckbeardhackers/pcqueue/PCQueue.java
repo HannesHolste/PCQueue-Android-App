@@ -24,15 +24,23 @@ import neckbeardhackers.pcqueue.model.Restaurant;
 import neckbeardhackers.pcqueue.net.NetworkStateReceiver;
 
 /**
- * Main entry point for the application
+ * Main entry point for the application. Contains logic for registering the the app with parse for
+ * updates and differentiating between test and prod Parse databases.
  */
 public class PCQueue extends Application {
 
     // TODO: Extract this to a separate configuration file, and re-generate keys
     // Leaving keys in source code that is committed to github is poor practice
-    private final String PARSE_APP_ID = "***REMOVED***";
-    private final String PARSE_CLIENT_KEY = "***REMOVED***";
+    private final String PROD_PARSE_APP_ID = "***REMOVED***";
+    private final String PROD_PARSE_CLIENT_KEY = "***REMOVED***";
+    private final String TEST_PARSE_APP_ID = "***REMOVED***";
+    private final String TEST_PARSE_CLIENT_KEY = "***REMOVED***";
 
+    /**
+     * Determines whether or not the application is being run as an app or for testing purposes by
+     * checking to see if the Test classes are in scope. Janky implementation.
+     * @return Whether we are running tests
+     */
     private static boolean isTestMode() {
         boolean result;
         try {
@@ -45,16 +53,17 @@ public class PCQueue extends Application {
     }
 
     /**
-     * When the application is run first, run initialization procedures.
+     * Handles the Application onCreate method by registering the App with the parse database and
+     * subscribing to notification channels. This is called when the application starts.
      */
     @Override
     public void onCreate() {
-        String parseAppId = PARSE_APP_ID;
-        String parseClientKey = PARSE_CLIENT_KEY;
+        String parseAppId = PROD_PARSE_APP_ID;
+        String parseClientKey = PROD_PARSE_CLIENT_KEY;
         if (isTestMode()) {
             System.err.println("TESTING!");
-            parseAppId = "***REMOVED***";
-            parseClientKey = "***REMOVED***";
+            parseAppId = TEST_PARSE_APP_ID;
+            parseClientKey = TEST_PARSE_CLIENT_KEY;
         }
         super.onCreate();
 
@@ -89,7 +98,7 @@ public class PCQueue extends Application {
         }
 
         if (!isTestMode()) {
-            // Register client with Parse (for push notificatons)
+            // Register client with Parse (for push notifications)
             ParseInstallation.getCurrentInstallation().saveInBackground();
 
             // Subscribe to channel to listen for updates to the restaurant objects, e.g. waittime
@@ -97,6 +106,4 @@ public class PCQueue extends Application {
             ParsePush.subscribeInBackground("restaurantUpdates");
         }
     }
-
-
 }
