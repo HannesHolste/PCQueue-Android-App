@@ -36,8 +36,6 @@ import com.parse.ParseQueryAdapter.QueryFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-import neckbeardhackers.pcqueue.model.Restaurant;
-
 
 /**
  * NEARLY IDENTICAL REPLACEMENT FOR ParseQueryAdapter ON ListView.
@@ -59,7 +57,13 @@ public abstract class ParseRecyclerQueryAdapter<T extends ParseObject, U extends
     private final boolean hasStableIds;
     private final List<T> mItems;
 
-    // PRIMARY CONSTRUCTOR
+    /**
+     * Primary Constructor
+     * Description: Creates a new query adapter with the provided QueryFactory and keeps track of
+     * whether the database IDs are meant to be stable
+     * @param factory The QueryFactory that should be set to this adapter
+     * @param hasStableIds Whether the database IDs are meant to be stable
+     */
     public ParseRecyclerQueryAdapter(final QueryFactory<T> factory, final boolean hasStableIds) {
         mFactory = factory;
         mItems = new ArrayList<T>();
@@ -71,80 +75,79 @@ public abstract class ParseRecyclerQueryAdapter<T extends ParseObject, U extends
         loadObjects();
     }
 
-    // ALTERNATE CONSTRUCTOR
-    public ParseRecyclerQueryAdapter(final String className, final boolean hasStableIds) {
-        this(new QueryFactory<T>() {
-
-            @Override
-            public ParseQuery<T> create() {
-                return ParseQuery.getQuery(className);
-            }
-        }, hasStableIds);
-    }
-
-    // ALTERNATE CONSTRUCTOR
-    public ParseRecyclerQueryAdapter(final Class<T> clazz, final boolean hasStableIds) {
-        this(new QueryFactory<T>() {
-
-            @Override
-            public ParseQuery<T> create() {
-                return ParseQuery.getQuery(clazz);
-            }
-        }, hasStableIds);
-    }
-
     protected void setQueryFactory(final QueryFactory<T> factory) {
         mFactory = factory;
     }
 
-  /*
-   *  REQUIRED RECYCLERVIEW METHOD OVERRIDES
-   */
-
+    /**
+     * Handles the RecyclerView getItemId which simply returns the item ID at the given position if the
+     * IDs are stable, and guesses if the IDs are unstable
+     * @param position The position of the item ID to get
+     * @return The item ID located at position
+     */
     @Override
     public long getItemId(int position) {
         if (hasStableIds) {
             return position;
         }
+
         return super.getItemId(position);
     }
 
+    /**
+     * Handles the RecyclerView getItemCount which simply returns the number of items we have in
+     * our RecyclerView
+     * @return The number of items within our RecyclerView
+     */
     @Override
     public int getItemCount() {
         return mItems.size();
     }
 
+    /**
+     * Gets the item at a given position
+     * @param position The position of the item to get
+     * @return The item at the given position
+     */
     public T getItem(int position) {
         return mItems.get(position);
     }
 
-    public List<T> getItems() {
-        return mItems;
-    }
-
+    /**
+     * Removes the item at a given position within our RecyclerView
+     * @param position The position of the item to remove
+     */
     public void removeItem(int position) {
         mItems.remove(position);
     }
 
+    /**
+     * Adds the given item to the RecyclerView at the given postition, shifting items right if they
+     * already exist in that location
+     * @param position The position to insert the item at
+     * @param toAdd The item to insert
+     */
     public void addItem(int position, T toAdd) {
         mItems.add(position, toAdd);
     }
 
+    /**
+     * Sets the given item in the given position with the provided item and overwrites it if it
+     * already exists
+     * @param position The position to put the item in
+     * @param item The item to insert into the RecyclerView
+     */
     public void setItem(int position, T item) {
         mItems.set(position, item);
     }
 
     /**
-     * Apply alterations to query prior to running findInBackground.
+     * Loads the objects from the Adapter's QueryFactory into the RecyclerView list and calls
+     * the completion callbacks when finished
      */
-    protected void onFilterQuery(ParseQuery<T> query) {
-        // provide override for filtering query
-    }
-
     public void loadObjects() {
         dispatchOnLoading();
         final ParseQuery<T> query = mFactory.create();
-        onFilterQuery(query);
         query.findInBackground(new FindCallback<T>() {
             ;
 
@@ -163,36 +166,47 @@ public abstract class ParseRecyclerQueryAdapter<T extends ParseObject, U extends
         });
     }
 
-//    public void updateItem(T item, int position) {
-//        mItems.remove(position);
-//        recycler.removeViewAt(position);
-//        mAdapter.notifyItemRemoved(position);
-//        mAdapter.notifyItemRangeChanged(position, list.size());
-//    }
-
-
+    /**
+     * The interface for listening to data changes within the RecyclerView
+     */
     public interface OnDataSetChangedListener {
         void onDataSetChanged();
     }
 
     private final List<OnDataSetChangedListener> mDataSetListeners;
 
+    /**
+     * Register a DataSetChangedListener with the RecyclerView so that it is updated every time
+     * the RecyclerView object list is changed
+     * @param listener The listener to register
+     */
     public void addOnDataSetChangedListener(OnDataSetChangedListener listener) {
         mDataSetListeners.add(listener);
     }
 
+    /**
+     * De-Register the specified DataSetChangedListener so that it is no longer updated every
+     * time the RecyclerView object list is changed
+     * @param listener The listener to unregister
+     */
     public void removeOnDataSetChangedListener(OnDataSetChangedListener listener) {
-        if (mDataSetListeners.contains(listener)) {
+        if (mDataSetListeners.contains(listener))
             mDataSetListeners.remove(listener);
-        }
     }
 
+    /**
+     * Alert all of the registered DataSetChangedListeners that the data set belonging to this
+     * RecyclerView has changed
+     */
     protected void fireOnDataSetChanged() {
-        for (int i = 0; i < mDataSetListeners.size(); i++) {
-            mDataSetListeners.get(i).onDataSetChanged();
-        }
+        for (OnDataSetChangedListener registeredListener : mDataSetListeners)
+        registeredListener.onDataSetChanged();
     }
 
+    /**
+     * The interface for listeners that may register for query change alerts within this adapter
+     * @param <T> The type of objects the query would be retrieving
+     */
     public interface OnQueryLoadListener<T> {
 
         public void onLoaded(
@@ -203,26 +217,44 @@ public abstract class ParseRecyclerQueryAdapter<T extends ParseObject, U extends
 
     private final List<OnQueryLoadListener<T>> mQueryListeners;
 
-    public void addOnQueryLoadListener(
-            OnQueryLoadListener<T> listener) {
+    /**
+     * Registers a OnQueryLoadListener with the adapter so that it is notified every time a
+     * query is loaded
+     * @param listener The listener to register
+     */
+    public void addOnQueryLoadListener( OnQueryLoadListener<T> listener) {
         if (!(mQueryListeners.contains(listener))) {
             mQueryListeners.add(listener);
         }
     }
 
-    public void removeOnQueryLoadListener(
-            OnQueryLoadListener<T> listener) {
+    /**
+     * De-Regsiters an OnQueryLoadListener from the adapter so that it is not notified every time
+     * a query is loaded
+     * @param listener The listener to de-register
+     */
+    public void removeOnQueryLoadListener( OnQueryLoadListener<T> listener) {
         if (mQueryListeners.contains(listener)) {
             mQueryListeners.remove(listener);
         }
     }
 
+    /**
+     * Alert all registered OnQueryLoadListeners that the query has loaded so that they may
+     * react as they please
+     */
     private void dispatchOnLoading() {
         for (OnQueryLoadListener<T> l : mQueryListeners) {
             l.onLoading();
         }
     }
 
+    /**
+     * Alert all registered OnQueryLoadListeners that the query has completed loading and provide
+     * them with the results and error code so that they may react as they please
+     * @param objects The results of the query
+     * @param e The error code belonging to the query
+     */
     private void dispatchOnLoaded(List<T> objects, ParseException e) {
         for (OnQueryLoadListener<T> l : mQueryListeners) {
             l.onLoaded(objects, e);
