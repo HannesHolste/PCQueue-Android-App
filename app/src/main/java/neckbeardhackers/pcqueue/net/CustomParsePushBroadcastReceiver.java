@@ -29,6 +29,14 @@ import neckbeardhackers.pcqueue.model.RestaurantManager;
  */
 public class CustomParsePushBroadcastReceiver extends ParsePushBroadcastReceiver {
 
+    /**
+     * Receives a signal from Parse indicating that something needs to be changed. If the thing that
+     * needs to be changed is a restaurant, delegates to the RestaurantManager to get the new
+     * restaurant from the database
+     *
+     * @param context The in-app context that is pushing the update
+     * @param intent An intent contain the data from the Parse push
+     */
     @Override
     protected void onPushReceive(Context context, Intent intent) {
         //super.onPushReceive(context, intent); // do not show push notification
@@ -61,6 +69,11 @@ public class CustomParsePushBroadcastReceiver extends ParsePushBroadcastReceiver
 
     }
 
+    /**
+     * Converts the received parse data into a JSONObject
+     * @param intent The intent containing data from the parse push
+     * @return The converted JSONObject from the parse data
+     */
     private JSONObject getPushData(Intent intent) {
         try {
             return new JSONObject(intent.getStringExtra(KEY_PUSH_DATA));
