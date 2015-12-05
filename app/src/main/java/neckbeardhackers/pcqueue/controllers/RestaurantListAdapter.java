@@ -1,4 +1,4 @@
-package neckbeardhackers.pcqueue.view;
+package neckbeardhackers.pcqueue.controllers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +18,6 @@ import com.parse.ParseQueryAdapter;
 import java.util.List;
 
 import neckbeardhackers.pcqueue.R;
-import neckbeardhackers.pcqueue.event.NetworkConnectionChangeObserver;
 import neckbeardhackers.pcqueue.event.RestaurantChangeObserver;
 import neckbeardhackers.pcqueue.model.Restaurant;
 import neckbeardhackers.pcqueue.model.RestaurantManager;

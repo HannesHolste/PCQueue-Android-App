@@ -1,21 +1,16 @@
-package neckbeardhackers.pcqueue.view;
+package neckbeardhackers.pcqueue.controllers;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.view.ViewTreeObserver;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 
 import com.parse.FunctionCallback;
@@ -26,7 +21,6 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import java.util.HashMap;
 
 import neckbeardhackers.pcqueue.R;
-import neckbeardhackers.pcqueue.event.NetworkConnectionChangeObserver;
 import neckbeardhackers.pcqueue.model.RestaurantManager;
 
 /**
