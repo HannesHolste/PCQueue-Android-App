@@ -97,10 +97,15 @@ public abstract class ParseRecyclerQueryAdapter<T extends ParseObject, U extends
         mFactory = factory;
     }
 
-  /*
-   *  REQUIRED RECYCLERVIEW METHOD OVERRIDES
-   */
+    /*
+     *  REQUIRED RECYCLERVIEW METHOD OVERRIDES
+     */
 
+    /**
+     * Getter for the item id at a particular location in the list
+     * @param position Index at which the item is located in the list
+     * @return The item id associated with the item in the list at location, position
+     */
     @Override
     public long getItemId(int position) {
         if (hasStableIds) {
@@ -109,27 +114,55 @@ public abstract class ParseRecyclerQueryAdapter<T extends ParseObject, U extends
         return super.getItemId(position);
     }
 
+    /**
+     * Getter for the item count
+     * @return The number of items in mItems list
+     */
     @Override
     public int getItemCount() {
         return mItems.size();
     }
 
+    /**
+     * Getter for an item at a particular position in the mItems list
+     * @param position Index to access mItems to obtain the item
+     * @return The item T in mItems
+     */
     public T getItem(int position) {
         return mItems.get(position);
     }
 
+    /**
+     * Obtains the list of items
+     * @return mItems instance
+     */
     public List<T> getItems() {
         return mItems;
     }
 
+    /**
+     * Removes an item at a particular position
+     * @param position Index of the item to remove
+     */
     public void removeItem(int position) {
         mItems.remove(position);
     }
 
+    /**
+     * Add a new item to the list
+     * @param position New position to insert the new item
+     * @param toAdd Item to insert into the list
+     */
     public void addItem(int position, T toAdd) {
         mItems.add(position, toAdd);
     }
 
+    /**
+     * Sets an item at a particular position and will overwrite items in that position if there
+     * exists one.
+     * @param position Index to insert the item
+     * @param item Item to insert or replace in the list
+     */
     public void setItem(int position, T item) {
         mItems.set(position, item);
     }
@@ -141,6 +174,9 @@ public abstract class ParseRecyclerQueryAdapter<T extends ParseObject, U extends
         // provide override for filtering query
     }
 
+    /**
+     *
+     */
     public void loadObjects() {
         dispatchOnLoading();
         final ParseQuery<T> query = mFactory.create();
@@ -162,14 +198,6 @@ public abstract class ParseRecyclerQueryAdapter<T extends ParseObject, U extends
             }
         });
     }
-
-//    public void updateItem(T item, int position) {
-//        mItems.remove(position);
-//        recycler.removeViewAt(position);
-//        mAdapter.notifyItemRemoved(position);
-//        mAdapter.notifyItemRangeChanged(position, list.size());
-//    }
-
 
     public interface OnDataSetChangedListener {
         void onDataSetChanged();

@@ -29,10 +29,22 @@ import neckbeardhackers.pcqueue.R;
 import neckbeardhackers.pcqueue.event.NetworkConnectionChangeObserver;
 import neckbeardhackers.pcqueue.model.RestaurantManager;
 
+/**
+ * This class is responsible for creating the landing page for the application. It will listen for
+ * network connection and display all the restaurants with their wait times. It will be sorted by
+ * name, alphabetically.
+ */
 public class RestaurantListActivity extends MasterActivity {
 
+    // Instance of SwipeRefreshLayout that will listen for manual refreshes
     private SwipeRefreshLayout swipeRefreshLayout;
 
+    /**
+     * This will create the landing page for the application with the restaurant list, establish a
+     * listener for the network, color the appropriate items, and listen for which sort button
+     * is clicked. Also listens for manual refreshing of the cards' wait times.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +82,7 @@ public class RestaurantListActivity extends MasterActivity {
         final View sortWaitTimeUnderline = findViewById(R.id.waitTimeSortActive);
         final View sortNameUnderline = findViewById(R.id.nameSortActive);
 
+        // sorts the restaurant cards by name and highlights the SORT BY NAME button
         sortByNameButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -91,7 +104,7 @@ public class RestaurantListActivity extends MasterActivity {
                 sortByWaitButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_sort_wait_inactive, 0, 0, 0);
 
 
-                // Making the unactive sort bar invisible and make the other visible
+                // Making the inactive sort bar invisible and make the other visible
                 sortWaitTimeUnderline.setVisibility(View.INVISIBLE);
                 sortNameUnderline.setVisibility(View.VISIBLE);
 
@@ -102,6 +115,7 @@ public class RestaurantListActivity extends MasterActivity {
             }
         });
 
+        // Sorts the restaurant cards by wait time and highlights the SORT BY WAIT TIME button
         sortByWaitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,13 +162,22 @@ public class RestaurantListActivity extends MasterActivity {
 
     }
 
-
+    /**
+     * This function will obtain the data returned after the user submits a queue report.
+     * It will hold the data for a certain amount of time and then release it to the server
+     * once the popbar disappears.
+     * @param requestCode request for result (unused)
+     * @param resultCode unused
+     * @param data parse information
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
 
             final HashMap<String, Object> params = new HashMap<String, Object>();
+            // restaurant name
             params.put("name", data.getStringExtra("name"));
+            // wait time
             params.put("time", data.getIntExtra("time", -1));
             final int oldTime = data.getIntExtra("oldTime", -1);
             final String restaurantId = data.getStringExtra("restaurantId");
@@ -163,12 +186,14 @@ public class RestaurantListActivity extends MasterActivity {
             Snackbar reportConfirmation = Snackbar
                 .make(snackbarView, "Update Reported!", Snackbar.LENGTH_LONG);
 
+            // Hold the report data momentarily
             reportConfirmation.setAction("UNDO", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Snackbar undoConfirmation = Snackbar.make(snackbarView, "Report Undone!",
                         Snackbar.LENGTH_SHORT);
                     undoConfirmation.show();
+                    // sets the wait time locally on the device
                     RestaurantManager.getInstance().setLocalRestaurantWaitTime(restaurantId, oldTime);
                 }
             });
@@ -177,6 +202,8 @@ public class RestaurantListActivity extends MasterActivity {
                 @Override
                 public void onDismissed(Snackbar snackbar, int event) {
                     super.onDismissed(snackbar, event);
+                    // checking if the snackbar was not dismissed and there is no second popbar
+                    // that shows up, push the report to parse database
                     if (event != Snackbar.Callback.DISMISS_EVENT_ACTION &&
                             event != Snackbar.Callback.DISMISS_EVENT_CONSECUTIVE)
                         pushToParse(params);
@@ -187,6 +214,11 @@ public class RestaurantListActivity extends MasterActivity {
         }
     }
 
+    /**
+     * This function will push report queue data to the parse database once the undo button disappears
+     *
+     * @param params Restaurant queue report
+     */
     final void pushToParse(HashMap<String, Object> params) {
         ParseCloud.callFunctionInBackground("attemptUpdate", params, new FunctionCallback<String>() {
         public void done(String results, ParseException e) {

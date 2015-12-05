@@ -21,12 +21,21 @@ import neckbeardhackers.pcqueue.model.RestaurantManager;
 import neckbeardhackers.pcqueue.model.WaitTimeGroup;
 
 /**
- * Created by brianna lam and katherine duan on 11/21/15.
+ * This class is responsible for creating the info pane activity. It will receive live updates from
+ * the parse database and display the current wait time of the corresponding restaurant. It will
+ * display the time and necessary information for the user. Also indicates if the restaurant is
+ * closed
  */
 public class RestaurantInfoActivity extends MasterActivity implements RestaurantChangeObserver {
 
     private Restaurant restaurant = null;
     @Override
+
+    /**
+     * Instantiates the info pane activity
+     *
+     * @param savedInstanceState The previous state to load from
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -51,8 +60,9 @@ public class RestaurantInfoActivity extends MasterActivity implements Restaurant
         Intent intent = getIntent();
         if (intent != null) {
             String restaurantId = intent.getStringExtra("restaurantId");
-            System.out.println("Restaurant id is: " + restaurantId);
+            // create an instance of the restaurant manager
             RestaurantManager restaurantManager = RestaurantManager.getInstance();
+            // find the object in the parse database
             ParseQuery<Restaurant> query = restaurantManager.queryRestaurantById(restaurantId);
             try {
                 // synchronous, blocking call.
@@ -74,12 +84,20 @@ public class RestaurantInfoActivity extends MasterActivity implements Restaurant
 
     }
 
+    /**
+     * Unregisters the info pane activity from receiving updates
+     */
     @Override
     public void onStop() {
         RestaurantManager.getInstance().unregisterRestaurantChangeListener(this);
         super.onStop();
     }
 
+    /**
+     * updates the restaurant information if there is an update. Also is used in instantiating the
+     * Restaurant info pane.
+     * @param updatedRestaurant
+     */
     @Override
     public void update(Restaurant updatedRestaurant) {
         if (restaurant != null) {
@@ -92,14 +110,7 @@ public class RestaurantInfoActivity extends MasterActivity implements Restaurant
 
             TextView waitTime = (TextView) findViewById(R.id.restaurantWaitTime);
             TextView openSign = (TextView) findViewById(R.id.info_openNow);
-            System.out.println("Is " + restaurant.getName() + " open now? " + restaurant.isOpenNow());
-            System.out.println("What is the current wait in minutes for this restaurant? " + restaurant.getWaitInMinutes());
-            //waitTime.setText(restaurant.getWaitInMinutes() + " minutes");
-//            if (restaurant.getHours().isOpenNow()) {
-//                waitTime.setText(restaurant.getWaitInMinutes() + " minutes");
-//                openSign.setText("Open Now");
-//                openSign.setTextColor(getResources().getColor(R.color.textColorHighlight));
-//            }
+
             if(restaurant.isOpenNow()){
                 waitTime.setText(restaurant.getWaitInMinutes() + " minutes");
                 openSign.setText("Open Now");
@@ -122,7 +133,6 @@ public class RestaurantInfoActivity extends MasterActivity implements Restaurant
                 DailyOperatingHours todaysHours = restaurant.getHours().getOperatingHours(OperatingHours.getDayOfWeek(i));
                 if(todaysHours.doesNotClose()){
                     fillDays.setText("24 Hours");
-                    //fillDays.setTextColor(getResources().getColor(R.color.textColorHighlight));
                 }
                 else if(!todaysHours.closedAllDay()) {
                     fillDays.setText(String.format("%s-\n%s", todaysHours.getOpeningTimeString(), todaysHours.getCloseTimeString()));
@@ -131,9 +141,11 @@ public class RestaurantInfoActivity extends MasterActivity implements Restaurant
                     fillDays.setText("Closed");
             }
 
+            // sets the description
             TextView infoDescription = (TextView) findViewById(R.id.info_descriptionText);
             infoDescription.setText(restaurant.getDescription());
 
+            // sets the phone number
             TextView phoneNum = (TextView) findViewById(R.id.info_phoneNumber);
             phoneNum.setText(restaurant.getPhoneNumber());
 

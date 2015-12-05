@@ -33,16 +33,37 @@ import neckbeardhackers.pcqueue.model.WaitTimeGroup;
  */
 public class RestaurantListAdapter
         extends ParseRecyclerQueryAdapter<Restaurant, RestaurantListAdapter.RestaurantViewHolder>
-        implements RestaurantChangeObserver, NetworkConnectionChangeObserver {
+        implements RestaurantChangeObserver{
 
+    // Sorts the landing page by name by default
     private RestaurantManager.RestaurantSortType currentSortType = RestaurantManager.RestaurantSortType.NAME;
+    // open and close restaurant indicators
     public static final int CARD_VIEW_OPEN_RESTAURANT = 0;
     public static final int CARD_VIEW_CLOSED_RESTAURANT = 1;
 
-    @Override
+    private Context context;
+
+    /**
+     * Creates a RestaurantListAdapter object and holds the restaurants so that they can be displayed
+     * @param c Context at which this RestaurantListAdapter will be in
+     */
+    public RestaurantListAdapter(Context c) {
+        // Create query Factory and setup superclass
+        super(new ParseQueryAdapter.QueryFactory<Restaurant>() {
+            public ParseQuery<Restaurant> create() {
+                return RestaurantManager.getInstance().queryForAllRestaurants();
+            }
+        }, false);
+
+        this.context = c;
+        RestaurantManager.getInstance().registerRestaurantChangeListener(this);
+    }
+
     /**
      * Called when we need to update the corresponding Restaurant view
+     * @param updatedRestaurant the updated restaurant to extract new information about
      */
+    @Override
     public void update(Restaurant updatedRestaurant) {
         for (int i = 0; i < getItemCount(); i++) {
             Restaurant oldRestaurant = getItem(i);
@@ -53,10 +74,21 @@ public class RestaurantListAdapter
         }
     }
 
+    /**
+     * Updates all of the restaurant cards with a update callback
+     * @param updateCompleteCallback
+     */
     public void updateAll(ManagerRefreshCallback updateCompleteCallback) {
         RestaurantManager.getInstance().refreshAllRestaurantsHard(updateCompleteCallback);
     }
 
+    /**
+     * Sorts the restaurant and force updates a particular restaurant
+     * @param sortType The sorting order to order the restaurant cards
+     * @param callback The call back function after the sorting is done
+     * @param forcedUpdate The restaurant to force update its information
+     * @param animations Animates the moving of the cards when the sorting changes
+     */
     public void sortAndUpdateForcingASingleRestaurant(final RestaurantManager.RestaurantSortType sortType,
                                                       final ManagerRefreshCallback callback,
                                                       final Restaurant forcedUpdate, final boolean animations) {
@@ -76,7 +108,7 @@ public class RestaurantListAdapter
 
                 for (int i = 0; i < objects.size(); ++i) {
                     if ((((getItemCount() - 1) < i || !objects.get(i).hasDifferences(getItem(i))))
-                        && (forcedUpdate == null || !objects.get(i).equals(forcedUpdate)))
+                            && (forcedUpdate == null || !objects.get(i).equals(forcedUpdate)))
                         continue;
                     else {
                         if (animations) {
@@ -84,8 +116,7 @@ public class RestaurantListAdapter
                             notifyItemRemoved(i);
                             addItem(i, objects.get(i));
                             notifyItemInserted(i);
-                        }
-                        else {
+                        } else {
                             setItem(i, objects.get(i));
                             notifyItemChanged(i);
                         }
@@ -97,39 +128,38 @@ public class RestaurantListAdapter
         });
     }
 
+    /**
+     * Sorts the restaurants given a sort while updating the restaurant wait times
+     * @param sortType The type of sorting for the restaurant cards
+     * @param callback The callback function to call after the sorting is complete
+     */
     public void sortAndUpdate(final RestaurantManager.RestaurantSortType sortType,
                               final ManagerRefreshCallback callback) {
         sortAndUpdateForcingASingleRestaurant(sortType, callback, null, false);
 
     }
 
+    /**
+     * Sorts and updates the restaurants given just a sort type and no call back
+     * @param sortType The sorting order for the restaurant cards
+     */
     public void sortAndUpdate(final RestaurantManager.RestaurantSortType sortType) {
         sortAndUpdate(sortType, null);
-
-        /*// update query factory with new query type
-        super.setQueryFactory(newFactory);
-        // invalidate current set of loaded restaurants. reload!
-        super.loadObjects();
-        */
-    }
-
-    @Override
-    public void onNetworkConnectivityChange(boolean hasConnection) {
-        
     }
 
 
     /**
-     * ViewHolder representing a restaurant card in our UI,
-     * based on the restaurant card layout XML,
+     * ViewHolder representing a restaurant card in our UI, based on the restaurant card layout XML,
      * as required by RecyclerView in android.
      */
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder {
+        // card properties
         CardView cardView;
         TextView restaurantName;
         TextView currentWait;
         Button updateButton;
 
+        // card constructor
         RestaurantViewHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.restaurant_card);
@@ -139,20 +169,10 @@ public class RestaurantListAdapter
         }
     }
 
-    private Context context;
-
-    public RestaurantListAdapter(Context c) {
-        // Create query Factory and setup superclass
-        super(new ParseQueryAdapter.QueryFactory<Restaurant>() {
-            public ParseQuery<Restaurant> create() {
-                return RestaurantManager.getInstance().queryForAllRestaurants();
-            }
-        }, false);
-
-        this.context = c;
-        RestaurantManager.getInstance().registerRestaurantChangeListener(this);
-    }
-
+    /**
+     * Getter function to obtain the number of restaurants in the ParseQuery
+     * @return the number of restaurants
+     */
     @Override
     public int getItemCount() {
         return super.getItemCount();
@@ -169,9 +189,9 @@ public class RestaurantListAdapter
      * Required method for RecyclerView. Upon creation, inflate the appropriate
      * Layout XML view and instantiate a RestaurantViewHolder.
      *
-     * @param viewGroup
-     * @param viewType
-     * @return
+     * @param viewGroup The group that this view holder belongs in
+     * @param viewType Open or closed restaurant
+     * @return Holder corresponding to a restaurant card
      */
     public RestaurantViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         int layout;
@@ -193,10 +213,10 @@ public class RestaurantListAdapter
         return new RestaurantViewHolder(v);
     }
 
-    @Override
     /**
      * Called by RecyclerView to display the data at the specified position.
      */
+    @Override
     public void onBindViewHolder(RestaurantViewHolder holder, int position) {
         final Restaurant restaurant = getItem(position);
 

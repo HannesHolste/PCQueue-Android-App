@@ -11,6 +11,8 @@ import neckbeardhackers.pcqueue.event.NetworkConnectionChangeObserver;
 import neckbeardhackers.pcqueue.net.NetworkStateReceiver;
 
 public class MasterActivity extends AppCompatActivity implements NetworkConnectionChangeObserver {
+
+
     protected NetworkStateReceiver networkConnectionReceiver = null;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,11 +20,15 @@ public class MasterActivity extends AppCompatActivity implements NetworkConnecti
         registerNetworkConnectionChangeReceiver();
     }
 
+    /**
+     * Registers network connection to application
+     */
     protected void registerNetworkConnectionChangeReceiver() {
         if (networkConnectionReceiver == null) {
             IntentFilter filter = new IntentFilter();
             filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
 
+            //
             NetworkStateReceiver receiver = new NetworkStateReceiver();
             registerReceiver(receiver, filter);
 
