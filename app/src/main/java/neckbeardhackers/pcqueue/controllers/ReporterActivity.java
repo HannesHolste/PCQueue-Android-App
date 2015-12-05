@@ -1,27 +1,18 @@
-package neckbeardhackers.pcqueue.view;
+package neckbeardhackers.pcqueue.controllers;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
-import java.util.HashMap;
 import java.util.List;
 
 import neckbeardhackers.pcqueue.R;

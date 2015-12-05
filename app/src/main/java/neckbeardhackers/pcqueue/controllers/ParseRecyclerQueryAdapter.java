@@ -1,4 +1,4 @@
-package neckbeardhackers.pcqueue.view;
+package neckbeardhackers.pcqueue.controllers;
 
 import com.parse.ParseException;
 /*

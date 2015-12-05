@@ -3,30 +3,23 @@ package neckbeardhackers.pcqueue;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
-import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.espresso.contrib.RecyclerViewActions;
-import android.support.test.espresso.matcher.ViewMatchers;
-import android.support.v7.widget.RecyclerView;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 
-import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
-import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
 
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import neckbeardhackers.pcqueue.view.RestaurantListActivity;
+import neckbeardhackers.pcqueue.controllers.RestaurantListActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.not;

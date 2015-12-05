@@ -1,4 +1,4 @@
-package neckbeardhackers.pcqueue.view;
+package neckbeardhackers.pcqueue.controllers;
 
 import android.content.Context;
 import android.view.LayoutInflater;
