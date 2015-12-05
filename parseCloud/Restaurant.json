@@ -1,0 +1,717 @@
+{ "results": [
+	{
+        "CurrentWait": 6,
+        "Location": "Price Center West",
+        "Name": "Starbucks",
+        "Phone": "(858) 534-9441",
+        "createdAt": "2015-11-02T00:04:56.439Z",
+        "description": "Your Starbucks is NOW OPEN!",
+        "isClosed": 0,
+        "objectId": "1HjJt1WJ73",
+        "operatingHours": [
+            {
+                "Sunday": {
+                    "close": "11:00pm",
+                    "open": "9:30am"
+                }
+            },
+            {
+                "Monday": {
+                    "close": "11:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Tuesday": {
+                    "close": "11:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Wednesday": {
+                    "close": "11:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Thursday": {
+                    "close": "11:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Friday": {
+                    "close": "11:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Saturday": {
+                    "close": "11:00pm",
+                    "open": "8:00am"
+                }
+            }
+        ],
+        "updatedAt": "2015-12-05T05:18:12.495Z"
+    },
+	{
+        "CurrentWait": 0,
+        "Location": "Price Center East",
+        "Name": "Bombay Coast",
+        "Phone": "(858) 622-9070",
+        "createdAt": "2015-11-01T23:27:41.275Z",
+        "description": "For curry in a hurry and a wide range of dishes made fresh with the best quality ingredients and authentic Indian spices, go to Bombay Coast! Offering various Indian wrap sandwiches and many other healthy Indian offerings.",
+        "isClosed": 1,
+        "objectId": "8F9YJ0Xdiv",
+        "operatingHours": [
+            {
+                "Sunday": {
+                    "close": null,
+                    "open": null
+                }
+            },
+            {
+                "Monday": {
+                    "close": "9:00pm",
+                    "open": "10:00am"
+                }
+            },
+            {
+                "Tuesday": {
+                    "close": "9:00pm",
+                    "open": "10:00am"
+                }
+            },
+            {
+                "Wednesday": {
+                    "close": "9:00pm",
+                    "open": "10:00am"
+                }
+            },
+            {
+                "Thursday": {
+                    "close": "9:00pm",
+                    "open": "10:00am"
+                }
+            },
+            {
+                "Friday": {
+                    "close": "9:00pm",
+                    "open": "10:00am"
+                }
+            },
+            {
+                "Saturday": {
+                    "close": null,
+                    "open": null
+                }
+            }
+        ],
+        "updatedAt": "2015-12-05T05:18:12.556Z"
+    },
+	{
+        "CurrentWait": 0,
+        "Location": "Price Center West",
+        "Name": "Subway",
+        "Phone": "(858) 638-8275",
+        "createdAt": "2015-11-02T00:04:06.458Z",
+        "description": "Craving a freshly toasted sub, salad, or savory cup of soup? With more than two million different sandwich combinations available. Subway has what you're looking for. Subway eat fresh!",
+        "isClosed": 0,
+        "objectId": "8RMzD9Piby",
+        "operatingHours": [
+            {
+                "Sunday": {
+                    "close": "11:00pm",
+                    "open": "9:30am"
+                }
+            },
+            {
+                "Monday": {
+                    "close": "11:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Tuesday": {
+                    "close": "11:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Wednesday": {
+                    "close": "11:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Thursday": {
+                    "close": "11:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Friday": {
+                    "close": "11:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Saturday": {
+                    "close": "11:00pm",
+                    "open": "8:00am"
+                }
+            }
+        ],
+        "updatedAt": "2015-12-05T05:18:12.618Z"
+    },
+	{
+        "CurrentWait": 0,
+        "Location": "Price Center West",
+        "Name": "Lemongrass",
+        "Phone": "(619) 274-4888",
+        "createdAt": "2015-11-01T23:39:10.862Z",
+        "description": "Lemongrass Fresh Farm Plates are concentric around the fresh flavor of Lemongrass and fruits and vegetables that are at their peak and in season. Come enjoy a Farmer's Market favorite at the Price Center!",
+        "isClosed": 0,
+        "objectId": "9qLEYBvWX0",
+        "operatingHours": [
+            {
+                "Sunday": {
+                    "close": "7:00pm",
+                    "open": "11:00am"
+                }
+            },
+            {
+                "Monday": {
+                    "close": "10:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Tuesday": {
+                    "close": "10:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Wednesday": {
+                    "close": "10:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Thursday": {
+                    "close": "10:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Friday": {
+                    "close": "10:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Saturday": {
+                    "close": "7:00pm",
+                    "open": "11:00am"
+                }
+            }
+        ],
+        "updatedAt": "2015-12-05T05:18:12.710Z"
+    },
+	{
+        "CurrentWait": 0,
+        "Location": "Price Center East",
+        "Name": "Burger King",
+        "Phone": "(858) 457-8272",
+        "createdAt": "2015-11-01T23:28:56.291Z",
+        "description": "Valuing high standards and commitment to excellence, Burger King proudly serves the best burgers in the business! Burgers, fries, and more - all freshly prepared - just the way you want it. After all, when you have it your way it just tastes better.",
+        "isClosed": 0,
+        "objectId": "AnGkOY6zY9",
+        "operatingHours": [
+            {
+                "Sunday": {
+                    "close": "11:59pm",
+                    "open": "9:30am"
+                }
+            },
+            {
+                "Monday": {
+                    "close": "11:59pm",
+                    "open": "12:00am"
+                }
+            },
+            {
+                "Tuesday": {
+                    "close": "11:59pm",
+                    "open": "12:00am"
+                }
+            },
+            {
+                "Wednesday": {
+                    "close": "11:59pm",
+                    "open": "12:00am"
+                }
+            },
+            {
+                "Thursday": {
+                    "close": "11:59pm",
+                    "open": "12:00am"
+                }
+            },
+            {
+                "Friday": {
+                    "close": "11:59pm",
+                    "open": "12:00am"
+                }
+            },
+            {
+                "Saturday": {
+                    "close": "11:59pm",
+                    "open": "8:00am"
+                }
+            }
+        ],
+        "updatedAt": "2015-12-05T05:18:12.787Z"
+    },
+	{
+        "CurrentWait": 0,
+        "Location": "Price Center West",
+        "Name": "Rubios",
+        "Phone": "(858) 784-0519",
+        "createdAt": "2015-11-01T23:48:13.556Z",
+        "description": "This campus favorite features made-to-order burritos, soft-shell tacos, quesadillas, char-grilled chicken breast salads, and seafood representative of the Baja, California region of Mexico.",
+        "isClosed": 1,
+        "objectId": "S7p3fdTulL",
+        "operatingHours": [
+            {
+                "Sunday": {
+                    "close": "5:00pm",
+                    "open": "10:30am"
+                }
+            },
+            {
+                "Monday": {
+                    "close": "9:00pm",
+                    "open": "9:00am"
+                }
+            },
+            {
+                "Tuesday": {
+                    "close": "9:00pm",
+                    "open": "9:00am"
+                }
+            },
+            {
+                "Wednesday": {
+                    "close": "9:00pm",
+                    "open": "9:00am"
+                }
+            },
+            {
+                "Thursday": {
+                    "close": "9:00pm",
+                    "open": "9:00am"
+                }
+            },
+            {
+                "Friday": {
+                    "close": "8:00pm",
+                    "open": "9:00am"
+                }
+            },
+            {
+                "Saturday": {
+                    "close": "6:00pm",
+                    "open": "10:30am"
+                }
+            }
+        ],
+        "updatedAt": "2015-12-05T05:18:12.826Z"
+    },
+	{
+        "CurrentWait": 0,
+        "Location": "Outside Price Center",
+        "Name": "Round Table",
+        "Phone": "(858) 457-2060",
+        "createdAt": "2015-11-01T23:43:25.723Z",
+        "description": "A pioneer in pizza innovation, Round Table serves up great tasting pizzas, pastas, sandwiches, and brews that students and staff crave. We also offer on-campus delivery! Don't forget to kick start your weekend at Round Table Fridays with live DJs and food and drink specials, most Fridays, 1-4pm.",
+        "isClosed": 1,
+        "objectId": "WZ7PLcYrbC",
+        "operatingHours": [
+            {
+                "Sunday": {
+                    "close": "4:00pm",
+                    "open": "11:00am"
+                }
+            },
+            {
+                "Monday": {
+                    "close": "9:00pm",
+                    "open": "10:00am"
+                }
+            },
+            {
+                "Tuesday": {
+                    "close": "9:00pm",
+                    "open": "10:00am"
+                }
+            },
+            {
+                "Wednesday": {
+                    "close": "9:00pm",
+                    "open": "10:00am"
+                }
+            },
+            {
+                "Thursday": {
+                    "close": "9:00pm",
+                    "open": "10:00am"
+                }
+            },
+            {
+                "Friday": {
+                    "close": "9:00pm",
+                    "open": "10:00am"
+                }
+            },
+            {
+                "Saturday": {
+                    "close": "2:00pm",
+                    "open": "11:00am"
+                }
+            }
+        ],
+        "updatedAt": "2015-12-05T05:18:12.913Z"
+    },
+	{
+        "CurrentWait": 0,
+        "Location": "Outside Price Center",
+        "Name": "Shogun",
+        "Phone": "(858) 453-0200",
+        "createdAt": "2015-11-02T00:03:39.236Z",
+        "description": "Shogun Sushi \u0026 Fusion Noodle Cafe is the one stop to satisfy your sushi craving. Located in the heart of Price Center West. This Japanese style restaurant offers an amazing array of fun, fresh, and tasty Japanese options.",
+        "isClosed": 1,
+        "objectId": "X2iBVI8PPM",
+        "operatingHours": [
+            {
+                "Sunday": {
+                    "close": "8:00pm",
+                    "open": "11:30am"
+                }
+            },
+            {
+                "Monday": {
+                    "close": "9:00pm",
+                    "open": "10:00am"
+                }
+            },
+            {
+                "Tuesday": {
+                    "close": "9:00pm",
+                    "open": "10:00am"
+                }
+            },
+            {
+                "Wednesday": {
+                    "close": "9:00pm",
+                    "open": "10:00am"
+                }
+            },
+            {
+                "Thursday": {
+                    "close": "9:00pm",
+                    "open": "10:00am"
+                }
+            },
+            {
+                "Friday": {
+                    "close": "8:00pm",
+                    "open": "10:00am"
+                }
+            },
+            {
+                "Saturday": {
+                    "close": "8:00pm",
+                    "open": "11:30am"
+                }
+            }
+        ],
+        "updatedAt": "2015-12-05T05:18:13.045Z"
+    },
+	{
+        "CurrentWait": 0,
+        "Location": "Price Center East",
+        "Name": "D'Lush",
+        "Phone": "(858) 450-0627",
+        "createdAt": "2015-11-01T23:31:58.233Z",
+        "description": "D'lush is committed to delivering an array of luxurious beverages, yummy open-faced melts, and delicious novelty salads. In addition, they look forward to fostering a fun and collaborative atmosphere with their D'lush student lounge.",
+        "isClosed": 1,
+        "objectId": "abVe7gzDYZ",
+        "operatingHours": [
+            {
+                "Sunday": {
+                    "close": "9:00pm",
+                    "open": "10:00am"
+                }
+            },
+            {
+                "Monday": {
+                    "close": "10:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Tuesday": {
+                    "close": "10:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Wednesday": {
+                    "close": "10:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Thursday": {
+                    "close": "10:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Friday": {
+                    "close": "7:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Saturday": {
+                    "close": "7:00pm",
+                    "open": "8:00am"
+                }
+            }
+        ],
+        "updatedAt": "2015-12-05T05:18:13.089Z"
+    },
+	{
+        "CurrentWait": 0,
+        "Location": "Outside Price Center",
+        "Name": "Jamba Juice",
+        "Phone": "(858) 622-2020",
+        "createdAt": "2015-11-01T23:34:22.151Z",
+        "description": "As the smoothie mecca for the UC San Diego community, Jamba Juice at the Price Center offers fantastic new smoothies, boosts, and shots to treat your body better.",
+        "isClosed": 0,
+        "objectId": "cbrSLwLec5",
+        "operatingHours": [
+            {
+                "Sunday": {
+                    "close": "4:00pm",
+                    "open": "9:30am"
+                }
+            },
+            {
+                "Monday": {
+                    "close": "10:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Tuesday": {
+                    "close": "10:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Wednesday": {
+                    "close": "10:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Thursday": {
+                    "close": "10:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Friday": {
+                    "close": "10:00pm",
+                    "open": "7:00am"
+                }
+            },
+            {
+                "Saturday": {
+                    "close": "4:00pm",
+                    "open": "9:30am"
+                }
+            }
+        ],
+        "updatedAt": "2015-12-05T05:18:13.184Z"
+    },
+	{
+        "CurrentWait": 0,
+        "Location": "Price Center West",
+        "Name": "Tapioca Express",
+        "Phone": "(858) 678-8821",
+        "createdAt": "2015-11-02T00:05:59.638Z",
+        "description": "Tapioca Express redefines tea culture by incorporating the art of sight, coustics, tactus, scent and flavor into over 150 different drinks. A full menu of Asian theme food items are offered. Tapioca Express brings a taste of Taiwan to UC San Diego for boba enthusiasts to enjoy.",
+        "isClosed": 0,
+        "objectId": "l5ft5T9MVp",
+        "operatingHours": [
+            {
+                "Sunday": {
+                    "close": "11:59pm",
+                    "open": "11:00am"
+                }
+            },
+            {
+                "Monday": {
+                    "close": "11:59pm",
+                    "open": "9:30am"
+                }
+            },
+            {
+                "Tuesday": {
+                    "close": "11:59pm",
+                    "open": "9:30am"
+                }
+            },
+            {
+                "Wednesday": {
+                    "close": "11:59pm",
+                    "open": "9:30am"
+                }
+            },
+            {
+                "Thursday": {
+                    "close": "11:59pm",
+                    "open": "9:30am"
+                }
+            },
+            {
+                "Friday": {
+                    "close": "11:59pm",
+                    "open": "9:30am"
+                }
+            },
+            {
+                "Saturday": {
+                    "close": "11:59pm",
+                    "open": "11:00am"
+                }
+            }
+        ],
+        "updatedAt": "2015-12-05T05:18:13.248Z"
+    },
+	{
+        "CurrentWait": 0,
+        "Location": "Price Center West",
+        "Name": "Panda Express",
+        "Phone": "(858) 638-0106",
+        "createdAt": "2015-11-01T23:40:41.492Z",
+        "description": "Panda Express serves up gourmet Chinese food. From traditional Chinese favorites to fresh new taste creations, Panda Express has wokked up a delicious menu with something for everyone to enjoy. Special catering offer: Order the Panda sixteen people party tray and receive free veggie egg rolls for sixteen.",
+        "isClosed": 1,
+        "objectId": "tkKXnr7h3s",
+        "operatingHours": [
+            {
+                "Sunday": {
+                    "close": "7:00pm",
+                    "open": "11:00am"
+                }
+            },
+            {
+                "Monday": {
+                    "close": "10:00pm",
+                    "open": "9:00am"
+                }
+            },
+            {
+                "Tuesday": {
+                    "close": "10:00pm",
+                    "open": "9:00am"
+                }
+            },
+            {
+                "Wednesday": {
+                    "close": "10:00pm",
+                    "open": "9:00am"
+                }
+            },
+            {
+                "Thursday": {
+                    "close": "10:00pm",
+                    "open": "9:00am"
+                }
+            },
+            {
+                "Friday": {
+                    "close": "8:00pm",
+                    "open": "9:00am"
+                }
+            },
+            {
+                "Saturday": {
+                    "close": "7:00pm",
+                    "open": "11:00am"
+                }
+            }
+        ],
+        "updatedAt": "2015-12-05T05:18:13.298Z"
+    },
+	{
+        "CurrentWait": 0,
+        "Location": "Price Center East",
+        "Name": "Santorini",
+        "Phone": "(858) 622-0067",
+        "createdAt": "2015-11-01T23:58:15.606Z",
+        "description": "Santorini Greek Grill's fresh-made greek dishes contains the saltiness of the Aegean Sea, smells of oregano, fresh tastes from the Cycladic Islands and the nostalgia of the Mediterranean, giving its customers a unique dining experience that will have you coming back for seconds.",
+        "isClosed": 1,
+        "objectId": "yOqRByzf7O",
+        "operatingHours": [
+            {
+                "Sunday": {
+                    "close": "11:59pm",
+                    "open": "11:00am"
+                }
+            },
+            {
+                "Monday": {
+                    "close": "11:59pm",
+                    "open": "7:30am"
+                }
+            },
+            {
+                "Tuesday": {
+                    "close": "11:59pm",
+                    "open": "7:30am"
+                }
+            },
+            {
+                "Wednesday": {
+                    "close": "11:59pm",
+                    "open": "7:30am"
+                }
+            },
+            {
+                "Thursday": {
+                    "close": "11:59pm",
+                    "open": "7:30am"
+                }
+            },
+            {
+                "Friday": {
+                    "close": "9:00pm",
+                    "open": "7:30am"
+                }
+            },
+            {
+                "Saturday": {
+                    "close": "7:00pm",
+                    "open": "10:00am"
+                }
+            }
+        ],
+        "updatedAt": "2015-12-05T05:18:13.403Z"
+    }
+] }
