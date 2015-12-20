@@ -31,10 +31,10 @@ public class PCQueue extends Application {
 
     // TODO: Extract this to a separate configuration file, and re-generate keys
     // Leaving keys in source code that is committed to github is poor practice
-    private final String PROD_PARSE_APP_ID = "***REMOVED***";
-    private final String PROD_PARSE_CLIENT_KEY = "***REMOVED***";
-    private final String TEST_PARSE_APP_ID = "***REMOVED***";
-    private final String TEST_PARSE_CLIENT_KEY = "***REMOVED***";
+    private final String PROD_PARSE_APP_ID = "**REMOVED**";
+    private final String PROD_PARSE_CLIENT_KEY = "**REMOVED**";
+    private final String TEST_PARSE_APP_ID = "**REMOVED**";
+    private final String TEST_PARSE_CLIENT_KEY = "**REMOVED**";
 
     /**
      * Determines whether or not the application is being run as an app or for testing purposes by
